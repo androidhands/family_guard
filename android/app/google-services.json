@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "665644469567",
+    "project_id": "family-guard-c555c",
+    "storage_bucket": "family-guard-c555c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:665644469567:android:ecc940e1a05c62327a578a",
+        "android_client_info": {
+          "package_name": "com.familyguard.family_guard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "665644469567-ou0gvfhlojjeea1f7d0uqi914e3m2fbb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_Cl4tTsUE0_H5N5A7OutO4O31B6cc85Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "665644469567-ou0gvfhlojjeea1f7d0uqi914e3m2fbb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

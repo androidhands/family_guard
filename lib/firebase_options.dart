@@ -50,20 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDbiXOJF8Ta9aZtD9Vo_DAoLEqWz4EslRs',
-    appId: '1:737331371351:android:f11aedcd738f8f4c677212',
-    messagingSenderId: '737331371351',
-    projectId: 'silent-safe',
-    storageBucket: 'silent-safe.appspot.com',
+    apiKey: 'AIzaSyA_Cl4tTsUE0_H5N5A7OutO4O31B6cc85Q',
+    appId: '1:665644469567:android:ecc940e1a05c62327a578a',
+    messagingSenderId: '665644469567',
+    projectId: 'family-guard-c555c',
+    storageBucket: 'family-guard-c555c.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDsvfeDN1uv6GK5JVYpqzhetgNul7sezY8',
-    appId: '1:737331371351:ios:dccf470d43e84b08677212',
-    messagingSenderId: '737331371351',
-    projectId: 'silent-safe',
-    storageBucket: 'silent-safe.appspot.com',
-    iosClientId: '737331371351-1qpfcj6vnouh06ncqed01if62vru3gu1.apps.googleusercontent.com',
-    iosBundleId: 'com.silentsafety.silentSafety',
+    apiKey: 'AIzaSyD8CyWX66bVSqSklcAbTVQHdiRkeZzgcl0',
+    appId: '1:665644469567:ios:20901d91cc407f137a578a',
+    messagingSenderId: '665644469567',
+    projectId: 'family-guard-c555c',
+    storageBucket: 'family-guard-c555c.appspot.com',
+    iosClientId: '665644469567-5273cl968lc5i2rj1rs7hr7eg35j6aio.apps.googleusercontent.com',
+    iosBundleId: 'com.familyguard.familyGuard',
   );
 }
