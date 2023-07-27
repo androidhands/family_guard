@@ -18,10 +18,8 @@ import '../controller/verification_provider.dart';
 
 class VerificationContentCardComponent extends StatelessWidget {
   final SignUpParams signUpParams;
- 
 
-  const VerificationContentCardComponent(
-      {Key? key, required this.signUpParams})
+  const VerificationContentCardComponent({Key? key, required this.signUpParams})
       : super(key: key);
 
   @override
@@ -70,8 +68,8 @@ class VerificationContentCardComponent extends StatelessWidget {
 
                 CustomText.thirdTitleSmall(
                   tr(tr(AppConstants.enterOTPCode)),
-                  textStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      fontWeight: AppFonts.medium, fontSize: AppSizes.h4),
+                  textStyle: Theme.of(context).textTheme.displaySmall!.copyWith(
+                      fontWeight: AppFonts.medium, fontSize: AppSizes.h3),
                 ),
                 SizedBox(
                   height: AppSizes.pH1,
@@ -90,7 +88,7 @@ class VerificationContentCardComponent extends StatelessWidget {
                 CustomPinCodeTextField(
                   controller: provider.pinCodeController,
                   onDone: (value) async {
-                     provider.onComplete();
+                    provider.onComplete();
                   },
                   onChanged: (value) {
                     provider.onChangedPinCode();
@@ -106,6 +104,7 @@ class VerificationContentCardComponent extends StatelessWidget {
                     onPressed: () {
                       provider.onSubmit(context);
                     },
+                    isLoading: provider.isLoadingSubmitOtp,
                     text: tr(AppConstants.verify)),
                 SizedBox(
                   height: AppSizes.pH6,

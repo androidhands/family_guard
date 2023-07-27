@@ -13,8 +13,9 @@ const String attachmentBaseUrl = '';
 //const String baseUrl = "http://uturnsoftware.com/";
 const String baseUrl = "http://development.uturnsoftware.com/";
 const int defaultAppTenant = 1;
-const String apiPassword = "";
-const String basicAuth = "";
+const String apiPassword = "COLgGMo6KEiaY3cFhysY920Kd33SHmGG5cXD";
+const String basicAuth =
+    "YWJkZWxoYW1pZC5haG1lZC5hYmRvQGdtYWlsLmNvbTpBYmRvQEJvb2R5QDI1MjkwMA==";
 
 class ApiCaller {
   Dio dio = Dio();

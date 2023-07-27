@@ -1,5 +1,14 @@
 import 'package:family_guard/core/controllers/main_provider.dart';
+import 'package:family_guard/features/authentication/data/datasource/base_users_credentials_data_source.dart';
+import 'package:family_guard/features/authentication/data/repositories/manual_sign_up_reposiory.dart';
+import 'package:family_guard/features/authentication/data/repositories/user_credentials_repository.dart';
+import 'package:family_guard/features/authentication/domain/repositories/base_manual_sign_up_repository.dart';
+import 'package:family_guard/features/authentication/domain/repositories/base_user_credentials_repository.dart';
+import 'package:family_guard/features/authentication/domain/usecases/get_cached_user_credentials_usecase.dart';
+import 'package:family_guard/features/authentication/domain/usecases/manual_sign_up_usecase.dart';
+import 'package:family_guard/features/authentication/domain/usecases/save_user_credentials_usecase.dart';
 import 'package:family_guard/features/authentication/presentation/controller/login/login_provider.dart';
+import 'package:family_guard/features/authentication/presentation/controller/sign_up_provider.dart';
 import 'package:get_it/get_it.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
 import 'package:family_guard/core/global/theme/data/datasource/theme_datasource.dart';
@@ -13,7 +22,7 @@ import 'package:family_guard/core/services/location_fetcher.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-
+import '../../features/authentication/data/datasource/manual_sign_up_data_source.dart';
 import 'connectivity_services.dart';
 import 'date_parser.dart';
 
@@ -44,6 +53,8 @@ class DependencyInjectionServices {
     initializeMainProvider();
 
     initializeLogin();
+
+    initializeSignUp();
   }
 
   initializeLocationFetcher() {
@@ -93,6 +104,21 @@ class DependencyInjectionServices {
   //main provider
   initializeMainProvider() {
     sl.registerLazySingleton(() => MainProvider());
+
+    //usecases
+    sl.registerLazySingleton(
+        () => SaveUserCredentialsUsecase(baseUserCredentialsRepository: sl()));
+
+    sl.registerLazySingleton(() =>
+        GetCachedUserCredentialsUsecase(baseUserCredentialsRepository: sl()));
+
+    //repositories
+    sl.registerLazySingleton<BaseUserCredentialsRepository>(
+        () => UserCredentialsRepository(baseUsersCredentialsDataSource: sl()));
+
+    //datasources
+    sl.registerLazySingleton<BaseUsersCredentialsDataSource>(
+        () => UsersCredentialsDataSource());
   }
 
   //main provider
@@ -100,5 +126,20 @@ class DependencyInjectionServices {
     sl.registerLazySingleton(() => LoginProvider());
   }
 
- 
+  initializeSignUp() {
+    //providers
+    sl.registerLazySingleton(() => SignUpProvider());
+
+    //usecases
+    sl.registerLazySingleton(
+        () => ManualSignUpUsecase(baseManualSignUpRepository: sl()));
+
+    //repositories
+    sl.registerLazySingleton<BaseManualSignUpRepository>(
+        () => ManualSignUpReposiory(baseManualSignUpDataSource: sl()));
+
+    //datasource
+    sl.registerLazySingleton<BaseManualSignUpDataSource>(
+        () => ManualSignUpDataSource());
+  }
 }

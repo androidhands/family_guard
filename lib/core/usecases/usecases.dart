@@ -7,3 +7,11 @@ abstract class BaseUseCases<Type, Params> {
 }
 
 
+abstract class BaseUseCasesNoParams<Type> {
+  Future<Either<Failure, Type>> call();
+}
+
+
+
+
+

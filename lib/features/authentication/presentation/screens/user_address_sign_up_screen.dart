@@ -9,6 +9,8 @@ import '../components/authentication_common_body.dart';
 class UserAddressSignUpScreen extends StatelessWidget {
   const UserAddressSignUpScreen({Key? key}) : super(key: key);
 
+  
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SignUpProvider>(

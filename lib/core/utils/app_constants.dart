@@ -306,4 +306,6 @@ class AppConstants {
 
   static const String female = "FEMALE";
   static const String male = "Male";
+
+  static const String failedSavingCredentials  ="FailedSavingCredentials";
 }

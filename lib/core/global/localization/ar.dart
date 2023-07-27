@@ -58,4 +58,6 @@ Map<String, String> coreAr = {
   'SECONDS': 'Seconds',
   "DidN\'T_RECEIVE_A_CODE?": "Didn’t receive a code?",
   'RESEND': 'Resend',
+  'FailedSavingCredentials': 'Failed Saving Credentials',
+  'ENTER_OTP_CODE': 'Enter OTP Code',
 };

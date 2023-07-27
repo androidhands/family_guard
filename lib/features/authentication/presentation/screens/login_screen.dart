@@ -1,6 +1,4 @@
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
-import 'package:family_guard/core/widget/custom_icon.dart';
-import 'package:family_guard/core/widget/images/custom_svg_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:family_guard/core/widget/custom_check_box.dart';

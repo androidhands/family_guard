@@ -1,7 +1,5 @@
 import 'dart:developer';
 
-import 'package:family_guard/features/authentication/presentation/screens/verification_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
 
@@ -16,11 +14,11 @@ import '../../../../core/services/navigation_service.dart';
 import '../../../../core/utils/app_constants.dart';
 
 import '../../domain/entities/sign_up_params.dart';
+import '../screens/verification_screen.dart';
 import '../validations/cancellation_reason_validation.dart';
 
 class SignUpProvider extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   String verificationsId = "";
 
   bool enableVerifyButton = false;
@@ -436,14 +434,15 @@ class SignUpProvider extends ChangeNotifier {
         mobile: phoneNumber!.completeNumber,
         email: '',
         password: passwordController.text,
-        gender: selectedGenders == Genders.male ? "0" : "1");
+        gender: selectedGenders == Genders.male ? "0" : "1",
+        uid: '');
 
     log(_signUpParameters.toJson().toString());
-   /*  NavigationService.navigateTo(
+     NavigationService.navigateTo(
         navigationMethod: NavigationMethod.push,
         page: () => VerificationScreen(
               signUpParams: _signUpParameters,
-            )); */
+            ));
 
     /*  
 
