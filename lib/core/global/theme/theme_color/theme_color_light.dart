@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ThemeColorLight {
-  static const Color primaryColor = Color(0xFF1D366F);
-  static const Color secondaryColor = Color(0xFF3E5EA9);
+  static const Color primaryColor = Color(0xFFED2647);
+  static const Color secondaryColor = Color(0xFFF88A9C);
   static const Color thirdColor = Color(0xFF49454F);
-  static const Color blueColor = Color(0xFF1D366F);
-  static const Color blueWhiteColor = Color(0xFF3E5EA9);
+  static const Color pinkColor = Color(0xFFED2647);
+  static const Color pinkWhiteColor = Color(0xFFF88A9C);
   static const Color backgroundColor = Color(0xFFEFF0F6);
   static const Color containerCardColor = Color(0xFFFCFCFC);
   static const Color dialogBackgroundColor = Color(0xFFFCFCFC);
@@ -14,7 +14,7 @@ class ThemeColorLight {
 
   static const Color grayscaleSolid = Color(0xFF14142B);
   static const LinearGradient gradientMAinColor =
-      LinearGradient(colors: [Color(0xFF1D366F), Color(0xFF3E5EA9)]);
+      LinearGradient(colors: [Color(0xFFED2647), Color(0xFFF88A9C)]);
   static Color iconColor = const Color(0xFF08C076);
 
   static const Color transparentColor = Colors.transparent;
@@ -23,11 +23,11 @@ class ThemeColorLight {
   static Color disableColor = const Color(0xFFF5F5F5);
   static Color disableButtonColor = const Color(0xFFF5F5F5);
 
-  static const Color overlayElevatedButtonColor = Color(0xFF1D366F);
+  static const Color overlayElevatedButtonColor = Color(0xFFD2647);
   static const Color inputBackgroundGray = Color(0xFFEFF0F6);
   static const Color fillColorTextFormField = Color(0xFFFCFCFC);
   //
-  static const Color focusBorderTextField = Color(0xFF1D366F);
+  static const Color focusBorderTextField = Color(0xFFD2647);
   static Color shadowColor = const Color(0xFF6e7191).withOpacity(0.2);
   static const Color hintTextFieldColor = Color(0xFFA0A3BD);
   static const Color labelTextFieldColor = Color(0x611C252E);

@@ -33,8 +33,8 @@ class ImageProfileWidget extends StatelessWidget {
                   ? GradientBoxBorder(
                       gradient: const LinearGradient(
                         colors: [
-                          ThemeColorLight.blueColor,
-                          ThemeColorLight.blueWhiteColor,
+                          ThemeColorLight.pinkColor,
+                          ThemeColorLight.pinkWhiteColor,
                         ],
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,

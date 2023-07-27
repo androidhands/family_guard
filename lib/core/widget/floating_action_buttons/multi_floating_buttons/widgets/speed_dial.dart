@@ -410,7 +410,7 @@ class _SpeedDialState extends State<SpeedDial>
                                 child: widget.iconAsset != null
                                     ? CustomSvgImage.icons(
                                         path: widget.iconAsset!,
-                                        color: ThemeColorLight.blueColor,
+                                        color: ThemeColorLight.pinkColor,
                                       )
                                     : widget.child,
                               ),

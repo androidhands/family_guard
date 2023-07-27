@@ -9,7 +9,7 @@ ThemeData get getThemeDataLight => ThemeData(
 
       dialogBackgroundColor: ThemeColorLight.dialogBackgroundColor,
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          selectedItemColor: ThemeColorLight.blueWhiteColor,
+          selectedItemColor: ThemeColorLight.pinkWhiteColor,
           backgroundColor: ThemeColorLight.bottomNavigationBarColor,
           unselectedItemColor: ThemeColorLight.green),
       highlightColor: ThemeColorLight.highlightColorBorderForPinTextField,
@@ -18,7 +18,7 @@ ThemeData get getThemeDataLight => ThemeData(
       brightness: Brightness.light,
       scaffoldBackgroundColor: ThemeColorLight.backgroundColor,
       progressIndicatorTheme: const ProgressIndicatorThemeData(
-        color: ThemeColorLight.blueColor,
+        color: ThemeColorLight.pinkColor,
       ),
       iconTheme: IconThemeData(color: ThemeColorLight.iconColor),
       shadowColor: ThemeColorLight.shadowColor,
@@ -102,7 +102,7 @@ ThemeData get getThemeDataLight => ThemeData(
       tabBarTheme: TabBarTheme(
         unselectedLabelColor: ThemeColorLight.unselectedLabelColor,
         labelStyle: TextStyle(
-          color: ThemeColorLight.blueColor,
+          color: ThemeColorLight.pinkColor,
           fontWeight: AppFonts.semiBold,
           fontSize: AppSizes.h5,
         ),
@@ -132,9 +132,9 @@ ThemeData get getThemeDataLight => ThemeData(
             padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                 const EdgeInsets.all(0)),
             shadowColor: MaterialStateProperty.all<Color>(
-                ThemeColorLight.blueWhiteColor),
+                ThemeColorLight.pinkWhiteColor),
             surfaceTintColor:
-                MaterialStateProperty.all<Color>(ThemeColorLight.blueColor),
+                MaterialStateProperty.all<Color>(ThemeColorLight.pinkColor),
             foregroundColor: MaterialStateProperty.all<Color>(
                 ThemeColorLight.disableButtonColor),
             overlayColor: MaterialStateProperty.all<Color>(
@@ -147,7 +147,7 @@ ThemeData get getThemeDataLight => ThemeData(
 
       outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
-        side: const BorderSide(color: ThemeColorLight.blueColor),
+        side: const BorderSide(color: ThemeColorLight.pinkColor),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(AppSizes.br8))),
       )),
@@ -167,7 +167,7 @@ getTextTheme() => TextTheme(
 
     /// 1. Text DisplaySmallBold pink
     displayLarge: TextStyle(
-      color: ThemeColorLight.blueColor,
+      color: ThemeColorLight.pinkColor,
       fontSize: AppSizes.h3,
       fontWeight: AppFonts.bold,
       fontFamily: AppFonts.fontFamilyEnglish,

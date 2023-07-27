@@ -68,7 +68,7 @@ class BeatState extends State<Beat> with SingleTickerProviderStateMixin {
                   )
                       .value,
                   child: Ring.draw(
-                    color: ThemeColorLight.blueColor,
+                    color: ThemeColorLight.pinkColor,
                     size: size,
                     strokeWidth: Tween<double>(begin: size / 5, end: size / 8)
                         .animate(
@@ -85,7 +85,7 @@ class BeatState extends State<Beat> with SingleTickerProviderStateMixin {
             Visibility(
               visible: _animationController.value <= 0.7,
               child: Ring.draw(
-                color: ThemeColorLight.blueWhiteColor,
+                color: ThemeColorLight.pinkWhiteColor,
                 size: size,
                 strokeWidth: size / 8,
               ),
@@ -107,7 +107,7 @@ class BeatState extends State<Beat> with SingleTickerProviderStateMixin {
                 )
                     .value,
                 child: Ring.draw(
-                  color: ThemeColorLight.blueColor,
+                  color: ThemeColorLight.pinkColor,
                   size: size,
                   strokeWidth: size / 8,
                 ),
@@ -128,7 +128,7 @@ class BeatState extends State<Beat> with SingleTickerProviderStateMixin {
                 )
                     .value,
                 child: Ring.draw(
-                  color: ThemeColorLight.blueWhiteColor,
+                  color: ThemeColorLight.pinkWhiteColor,
                   size: size,
                   strokeWidth: size / 8,
                 ),

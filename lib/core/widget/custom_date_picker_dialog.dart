@@ -50,7 +50,7 @@ class _CustomDatePickerDialogState extends State<CustomDatePickerDialog> {
         right: AppSizes.pW1,
       ),
       decoration: BoxDecoration(
-          color: ThemeColorLight.blueColor,
+          color: ThemeColorLight.pinkColor,
           borderRadius: BorderRadius.circular(AppSizes.br25)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -95,15 +95,15 @@ class _CustomDatePickerDialogState extends State<CustomDatePickerDialog> {
                     return Theme(
                         data: Theme.of(context).copyWith(
                           colorScheme: const ColorScheme.light(
-                            primary: ThemeColorLight.blueColor, // <-- SEE HERE
+                            primary: ThemeColorLight.pinkColor, // <-- SEE HERE
                             onPrimary: ThemeColorLight.green, // <-- SEE HERE
                             onSurface:
-                                ThemeColorLight.blueColor, // <-- SEE HERE
+                                ThemeColorLight.pinkColor, // <-- SEE HERE
                           ),
                           textButtonTheme: TextButtonThemeData(
                             style: TextButton.styleFrom(
                               foregroundColor: ThemeColorLight
-                                  .blueColor, // button text color
+                                  .pinkColor, // button text color
                             ),
                           ),
                         ),

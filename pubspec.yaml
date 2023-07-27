@@ -97,6 +97,50 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/png/hs_app_logo_colored.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+
+
+flutter_native_splash:
+  color: "#ED2647"
+  image: assets/images/png/hs_color_logo.png
+   #flutter pub run flutter_native_splash:create
+    # The android, ios and web parameters can be used to disable generating a splash screen on a given
+  # platform.
+  android_12:
+    # The image parameter sets the splash screen icon image.  If this parameter is not specified,
+    # the app's launcher icon will be used instead.
+    # Please note that the splash screen will be clipped to a circle on the center of the screen.
+    # App icon with an icon background: This should be 960×960 pixels, and fit within a circle
+    # 640 pixels in diameter.
+    # App icon without an icon background: This should be 1152×1152 pixels, and fit within a circle
+    # 768 pixels in diameter.
+    # image: assets/images/png/logo_color_android_twelve.png
+
+    # Splash screen background color.
+    #color: "#1D366F"
+
+    # App icon background color.
+    #icon_background_color: "#111111"
+
+    # The image_dark parameter and icon_background_color_dark set the image and icon background
+    # color when the device is in dark mode. If they are not specified, the app will use the
+    # parameters from above.
+    #image_dark: assets/android12splash-invert.png
+    #color_dark: "#042a49"
+    #icon_background_color_dark: "#eeeeee"
+    image: assets/images/png/hs_color_logo.png
+
+  android: true
+  android12: true
+  ios: true
+  web: true
+
+
+
 flutter:
 
 

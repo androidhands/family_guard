@@ -47,8 +47,8 @@ class CustomElevatedButton extends StatelessWidget {
                 gradient: LinearGradient(
                   colors: isEnabled
                       ? [
-                    ThemeColorLight.blueColor,
-                    ThemeColorLight.blueWhiteColor,
+                    ThemeColorLight.pinkColor,
+                    ThemeColorLight.pinkWhiteColor,
                         ]
                       : [
                           Theme.of(context).disabledColor,

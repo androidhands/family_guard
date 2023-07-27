@@ -17,8 +17,8 @@ class CustomGradientText extends StatelessWidget {
     return GradientText(
       text,
       colors: const [
-        ThemeColorLight.blueColor,
-        ThemeColorLight.blueWhiteColor
+        ThemeColorLight.pinkColor,
+        ThemeColorLight.pinkWhiteColor
       ],
       style: textStyle ??
           TextStyle(

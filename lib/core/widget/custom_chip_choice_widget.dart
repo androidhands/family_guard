@@ -48,7 +48,7 @@ class _CustomChipChoiceWidgetState extends State<CustomChipChoiceWidget> {
                   fontSize: AppSizes.h8,
                   color: widget.isSelected
                       ? ThemeColorLight.whiteColor
-                      : ThemeColorLight.blueColor),
+                      : ThemeColorLight.pinkColor),
             ),
             SizedBox(width: AppSizes.pH2),
             (widget.isCloseIcon)
