@@ -13,6 +13,8 @@ const String attachmentBaseUrl = '';
 //const String baseUrl = "http://uturnsoftware.com/";
 const String baseUrl = "http://development.uturnsoftware.com/";
 const int defaultAppTenant = 1;
+const String apiPassword = "";
+const String basicAuth = "";
 
 class ApiCaller {
   Dio dio = Dio();
@@ -125,7 +127,8 @@ class ApiCaller {
       'Abp.TenantId': tenantId,
 
       ///TODO Check if tenant id is null use the global tenant... global tenant should be set in signIn
-      'Authorization': 'Bearer $token',
+      'Authorization': 'Basic $basicAuth',
+      'auth-token': token
     }
       ..addAll(
         headers ?? {},
@@ -143,7 +146,7 @@ class ApiCaller {
     int? tenantId,
     ResponseType? responseType,
   }) {
-    String uri = '${baseUrl}api$url';
+    String uri = '${baseUrl}api$url?api_password=$apiPassword';
     log(uri);
     //log(jsonEncode(body)); ///Warning this line must be commented in production or even if not used
     return () {
@@ -207,7 +210,6 @@ class ApiCaller {
       if (onFailure != null) onFailure(data.message);
     }
     return Future.value();
-    
   }
 }
 

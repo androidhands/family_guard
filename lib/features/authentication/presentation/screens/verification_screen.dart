@@ -4,24 +4,25 @@ import 'package:provider/provider.dart';
 
 import '../../../../core/global/localization/app_localization.dart';
 import '../../../../core/utils/app_constants.dart';
+import '../../domain/entities/sign_up_params.dart';
 import '../components/authentication_common_body.dart';
 import '../components/verification_content_card_component.dart';
 import '../controller/verification_provider.dart';
 
 class VerificationScreen extends StatelessWidget {
-  final String emailOrPhone;
-  final bool isPhone;
+  final SignUpParams signUpParams;
+ 
 
   const VerificationScreen(
-      {Key? key, required this.emailOrPhone, required this.isPhone})
+      {Key? key, required this.signUpParams})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => VerificationProvider(
-        emailOrPhone: emailOrPhone,
-        isPhone: isPhone,
+        signUpParams: signUpParams,
+       
       ),
       child: Consumer<VerificationProvider>(
         builder: (context, provider, child) {
@@ -33,8 +34,8 @@ class VerificationScreen extends StatelessWidget {
               : AuthenticationCommonBody(
                   title: tr(AppConstants.verification),
                   body: VerificationContentCardComponent(
-                    emailOrPhone: emailOrPhone,
-                    isPhone: isPhone,
+                    signUpParams: signUpParams,
+                   
                   ));
         },
       ),

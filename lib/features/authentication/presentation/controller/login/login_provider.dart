@@ -1,12 +1,13 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-
 
 import 'package:family_guard/features/authentication/presentation/screens/forget_password_screen.dart';
 
 import 'package:family_guard/features/authentication/presentation/screens/signup_screen.dart';
 import 'package:intl_phone_field/phone_number.dart';
+
 
 import '../../../../../core/global/localization/app_localization.dart';
 import '../../../../../core/local_data/shared_preferences_services.dart';
@@ -14,8 +15,6 @@ import '../../../../../core/local_data/shared_preferences_services.dart';
 import '../../../../../core/services/dependency_injection_service.dart';
 import '../../../../../core/services/navigation_service.dart';
 import '../../../../../core/utils/app_constants.dart';
-
-
 
 import '../../utils/constants.dart';
 import '../../validations/cancellation_reason_validation.dart';
@@ -29,8 +28,6 @@ class LoginProvider extends ChangeNotifier {
   bool isLoadingSignIn = false;
   bool isLoadingActiveCountries = true;
 
-
-
   bool isLoadingAvailableTenants = false;
   bool isLoadingPhoneCodes = false;
   bool showOrganization = false;
@@ -42,7 +39,6 @@ class LoginProvider extends ChangeNotifier {
   // SignIn Patamater
   //late SignInParameters _signInParameters;
 
-
   final TextEditingController emailOrPhoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -53,9 +49,10 @@ class LoginProvider extends ChangeNotifier {
   final GlobalKey phoneCodePickerWidgetKey = GlobalKey();
   double textFieldHeight = 0.0;
 
+  FocusNode phoneFocus = FocusNode();
+
   LoginProvider() {
     init();
-   
   }
 
   init() async {
@@ -69,8 +66,6 @@ class LoginProvider extends ChangeNotifier {
       sl<BaseAppLocalizations>().changeLocale(languageCode: locale);
     }
   }
-
-
 
   String? validateEmailOrMobilePhone(String value) {
     if (!emailOrPhoneShowValidation) return null;
@@ -177,8 +172,8 @@ class LoginProvider extends ChangeNotifier {
   }
 
   void checkFormReadiness() {
-    bool isNotValid = emailOrPhoneController.text.isEmpty ||
-        passwordController.text.isEmpty;
+    bool isNotValid =
+        emailOrPhoneController.text.isEmpty || passwordController.text.isEmpty;
     if (enableVerifyButton != !isNotValid) {
       enableVerifyButton = !isNotValid;
       notifyListeners();
@@ -224,7 +219,6 @@ class LoginProvider extends ChangeNotifier {
     }
     isLoadingSignIn = false;
     notifyListeners(); */
-    
   }
 
   gotoSignUpScreen() {
@@ -251,5 +245,9 @@ class LoginProvider extends ChangeNotifier {
     super.dispose();
   }
 
-  void setPhoneNumber(PhoneNumber phone) {}
+  PhoneNumber? phoneNumber;
+  void setPhoneNumber(PhoneNumber phone) {
+    phoneNumber = phone;
+    log(phoneNumber!.completeNumber);
+  }
 }

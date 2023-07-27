@@ -175,7 +175,7 @@ class AppSizes {
   static final double checkBoxPaddingWidth = 4.w;
 
   ///height
-  static final double heightPinCode = 86.h;
+  static final double heightPinCode = 60.h;
   static final double countryFlagHeight = 16.h;
   static final double imageProfileHeightInHomeScreen = 40.h;
   static final double imageCompanyHeightInHomeScreen = 40.h;
@@ -203,7 +203,7 @@ class AppSizes {
   static final double dotSize = 5.w;
 
   ///width
-  static final double widthPinCode = 82.w;
+  static final double widthPinCode = 60.w;
   static final double countryFlagWidth = 24.w;
   static final double logoImageWidth = 200.w;
   static final double organizationImageWidth = 65.w;

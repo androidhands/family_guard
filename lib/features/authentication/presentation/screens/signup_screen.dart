@@ -13,10 +13,11 @@ import 'package:family_guard/features/authentication/presentation/components/cho
 
 import 'package:family_guard/features/authentication/presentation/controller/sign_up_provider.dart';
 import 'package:family_guard/features/authentication/presentation/utils/constants.dart';
-import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+
 import 'package:provider/provider.dart';
 
+import '../../../../core/global/theme/theme_color/theme_color_light.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -127,24 +128,20 @@ class SignUpScreen extends StatelessWidget {
                         borderSide: BorderSide(),
                       ),
                     ),
+                    dropdownIcon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: ThemeColorLight.pinkColor,
+                    ),
                     initialCountryCode: 'US',
                     controller: provider.phoneController,
-                    countries: countries
-                        .where((element) =>
-                            element.code == 'US' || element.code == "CA")
-                        .toList(),
                     onChanged: (phone) {
                       provider.setPhoneNumber(phone);
                       provider.checkFormReadiness();
                     },
                   ),
-
-                  ///here
-
                   SizedBox(
                     height: AppSizes.pH3,
                   ),
-
                   CustomTextFormField(
                       onFocusChange: (hasFocus) =>
                           provider.validatePasswordOnFocusLose(hasFocus),
@@ -172,7 +169,6 @@ class SignUpScreen extends StatelessWidget {
                         provider.checkFormReadiness();
                         provider.validateConfirmPasswordOnChange(value);
                       }),
-
                   SizedBox(
                     height: AppSizes.pH5,
                   ),
@@ -187,18 +183,15 @@ class SignUpScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   SizedBox(
                     height: AppSizes.pH3,
                   ),
-
                   ChooseGenderComponent(
                     onChanged: (gender) {
-                      provider.checkFormReadiness();
                       provider.setSelectedGender(gender);
                     },
+                    selectedGender: provider.selectedGenders,
                   ),
-
                   SizedBox(
                     height: AppSizes.pH8,
                   ),
@@ -218,7 +211,7 @@ class SignUpScreen extends StatelessWidget {
                     height: AppSizes.pH8,
                   ),
                   CustomElevatedButton(
-                      onPressed: () => provider.verify(),
+                      onPressed: () => provider.validateAndVerify(),
                       isEnabled: provider.enableVerifyButton,
                       isLoading: provider.isLoadingSignUp,
                       text: tr(AppConstants.verify)),

@@ -46,7 +46,7 @@ ThemeData get getThemeDataDark => ThemeData(
               color: ThemeColorDark.searchFormFieldColor,
               width: AppSizes.bs1_0,
             ),
-            borderRadius: BorderRadius.circular(AppSizes.br4),
+            borderRadius: BorderRadius.circular(AppSizes.br30),
           ),
           outlineBorder: BorderSide(
             color: ThemeColorDark.searchFormFieldColor,
@@ -148,7 +148,6 @@ ThemeData get getThemeDataDark => ThemeData(
       )),
       hintColor: ThemeColorDark.lightGray,
       textTheme: getTextTheme(),
-    
     );
 
 getTextTheme() => TextTheme(

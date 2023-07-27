@@ -42,4 +42,20 @@ Map<String, String> coreEn = {
       "Incorrect password format, minimum length 8 letters and numbers",
   "Please_Enter_Password": "Please, Enter Password",
   "Password_Doesnt_Match": "Password doesn’t match",
+  'MALE': 'Male',
+  'FEMALE': 'Female',
+  'ENTER_VERIFICATION_CODE_THAT_WE_SENT_YOU_THROUGH_YOUR_EMAIL_OR_MOBILE_NUMBER':
+      'A verification code has been sent to your mobile number',
+  //verification  screen
+  'VERIFICATION': 'Verification',
+  'VERIFYING_YOUR_ACCOUNT': 'Verify your account',
+  'WE_HAVE_SENT_YOU_A_CODE_TO': 'We have sent to you a code to verify',
+
+  'SUBMIT': 'Submit',
+  'REQUEST_NEW_CODE_IN': 'request new code in',
+  "DIDN\'T_RECIEVE_THE_VERIFICATION_CODE?":
+      'Didn\'t receive the verification code?',
+  'SECONDS': 'Seconds',
+  "DidN\'T_RECEIVE_A_CODE?": "Didn’t receive a code?",
+  'RESEND': 'Resend',
 };

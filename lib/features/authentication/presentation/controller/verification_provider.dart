@@ -1,24 +1,32 @@
-
-
 import 'dart:async';
+import 'dart:developer';
 
+import 'package:family_guard/core/services/navigation_service.dart';
 import 'package:family_guard/core/services/number_parser.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../../core/global/localization/app_localization.dart';
+import '../../../../core/utils/app_constants.dart';
+import '../../../../core/widget/dialog_service.dart';
+import '../../domain/entities/sign_up_params.dart';
+import '../screens/signup_screen.dart';
+import '../screens/user_address_sign_up_screen.dart';
 
 class VerificationProvider with ChangeNotifier {
-  VerificationProvider({required this.emailOrPhone, required this.isPhone}) {
+  VerificationProvider({required this.signUpParams}) {
     initialization();
   }
 
   ///data
-  final String emailOrPhone;
-  final bool isPhone;
+  final SignUpParams signUpParams;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   ///Timer Var
   bool timerIsRunning = true;
   final interval = const Duration(seconds: 1);
-  int timerMaxSeconds = 59;
+  int timerMaxSeconds = 120;
   int currentSeconds = 0;
   late Timer timer;
   bool isLoadingResendButton = false;
@@ -28,6 +36,7 @@ class VerificationProvider with ChangeNotifier {
 
   bool isLoading = true;
   bool mounted = true;
+  String myVerificationId = "";
 
   ///pin code
   late String sentCode;
@@ -39,11 +48,7 @@ class VerificationProvider with ChangeNotifier {
   }
 
   initialization() async {
-    if (isPhone) {
-      await verifyMobileNumber();
-    } else {
-      await verifyEmail();
-    }
+    verify();
     isLoading = false;
     notifyListeners();
     startTimeout();
@@ -60,29 +65,49 @@ class VerificationProvider with ChangeNotifier {
     });
   }
 
+  void verify() async {
+    await _auth.verifyPhoneNumber(
+        phoneNumber: signUpParams.mobile,
+        verificationCompleted: (PhoneAuthCredential credential) {
+          _auth.signInWithCredential(credential);
+        },
+        verificationFailed: (FirebaseAuthException e) async {
+          log(e.message!);
+          await DialogWidget.showCustomDialog(
+            context: Get.context!,
+            title: e.message,
+            buttonText: tr(AppConstants.ok),
+          );
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          myVerificationId = verificationId;
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          myVerificationId = verificationId;
+        },
+        timeout: const Duration(seconds: 120));
+  }
+
+  Future<bool> verifyOtp(String otp) async {
+    UserCredential credential = await _auth.signInWithCredential(
+        PhoneAuthProvider.credential(
+            smsCode: otp, verificationId: myVerificationId));
+    return credential.user != null ? true : false;
+  }
+
   /// Resend Button
   Future<void> resendOnPress(context) async {
-    /* if (numResendClicked < AppConstants.numBlockedVerification) {
+    if (numResendClicked < AppConstants.numBlockedVerification) {
       isLoadingResendButton = true;
       notifyListeners();
       numResendClicked++;
-      if (isPhone) {
-        await verifyMobileNumber();
-      } else {
-        await verifyEmail();
-      }
+      verify();
       isLoadingResendButton = false;
       notifyListeners();
       currentSeconds = 0;
       timerIsRunning = true;
       startTimeout();
     } else {
-      if (!isBlocked) {
-        await SaveSpecificBlockedUser(baseBlockedUserRepository: sl())
-            .call(emailOrPhone);
-        isBlocked = true;
-      }
-
       ///Blocked
       await DialogWidget.showCustomDialog(
           context: context,
@@ -94,14 +119,17 @@ class VerificationProvider with ChangeNotifier {
                 navigationMethod: NavigationMethod.pushReplacement,
                 page: () => const SignUpScreen());
           });
-    } */
+    }
   }
 
   ///on Submit
   void onSubmit(context) async {
-    /* if (sentCode == pinCodeController.text.encryptToSHA256()) {
+    bool verified = await verifyOtp(pinCodeController.text);
+    if (verified) {
       log('Success');
-      NavigationService.goBack(result: true);
+      NavigationService.navigateTo(
+          navigationMethod: NavigationMethod.pushReplacement,
+          page: () => const UserAddressSignUpScreen());
     } else {
       await DialogWidget.showCustomDialog(
           context: context,
@@ -110,45 +138,12 @@ class VerificationProvider with ChangeNotifier {
           onPressed: () {
             NavigationService.goBack();
           });
-    } */
+    }
   }
 
   ///on Complete Pin Code
   onComplete() async {
     FocusManager.instance.primaryFocus?.unfocus();
-  }
-
-  ///verify Email
-  Future<void> verifyEmail() async {
-  /*   var result = await VerifyEmailUseCase(baseVerificationRepository: sl())
-        .call(emailOrPhone);
-    result.fold((l) async {
-      await DialogWidget.showCustomDialog(
-        context: Get.context!,
-        title: l.message,
-        buttonText: tr(AppConstants.ok),
-      );
-      NavigationService.goBack();
-    }, (r) {
-      sentCode = r;
-    }); */
-  }
-
-  ///verify Email
-  Future<void> verifyMobileNumber() async {
-  /*   var result =
-        await VerifyMobileNumberUseCase(baseVerificationRepository: sl())
-            .call(emailOrPhone);
-    result.fold((l) async {
-      await DialogWidget.showCustomDialog(
-        context: Get.context!,
-        title: l.message,
-        buttonText: tr(AppConstants.ok),
-      );
-      NavigationService.goBack();
-    }, (r) {
-      sentCode = r;
-    }); */
   }
 
   ///on Change PinCode
@@ -158,7 +153,7 @@ class VerificationProvider with ChangeNotifier {
 
   ///is Enable Submit Button
   bool isEnableSubmitButton() {
-    return pinCodeController.text.length == 4;
+    return pinCodeController.text.length == 6;
   }
 
   @override

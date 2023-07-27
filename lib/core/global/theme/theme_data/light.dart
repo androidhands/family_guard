@@ -53,7 +53,7 @@ ThemeData get getThemeDataLight => ThemeData(
               color: ThemeColorLight.searchFormFieldColor,
               width: AppSizes.bs1_0,
             ),
-            borderRadius: BorderRadius.circular(AppSizes.br4),
+            borderRadius: BorderRadius.circular(AppSizes.br30),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderSide: BorderSide(

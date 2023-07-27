@@ -35,7 +35,7 @@ class CustomPinCodeTextField extends StatelessWidget {
           await onDone!(value);
         }
       },
-      length: 4,
+      length: 6,
       obscureText: false,
       animationType: AnimationType.scale,
       textStyle: Theme.of(context)

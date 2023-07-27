@@ -7,7 +7,7 @@ class AppConstants {
   static const String blockedVerification = "blocked_verification";
   static const String blockedSpecificUser = "blocked_Specific_user";
   static const String authCredential = "auth_credential";
-  static const String googleAPIKey = "AIzaSyDbiXOJF8Ta9aZtD9Vo_DAoLEqWz4EslRs";
+  static const String googleAPIKey = "AIzaSyA_Cl4tTsUE0_H5N5A7OutO4O31B6cc85Q";
 
   /// Duration Time
   static const int splashTimeDelay = 2;
@@ -303,4 +303,7 @@ class AppConstants {
   static const String familyName = "FAMILY_NAME";
 
   static const String selectGender = "SELECT_GENDER";
+
+  static const String female = "FEMALE";
+  static const String male = "Male";
 }

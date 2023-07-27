@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:family_guard/features/authentication/presentation/screens/verification_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
 
@@ -7,15 +9,19 @@ import 'package:family_guard/features/authentication/presentation/screens/login_
 import 'package:family_guard/features/authentication/presentation/utils/constants.dart';
 import 'package:family_guard/features/authentication/presentation/utils/enums.dart';
 import 'package:family_guard/features/general/presentation/screens/terms_and_privacy_policy.dart';
+import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/phone_number.dart';
 
 import '../../../../core/services/navigation_service.dart';
 import '../../../../core/utils/app_constants.dart';
 
+import '../../domain/entities/sign_up_params.dart';
 import '../validations/cancellation_reason_validation.dart';
 
 class SignUpProvider extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  String verificationsId = "";
 
   bool enableVerifyButton = false;
   bool showPassword = false;
@@ -25,10 +31,11 @@ class SignUpProvider extends ChangeNotifier {
   bool isLoadingActiveCountries = false;
   bool isLoadingPhoneCodes = false;
   String? businessNameDuplicationError;
+  FocusNode phoneFocus = FocusNode();
 
   ///Data
 
-  List<Genders> selectedGenders = [];
+  Genders? selectedGenders;
 
   ///Controllers
   final TextEditingController firstNameController = TextEditingController();
@@ -61,7 +68,7 @@ class SignUpProvider extends ChangeNotifier {
   bool instagramSocialMediaProfileShowValidation = false;
 
   ///Sign up parameters
-  // late SignUpParameters _signUpParameters;
+  late SignUpParams _signUpParameters;
 
   ///Design related vars
   GlobalKey phoneCodePickerWidgetKey = GlobalKey();
@@ -228,7 +235,6 @@ class SignUpProvider extends ChangeNotifier {
     formKey.currentState?.validate();
   }
 
- 
   ///Validate If User Unfocused A Field
 
   validateFirstNameOnFocusLose(bool hasFocus) {
@@ -356,13 +362,15 @@ class SignUpProvider extends ChangeNotifier {
   }
 
   void setSelectedGender(Genders gender) {
-    if (selectedGenders.any((element) => element == gender)) {
+    selectedGenders = gender;
+    notifyListeners();
+    log(selectedGenders.toString());
+    /*  if (selectedGenders.any((element) => element == gender)) {
       selectedGenders.remove(gender);
     } else {
       selectedGenders.add(gender);
-    }
+    } */
     checkFormReadiness();
-    notifyListeners();
   }
 
   void setTermsAndConditionsState(bool state) {
@@ -377,7 +385,8 @@ class SignUpProvider extends ChangeNotifier {
         lastNameController.text.isEmpty ||
         familyNameController.text.isEmpty ||
         phoneController.text.isEmpty ||
-        selectedGenders.isEmpty ||
+        !isValidNumber(phoneNumber!) ||
+        selectedGenders == null ||
         !isTermsAndConditionsAccepted ||
         passwordController.text.isEmpty ||
         confirmPasswordController.text.isEmpty;
@@ -402,19 +411,6 @@ class SignUpProvider extends ChangeNotifier {
     return isBlocked;
   } */
 
-  void verify() async {
-    /*  bool isBlocked = await checkIfUserIsBlocked();
-    if (isBlocked) {
-      await DialogWidget.showCustomDialog(
-        context: Get.context!,
-        title: tr(AppConstants.tooManyAttemptsPleaseTryAgainIn30Minutes),
-        buttonText: tr(AppConstants.ok),
-      );
-    } else {
-      validateAndVerify();
-    } */
-  }
-
   /* Future<bool> checkCredentialsExistence() async {
     Either<Failure, bool> result;
     bool isAllowed = false;
@@ -430,31 +426,27 @@ class SignUpProvider extends ChangeNotifier {
     return isAllowed;
   } */
 
+  void navigateToVerificationScreen() {}
+
   validateAndVerify() async {
-    /*  _signUpParameters = SignUpParameters(
-      firstName: firstNameController.text,
-      lastName: lastNameController.text,
-      emailAddress: isUsingPhone ? null : emailOrPhoneController.text,
-      deviceToken: (await sl<FirebaseMessagingServices>().deviceToken())!,
-      confirmPassword: confirmPasswordController.text,
-      isAutomaticSignIn: true,
-      isEmailConfirmed: !isUsingPhone,
-      isPhoneConfirmed: isUsingPhone,
-      password: passwordController.text,
-      mobileNumber: isUsingPhone ? emailOrPhoneController.text : null,
-      phoneCode: '',
-      countryCode:
-      '',
-      phoneCodeCountryId:0,
-      countryId:1,
-      targetAudience: selectedGenders.map((e) => e.index).toList(),
-      typeId: 0,
-      maroofNumber: maroofNumberController.text,
-      businessName: businessNameController.text,
-      commercialRegistration: commercialRegistrationController.text,
-      facebookLink: facebookSocialMediaProfileController.text,
-      instagramLink: instagramSocialMediaProfileController.text,
-    );
+    _signUpParameters = SignUpParams(
+        firstName: firstNameController.text,
+        secondName: lastNameController.text,
+        familyName: familyNameController.text,
+        mobile: phoneNumber!.completeNumber,
+        email: '',
+        password: passwordController.text,
+        gender: selectedGenders == Genders.male ? "0" : "1");
+
+    log(_signUpParameters.toJson().toString());
+   /*  NavigationService.navigateTo(
+        navigationMethod: NavigationMethod.push,
+        page: () => VerificationScreen(
+              signUpParams: _signUpParameters,
+            )); */
+
+    /*  
+
 
     firstNameShowValidation = true;
     lastNameShowValidation = true;
@@ -543,6 +535,35 @@ class SignUpProvider extends ChangeNotifier {
   PhoneNumber? phoneNumber;
   void setPhoneNumber(PhoneNumber phone) {
     phoneNumber = phone;
-    log(phoneNumber!.completeNumber);
+    log(isValidNumber(phoneNumber!).toString());
+    checkFormReadiness();
+  }
+
+  bool isValidNumber(PhoneNumber phoneNumber) {
+    Country country = getCountry(phoneNumber.completeNumber);
+    if (phoneNumber.number.length < country.minLength) {
+      return false;
+    }
+
+    if (phoneNumber.number.length > country.maxLength) {
+      return false;
+    }
+    return true;
+  }
+
+  static Country getCountry(String phoneNumber) {
+    final validPhoneNumber = RegExp(r'^[+0-9]*[0-9]*$');
+
+    if (!validPhoneNumber.hasMatch(phoneNumber)) {
+      throw InvalidCharactersException();
+    }
+
+    if (phoneNumber.startsWith('+')) {
+      return countries.firstWhere((country) => phoneNumber
+          .substring(1)
+          .startsWith(country.dialCode + country.regionCode));
+    }
+    return countries.firstWhere((country) =>
+        phoneNumber.startsWith(country.dialCode + country.regionCode));
   }
 }

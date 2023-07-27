@@ -7,16 +7,6 @@ class UserEntity extends Equatable {
   final String familyName;
   final String mobile;
   final String email;
-  final String fbAccount;
-  final String applAccount;
-  final String googleAccount;
-  final String twitterAccount;
-  final String notificationKeys;
-  final String address;
-  final String city;
-  final String state;
-  final String country;
-  final String zipCode;
   final String gender;
   final String? emailVerifiedAt;
   final String createdAt;
@@ -31,16 +21,6 @@ class UserEntity extends Equatable {
       this.familyName,
       this.mobile,
       this.email,
-      this.fbAccount,
-      this.applAccount,
-      this.googleAccount,
-      this.twitterAccount,
-      this.notificationKeys,
-      this.address,
-      this.city,
-      this.state,
-      this.country,
-      this.zipCode,
       this.gender,
       this.emailVerifiedAt,
       this.createdAt,
@@ -56,16 +36,6 @@ class UserEntity extends Equatable {
         familyName,
         mobile,
         email,
-        fbAccount,
-        applAccount,
-        googleAccount,
-        twitterAccount,
-        notificationKeys,
-        address,
-        city,
-        state,
-        country,
-        zipCode,
         gender,
         emailVerifiedAt,
         createdAt,

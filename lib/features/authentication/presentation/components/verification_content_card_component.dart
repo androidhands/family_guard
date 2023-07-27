@@ -1,4 +1,3 @@
-import 'package:family_guard/core/services/number_parser.dart';
 import 'package:flutter/material.dart';
 
 import 'package:family_guard/core/utils/app_sizes.dart';
@@ -14,14 +13,15 @@ import '../../../../core/global/localization/app_localization.dart';
 import '../../../../core/utils/app_constants.dart';
 import '../../../../core/utils/app_fonts.dart';
 import '../../../../core/widget/custom_pin_code_text.dart';
+import '../../domain/entities/sign_up_params.dart';
 import '../controller/verification_provider.dart';
 
 class VerificationContentCardComponent extends StatelessWidget {
-  final String emailOrPhone;
-  final bool isPhone;
+  final SignUpParams signUpParams;
+ 
 
   const VerificationContentCardComponent(
-      {Key? key, required this.emailOrPhone, required this.isPhone})
+      {Key? key, required this.signUpParams})
       : super(key: key);
 
   @override
@@ -55,9 +55,7 @@ class VerificationContentCardComponent extends StatelessWidget {
                   height: AppSizes.pH1,
                 ),
                 CustomGradientText(
-                  text: isPhone
-                      ? emailOrPhone.numberParserToArabic()
-                      : emailOrPhone,
+                  text: signUpParams.mobile,
                   textStyle: TextStyle(
                       fontSize: AppSizes.h7, fontWeight: AppFonts.medium),
                 ),
