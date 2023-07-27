@@ -20,7 +20,7 @@ ThemeData get getThemeDataLight => ThemeData(
       progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: ThemeColorLight.pinkColor,
       ),
-      iconTheme: IconThemeData(color: ThemeColorLight.iconColor),
+      iconTheme: IconThemeData(color: ThemeColorLight.offWhiteColor),
       shadowColor: ThemeColorLight.shadowColor,
       dividerColor: ThemeColorLight.gray,
       bottomSheetTheme: const BottomSheetThemeData(
