@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 
 class AppFonts {
-
-  static const String fontFamilyEnglish = "Poppins-Regular";
-  static const String fontFamilyEnglishMedium = "Poppins-Medium";
-  static const String fontFamilyEnglishBold = "Poppins-Bold";
-  static const String fontFamilyEnglishSimiBold = "Poppins-SemiBold";
+  static const String fontFamilyEnglish = "Balsamiq-Sans-Regular";
+  static const String fontFamilyEnglishMedium = "Odibee-Sans-Regular";
+  static const String fontFamilyEnglishBold = "Balsamiq-Sans-Regular";
+  static const String fontFamilyEnglishSimiBold = "Odibee-Sans-Regular";
 
   /// Font Weight
   static const FontWeight bold = FontWeight.bold;
@@ -13,5 +12,5 @@ class AppFonts {
   static const FontWeight medium = FontWeight.w500;
   static const FontWeight regular = FontWeight.normal;
 
-  static var fontFamilyEnglishNew ="";
+  static var fontFamilyEnglishNew = "";
 }

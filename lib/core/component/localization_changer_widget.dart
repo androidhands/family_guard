@@ -29,7 +29,7 @@ class LocalizationChangeWidget extends StatelessWidget {
           children: [
             const CustomSvgImage(
               path: AppAssets.gloablSvg,
-              color: ThemeColorLight.green,
+              color: ThemeColorLight.pinkColor,
             ),
             SizedBox(
               width: AppSizes.pH1,
@@ -39,7 +39,7 @@ class LocalizationChangeWidget extends StatelessWidget {
                   ? AppConstants.arabicLanhaugeText
                   : AppConstants.englishLanhaugeText),
               textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  fontSize: AppSizes.h7, color: ThemeColorLight.green),
+                  fontSize: AppSizes.h7, color: ThemeColorLight.pinkColor),
             ),
           ],
         ),

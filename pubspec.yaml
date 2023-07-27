@@ -168,6 +168,14 @@ flutter:
     - family: Poppins-SemiBold
       fonts:
         - asset: assets/fonts/Poppins-SemiBold.ttf
+
+    - family: Balsamiq-Sans-Regular
+      fonts:
+        - asset: assets/fonts/Balsamiq-Sans-Regular.ttf
+
+    - family: Odibee-Sans-Regular
+      fonts:
+        - asset: assets/fonts/Odibee-Sans-Regular.ttf       
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

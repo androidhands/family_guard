@@ -9,9 +9,9 @@ ThemeData get getThemeDataLight => ThemeData(
 
       dialogBackgroundColor: ThemeColorLight.dialogBackgroundColor,
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          selectedItemColor: ThemeColorLight.pinkWhiteColor,
+          selectedItemColor: ThemeColorLight.pinkColor,
           backgroundColor: ThemeColorLight.bottomNavigationBarColor,
-          unselectedItemColor: ThemeColorLight.green),
+          unselectedItemColor: ThemeColorLight.pinkWhiteColor),
       highlightColor: ThemeColorLight.highlightColorBorderForPinTextField,
       primaryColor: ThemeColorLight.primaryColor,
       disabledColor: ThemeColorLight.disableColor,
@@ -77,7 +77,7 @@ ThemeData get getThemeDataLight => ThemeData(
             borderRadius: BorderRadius.circular(AppSizes.br4),
           ),
           floatingLabelStyle: TextStyle(
-              color: ThemeColorLight.green,
+              color: ThemeColorLight.pinkColor,
               fontWeight: AppFonts.medium,
               fontSize: AppSizes.h7),
           errorStyle: TextStyle(
@@ -88,13 +88,13 @@ ThemeData get getThemeDataLight => ThemeData(
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: ThemeColorLight.green,
+              color: ThemeColorLight.pinkColor,
               width: AppSizes.bs1_0,
             ),
             borderRadius: BorderRadius.circular(AppSizes.br4),
           ),
           labelStyle: TextStyle(
-            color: ThemeColorLight.green,
+            color: ThemeColorLight.pinkColor,
             fontSize: AppSizes.h5,
             fontWeight: AppFonts.regular,
             fontFamily: AppFonts.fontFamilyEnglish,
@@ -175,7 +175,7 @@ getTextTheme() => TextTheme(
 
     /// 2. Text DisplaySmall
     displaySmall: TextStyle(
-      color: ThemeColorLight.secondaryColor,
+      color: ThemeColorLight.primaryColor,
       fontSize: AppSizes.h6,
       fontWeight: AppFonts.regular,
       fontFamily: AppFonts.fontFamilyEnglish,
@@ -199,7 +199,7 @@ getTextTheme() => TextTheme(
 
     /// 5.  Success green
     titleMedium: TextStyle(
-      color: ThemeColorLight.successColor,
+      color: ThemeColorLight.pinkColor,
       fontSize: AppSizes.h6,
       fontWeight: AppFonts.semiBold,
       fontFamily: AppFonts.fontFamilyEnglish,

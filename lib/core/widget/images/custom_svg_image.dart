@@ -14,7 +14,7 @@ class CustomSvgImage extends StatelessWidget {
     this.width,
     this.radius,
     this.fit = BoxFit.contain,
-    this.color = ThemeColorLight.green,
+    this.color = ThemeColorLight.pinkColor,
   }) : super(key: key);
 
   CustomSvgImage.square({Key? key, required String path, Color? color})
@@ -23,7 +23,7 @@ class CustomSvgImage extends StatelessWidget {
           path: path,
           height: AppSizes.imageWidthMedium,
           width: AppSizes.imageWidthMedium,
-          color: color ?? ThemeColorLight.green,
+          color: color ?? ThemeColorLight.pinkColor,
           radius: BorderRadius.circular(AppSizes.br8),
         );
 
@@ -35,7 +35,7 @@ class CustomSvgImage extends StatelessWidget {
             width: AppSizes.iconSize,
             radius: BorderRadius.zero,
             fit: BoxFit.scaleDown,
-            color: color ?? ThemeColorLight.green);
+            color: color ?? ThemeColorLight.pinkColor);
 
   final String path;
   final double? height;

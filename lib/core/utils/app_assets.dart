@@ -10,7 +10,6 @@ class AppAssets {
 
   static const String appIcon = "${imagePath}app_icon.png";
 
-
   static const String trueWithBorderPng = "${imagePath}trueWithBorderPng.png";
   static const String calender = "${imagePath}calender.png";
   static const String call = "${imagePath}call.png";
@@ -30,6 +29,7 @@ class AppAssets {
   static const String logoNoBackGroundPng =
       "${imagePath}logo_banner_colored.png";
   static const String logoBluePng = "${imagePath}logo_blue.png";
+  static const String appLogo = "${imagePath}hs_app_logo_colored.png";
 
   /// SvgImages
 

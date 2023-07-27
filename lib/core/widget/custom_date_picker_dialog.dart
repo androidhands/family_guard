@@ -96,7 +96,7 @@ class _CustomDatePickerDialogState extends State<CustomDatePickerDialog> {
                         data: Theme.of(context).copyWith(
                           colorScheme: const ColorScheme.light(
                             primary: ThemeColorLight.pinkColor, // <-- SEE HERE
-                            onPrimary: ThemeColorLight.green, // <-- SEE HERE
+                            onPrimary: ThemeColorLight.pinkColor, // <-- SEE HERE
                             onSurface:
                                 ThemeColorLight.pinkColor, // <-- SEE HERE
                           ),

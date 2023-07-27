@@ -101,7 +101,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           style: Theme.of(context).textTheme.labelMedium!.copyWith(
               fontSize: AppSizes.h5,
               fontWeight: AppFonts.medium,
-              color: ThemeColorLight.green),
+              color: ThemeColorLight.pinkColor),
           textDirection: widget.textDirection,
           inputFormatters: widget.inputFormatters,
           onChanged: widget.onChanged,

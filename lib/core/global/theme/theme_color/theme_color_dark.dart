@@ -6,15 +6,15 @@ class ThemeColorDark {
   static const Color thirdColor = Color(0xFFFCFCFC);
   static Color disableButtonColor = const Color(0xFF4E4B66);
 
-  static const Color blueColor = Color(0xFF1D366F);
-  static const Color blueWhiteColor = Color(0xFF3E5EA9);
+  static const Color pinkColor = Color(0xFFED2647);
+  static const Color pinkWhiteColor = Color(0xFFF88A9C);
   static const Color backgroundColor = Color(0xFF161D23);
   static const Color containerCardColor = Color(0xFF1C252E);
   static const Color dialogBackgroundColor = Color(0xFF1C252E);
   static const Color whiteColor = Color(0xFFFCFCFC);
   static Color offWhiteColor = const Color(0xFFFCFCFC).withOpacity(0.6);
-  static const LinearGradient gradientMAinColor = LinearGradient(
-      colors: [Color(0xFF1D366F), Color(0xFF3E5EA9)]);
+  static const LinearGradient gradientMAinColor =
+      LinearGradient(colors: [Color(0xFFED2647), Color(0xFFF88A9C)]);
   static const Color bottomNavigationBarUnselectedItemColor = Color(0xFFFCFCFC);
   static Color shadowColor = const Color(0xFF6e7191).withOpacity(0.2);
   static const Color darkGray = Color(0xFF4E4B66);
@@ -47,5 +47,5 @@ class ThemeColorDark {
   static const Color labelMediumColor = Color(0xFFBAB9BD);
   static const Color loadingColorElevatedButton = Color(0xFFFCFCFC);
   static const Color unselectedLabelColor = Color(0xFFECECEE);
-   static const Color iconColor = Color(0xFF08C076);
+  static const Color iconColor = Color(0xFFED2647);
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class ThemeColorLight {
   static const Color primaryColor = Color(0xFFED2647);
+
   static const Color secondaryColor = Color(0xFFF88A9C);
   static const Color thirdColor = Color(0xFF49454F);
   static const Color pinkColor = Color(0xFFED2647);
@@ -12,10 +13,10 @@ class ThemeColorLight {
   static const Color whiteColor = Color(0xFFFCFCFC);
   static Color offWhiteColor = const Color(0xFFFCFCFC).withOpacity(0.6);
 
-  static const Color grayscaleSolid = Color(0xFF14142B);
+  static const Color grayscaleSolid = Color(0xFFED2647);
   static const LinearGradient gradientMAinColor =
       LinearGradient(colors: [Color(0xFFED2647), Color(0xFFF88A9C)]);
-  static Color iconColor = const Color(0xFF08C076);
+  static Color iconColor = const Color(0xFFED2647);
 
   static const Color transparentColor = Colors.transparent;
   static const Color overLayColor = Color(0xFFEFF0F6);
@@ -57,6 +58,6 @@ class ThemeColorLight {
   static const Color highlightColorBorderForPinTextField = Color(0xFF6E7191);
   static const Color whiteIconColor = Color(0xFFEFF0F6);
   static const Color lightGreen = Color(0xFfE2F5EE);
-  static const Color green = Color(0xFF08C076);
+  // static const Color green = Color(0xFF08C076);
   static const Color lightRed = Color(0xFfF2B8B5);
 }

@@ -13,7 +13,7 @@ ThemeData get getThemeDataDark => ThemeData(
       disabledColor: ThemeColorDark.disableColor,
       scaffoldBackgroundColor: ThemeColorDark.backgroundColor,
       progressIndicatorTheme: const ProgressIndicatorThemeData(
-        color: ThemeColorDark.blueColor,
+        color: ThemeColorDark.pinkColor,
       ),
       shadowColor: ThemeColorDark.shadowColor,
       iconTheme: const IconThemeData(color: ThemeColorDark.iconColor),
@@ -22,7 +22,7 @@ ThemeData get getThemeDataDark => ThemeData(
         backgroundColor: ThemeColorDark.backgroundColor,
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          selectedItemColor: ThemeColorDark.blueWhiteColor,
+          selectedItemColor: ThemeColorDark.pinkWhiteColor,
           backgroundColor:
               ThemeColorDark.bottomNavigationBarColor.withOpacity(0.8),
           unselectedItemColor: ThemeColorDark.iconColor),
@@ -71,7 +71,7 @@ ThemeData get getThemeDataDark => ThemeData(
             fontFamily: AppFonts.fontFamilyEnglishSimiBold,
           ),
           floatingLabelStyle: TextStyle(
-              color: ThemeColorDark.blueWhiteColor,
+              color: ThemeColorDark.pinkWhiteColor,
               fontWeight: AppFonts.medium,
               fontSize: AppSizes.h7),
           disabledBorder: OutlineInputBorder(
@@ -83,7 +83,7 @@ ThemeData get getThemeDataDark => ThemeData(
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: ThemeColorDark.blueWhiteColor,
+              color: ThemeColorDark.pinkWhiteColor,
               width: AppSizes.bs1_0,
             ),
             borderRadius: BorderRadius.circular(AppSizes.br4),
@@ -98,7 +98,7 @@ ThemeData get getThemeDataDark => ThemeData(
       tabBarTheme: TabBarTheme(
         unselectedLabelColor: ThemeColorDark.unselectedLabelColor,
         labelStyle: TextStyle(
-          color: ThemeColorDark.blueColor,
+          color: ThemeColorDark.pinkColor,
           fontWeight: AppFonts.semiBold,
           fontSize: AppSizes.h5,
         ),
@@ -107,7 +107,7 @@ ThemeData get getThemeDataDark => ThemeData(
       /// ToggleButtons
       toggleButtonsTheme: ToggleButtonsThemeData(
         color: ThemeColorDark.primaryColor,
-        selectedColor: ThemeColorDark.blueWhiteColor,
+        selectedColor: ThemeColorDark.pinkWhiteColor,
         fillColor: ThemeColorDark.darkGray,
         borderRadius: BorderRadius.circular(AppSizes.br50),
       ),
@@ -123,7 +123,7 @@ ThemeData get getThemeDataDark => ThemeData(
             padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                 const EdgeInsets.all(0)),
             backgroundColor:
-                MaterialStateProperty.all<Color>(ThemeColorDark.blueColor),
+                MaterialStateProperty.all<Color>(ThemeColorDark.pinkColor),
             overlayColor: MaterialStateProperty.all<Color>(
                 ThemeColorDark.overlayElevatedButtonColor),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -155,7 +155,7 @@ getTextTheme() => TextTheme(
 
     /// 1. Text DisplaySmallBold pink
     displayLarge: TextStyle(
-      color: ThemeColorDark.blueColor,
+      color: ThemeColorDark.pinkColor,
       fontSize: AppSizes.h3,
       fontWeight: AppFonts.bold,
       fontFamily: AppFonts.fontFamilyEnglishNew,

@@ -16,7 +16,7 @@ class MultiFloatingActionButtons extends StatelessWidget {
     return SpeedDial(
       iconAsset: iconAsset,
       animatedIconTheme: const IconThemeData(size: 22),
-      backgroundColor: ThemeColorLight.green,
+      backgroundColor: ThemeColorLight.pinkColor,
       visible: true,
       curve: Curves.bounceIn,
       children: floatingButtons,

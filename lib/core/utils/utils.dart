@@ -100,7 +100,7 @@ class CustomTitleCard extends StatelessWidget {
             textStyle: Theme.of(Get.context!)
                 .textTheme
                 .labelMedium!
-                .copyWith(color: ThemeColorLight.green)),
+                .copyWith(color: ThemeColorLight.pinkColor)),
         Divider(
           thickness: AppSizes.dividerThickness,
         )

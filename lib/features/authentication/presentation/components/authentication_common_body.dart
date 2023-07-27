@@ -1,3 +1,5 @@
+import 'package:family_guard/core/global/theme/theme_color/theme_color_dark.dart';
+import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
 import 'package:flutter/material.dart';
 
 import 'package:family_guard/core/utils/app_assets.dart';
@@ -8,6 +10,7 @@ import 'package:family_guard/core/widget/images/custom_svg_image.dart';
 
 import '../../../../core/global/localization/app_localization.dart';
 import '../../../../core/widget/custom_text.dart';
+import '../../../../core/widget/images/custom_png_image.dart';
 
 class AuthenticationCommonBody extends StatelessWidget {
   final String title;
@@ -43,6 +46,7 @@ class AuthenticationCommonBody extends StatelessWidget {
               fit: BoxFit.fill,
             ),
           ), */
+          color: ThemeColorLight.pinkColor,
           padding: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
           constraints: const BoxConstraints.expand(),
           child: isScrolling
@@ -105,10 +109,8 @@ class _BodyContainer extends StatelessWidget {
           children: [
             if (backOnPress != null)
               CustomBackButton(popOnPressed: backOnPress),
-            CustomSvgImage(
-              path: AppAssets.home,
-              width: AppSizes.pW4,
-              height: AppSizes.pH4,
+            CustomPngImage.square(
+              path: AppAssets.appLogo,
             ),
             /* SizedBox(
               width: AppSizes.backIconSize + (AppSizes.pW5 * 2),
@@ -122,6 +124,7 @@ class _BodyContainer extends StatelessWidget {
           CustomText.primaryBodyLarge(
             tr(AppConstants.welcome),
             textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  color: ThemeColorLight.whiteColor,
                   fontSize: AppSizes.h4,
                 ),
           ),

@@ -44,7 +44,7 @@ class TermsAndPrivacyPolicyScreen extends StatelessWidget {
                             height: AppSizes.pH8,
                           ),
                           CustomSvgImage(
-                            path: AppAssets.home,
+                            path: AppAssets.appLogo,
                             width: AppSizes.pW4,
                             height: AppSizes.pH4,
                           ),

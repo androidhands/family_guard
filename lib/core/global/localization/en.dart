@@ -1,5 +1,5 @@
 Map<String, String> coreEn = {
-  'WELCOME': 'Welcome to Silent Safety',
+  'WELCOME': 'Welcome to \nFamily Guard',
   'SIGN_IN': 'Sign in',
   'WITH_PHOE_NUMBER': 'with phone number',
   'OR_WITH_Social_SIGN_IN': 'or with social sign in',
