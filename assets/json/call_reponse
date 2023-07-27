@@ -1,0 +1,43 @@
+{
+   "data": {
+      "sid": "CAc7d46a83167655b788b83d198b57f963",
+      "dateCreated": null,
+      "dateUpdated": null,
+      "parentCallSid": null,
+      "accountSid": "AC079c39fd77cf487f99a27a7a52756c24",
+      "to": "+201115583344",
+      "toFormatted": "+201115583344",
+      "from": "+201096265988",
+      "fromFormatted": "+201096265988",
+      "phoneNumberSid": "PN1b74eb3781b1b2c88bffb3f61e6e81f4",
+      "status": "queued",
+      "startTime": null,
+      "endTime": null,
+      "duration": null,
+      "price": null,
+      "priceUnit": "USD",
+      "direction": "outbound-api",
+      "answeredBy": null,
+      "apiVersion": "2010-04-01",
+      "forwardedFrom": null,
+      "groupSid": null,
+      "callerName": null,
+      "queueTime": "0",
+      "trunkSid": null,
+      "uri": "/2010-04-01/Accounts/AC079c39fd77cf487f99a27a7a52756c24/Calls/CAc7d46a83167655b788b83d198b57f963.json",
+      "subresourceUris": {
+         "feedback": "/2010-04-01/Accounts/AC079c39fd77cf487f99a27a7a52756c24/Calls/CAc7d46a83167655b788b83d198b57f963/Feedback.json",
+         "user_defined_messages": "/2010-04-01/Accounts/AC079c39fd77cf487f99a27a7a52756c24/Calls/CAc7d46a83167655b788b83d198b57f963/UserDefinedMessages.json",
+         "notifications": "/2010-04-01/Accounts/AC079c39fd77cf487f99a27a7a52756c24/Calls/CAc7d46a83167655b788b83d198b57f963/Notifications.json",
+         "recordings": "/2010-04-01/Accounts/AC079c39fd77cf487f99a27a7a52756c24/Calls/CAc7d46a83167655b788b83d198b57f963/Recordings.json",
+         "streams": "/2010-04-01/Accounts/AC079c39fd77cf487f99a27a7a52756c24/Calls/CAc7d46a83167655b788b83d198b57f963/Streams.json",
+         "payments": "/2010-04-01/Accounts/AC079c39fd77cf487f99a27a7a52756c24/Calls/CAc7d46a83167655b788b83d198b57f963/Payments.json",
+         "user_defined_message_subscriptions": "/2010-04-01/Accounts/AC079c39fd77cf487f99a27a7a52756c24/Calls/CAc7d46a83167655b788b83d198b57f963/UserDefinedMessageSubscriptions.json",
+         "siprec": "/2010-04-01/Accounts/AC079c39fd77cf487f99a27a7a52756c24/Calls/CAc7d46a83167655b788b83d198b57f963/Siprec.json",
+         "events": "/2010-04-01/Accounts/AC079c39fd77cf487f99a27a7a52756c24/Calls/CAc7d46a83167655b788b83d198b57f963/Events.json",
+         "feedback_summaries": "/2010-04-01/Accounts/AC079c39fd77cf487f99a27a7a52756c24/Calls/FeedbackSummary.json"
+      }
+   },
+   "message": "Ok",
+   "status": 200
+}

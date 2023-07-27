@@ -1,6 +1,23 @@
+import 'package:family_guard/core/controllers/main_provider.dart';
+import 'package:family_guard/features/authentication/presentation/screens/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
-void main() {
+import 'core/global/localization/language_translation.dart';
+import 'core/global/theme/app_theme.dart';
+import 'core/global/theme/controller/theme_provider.dart';
+import 'core/global/theme/theme_color/theme_color_dark.dart';
+import 'core/global/theme/theme_color/theme_color_light.dart';
+import 'core/services/dependency_injection_service.dart';
+import 'core/services/service_initializer.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await ServiceInitializer().initializeSettings();
   runApp(const MyApp());
 }
 
@@ -10,116 +27,72 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+    return GestureDetector(
+      onTap: () {
+        ///TO Handle keyboard Focus
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: ScreenUtilInit(
+        designSize: const Size(428, 926),
+        minTextAdapt: false,
+        builder: (_, __) {
+          return MultiProvider(
+            providers: [
+              ChangeNotifierProvider<ThemeProvider>(
+                  create: (context) => ThemeProvider(
+                      appTheme: ServiceInitializer.savedAppTheme,
+                      themeData:
+                          appThemeData[ServiceInitializer.savedAppTheme]!)),
+              /*     ChangeNotifierProvider<TwitterProvider>(
+                  create: (context) => sl()),
+              ChangeNotifierProvider<FacebookProvider>(
+                create: (context) => sl(),
+              ),
+              ChangeNotifierProvider<GoogleProvider>(
+                create: (context) => sl(),
+              ),
+              ChangeNotifierProvider<AppleProvider>(
+                create: (context) => sl(),
+              ), */
+              ChangeNotifierProvider<MainProvider>(
+                create: (context) => sl(),
+              ),
+            ],
+            child: Consumer<ThemeProvider>(
+              builder: (BuildContext context, provider, _) {
+                ///status color
+                SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+                  statusBarColor: provider.appTheme.index == AppTheme.dark.index
+                      ? ThemeColorDark.backgroundColor
+                      : ThemeColorLight.backgroundColor, // status bar color
+                ));
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+                return GetMaterialApp(
+                  localizationsDelegates: const [
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                  ],
+                  supportedLocales: const [Locale('en'), Locale('ar')],
+                  fallbackLocale: ServiceInitializer.locale,
+                  title: 'Go-Care',
+                  debugShowCheckedModeBanner: false,
+                  locale: ServiceInitializer.locale,
+                  translations: LanguageTranslation(),
+                  theme: provider.themeData,
+                  home: AnnotatedRegion<SystemUiOverlayStyle>(
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+                      ///status icon color
+                      value: provider.appTheme.index == AppTheme.dark.index
+                          ? SystemUiOverlayStyle.light
+                          : SystemUiOverlayStyle.dark,
+                      child: const LoginScreen()),
+                );
+              },
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+          );
+        },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

@@ -1,0 +1,28 @@
+{
+    "status": true,
+    "errNum": "S000",
+    "msg": "",
+    "user": {
+        "id": 1,
+        "first_name": "Mohsen",
+        "last_name": "Ahmed",
+        "family_name": "Ali",
+        "mobile": "01096265988",
+        "email": "Alexandris",
+        "fbaccount": "Alexandris",
+        "applaccount": "Alexandris",
+        "googleaccount": "Alexandris",
+        "twitteraccount": "Alexandris",
+        "notification_keys": "Alexandris",
+        "address": "Alexandris",
+        "city": "Alexandria",
+        "state": "Alexandris",
+        "country": "Egypt",
+        "zip_code": "95663",
+        "gender": "0",
+        "email_verified_at": null,
+        "created_at": "2023-07-21T19:22:15.000000Z",
+        "updated_at": "2023-07-21T19:22:15.000000Z",
+        "api_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2RldmVsb3BtZW50LnV0dXJuc29mdHdhcmUuY29tL2FwaS91c2Vycy9sb2dpbiIsImlhdCI6MTY4OTk2NzQxMSwiZXhwIjo1Mjg5OTY3NDExLCJuYmYiOjE2ODk5Njc0MTEsImp0aSI6InV2aFBiN1RaRWNIcGxwVW4iLCJzdWIiOiIxIiwicHJ2IjoiZjY0ZDQ4YTZjZWM3YmRmYTdmYmY4OTk0NTRiNDg4YjNlNDYyNTIwYSJ9.F0cOyZQ_NNt45_2jL-B62I_w8gnGnnRI1WjO8oC5mlg"
+    }
+}
