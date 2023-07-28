@@ -1,5 +1,5 @@
 class ErrorMessage {
-  int code;
+  String code;
   String message;
   String details;
 

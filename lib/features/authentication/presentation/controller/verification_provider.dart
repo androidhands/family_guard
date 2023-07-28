@@ -73,7 +73,7 @@ class VerificationProvider with ChangeNotifier {
   }
 
   void verify() async {
-    /*    await _auth.verifyPhoneNumber(
+    /*   await _auth.verifyPhoneNumber(
         phoneNumber: signUpParams.mobile,
         verificationCompleted: (PhoneAuthCredential credential) {
           _auth.signInWithCredential(credential);
@@ -133,7 +133,7 @@ class VerificationProvider with ChangeNotifier {
   void onSubmit(context) async {
     isLoadingSubmitOtp = true;
     notifyListeners();
-    bool verified = await verifyOtp(pinCodeController.text);
+    bool verified = true; //await verifyOtp(pinCodeController.text);
     if (verified) {
       log('Success');
       signUpParams.setUid = _auth.currentUser?.uid ?? "";
@@ -150,6 +150,7 @@ class VerificationProvider with ChangeNotifier {
               NavigationService.goBack();
             });
       }, (r) async {
+        
         Either<Failure, bool> credentialsResult =
             await sl<SaveUserCredentialsUsecase>()(r);
         credentialsResult.fold((l) async {
@@ -179,6 +180,7 @@ class VerificationProvider with ChangeNotifier {
           }
         });
       });
+    
     } else {
       isLoadingSubmitOtp = false;
       await DialogWidget.showCustomDialog(

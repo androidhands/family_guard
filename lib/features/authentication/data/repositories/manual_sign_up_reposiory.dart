@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:family_guard/core/error/failure.dart';
 import 'package:family_guard/features/authentication/data/datasource/manual_sign_up_data_source.dart';
@@ -15,8 +17,10 @@ class ManualSignUpReposiory implements BaseManualSignUpRepository {
   Future<Either<Failure, UserEntity>> signUpUserManually(
       SignUpParams signUpParams) async {
     try {
-      return Right(
-          await baseManualSignUpDataSource.signUpUserManually(signUpParams));
+      UserEntity userEntity =
+          await baseManualSignUpDataSource.signUpUserManually(signUpParams);
+      log(userEntity.mobile);
+      return Right(userEntity);
     } on ServerException catch (ex) {
       return Left(ServerFailure(message: ex.message, code: ex.code));
     }

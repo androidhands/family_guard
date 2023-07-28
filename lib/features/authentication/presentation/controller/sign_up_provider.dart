@@ -432,13 +432,13 @@ class SignUpProvider extends ChangeNotifier {
         secondName: lastNameController.text,
         familyName: familyNameController.text,
         mobile: phoneNumber!.completeNumber,
-        email: '',
+        email: 'example@company.com',
         password: passwordController.text,
         gender: selectedGenders == Genders.male ? "0" : "1",
-        uid: '');
+        uid: 'zzz');
 
     log(_signUpParameters.toJson().toString());
-     NavigationService.navigateTo(
+    NavigationService.navigateTo(
         navigationMethod: NavigationMethod.push,
         page: () => VerificationScreen(
               signUpParams: _signUpParameters,

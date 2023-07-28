@@ -100,7 +100,7 @@ class VerificationContentCardComponent extends StatelessWidget {
 
                 ///submit button
                 CustomElevatedButton(
-                    isEnabled: provider.isEnableSubmitButton(),
+                    isEnabled: true, //provider.isEnableSubmitButton(),
                     onPressed: () {
                       provider.onSubmit(context);
                     },

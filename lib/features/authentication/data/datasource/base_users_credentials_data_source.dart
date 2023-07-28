@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:family_guard/features/authentication/data/models/user_model.dart';
 
@@ -33,6 +34,7 @@ class UsersCredentialsDataSource implements BaseUsersCredentialsDataSource {
   @override
   Future<bool> saveUserCredentials(UserEntity userEntity) async {
     try {
+      log('saving credentials ${userEntity.mobile}');
       await sl<SharedPreferencesServices>().saveData(
         key: AppConstants.authCredential,
         value: jsonEncode(userEntity),

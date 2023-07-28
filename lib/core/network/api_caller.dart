@@ -11,9 +11,9 @@ const String attachmentBaseUrl = '';
 
 // const String baseUrl = "http://test.uturnsoftware.com/";
 //const String baseUrl = "http://uturnsoftware.com/";
-const String baseUrl = "http://development.uturnsoftware.com/";
+const String baseUrl = "https://development.uturnsoftware.com/";
 const int defaultAppTenant = 1;
-const String apiPassword = "COLgGMo6KEiaY3cFhysY920Kd33SHmGG5cXD";
+
 const String basicAuth =
     "YWJkZWxoYW1pZC5haG1lZC5hYmRvQGdtYWlsLmNvbTpBYmRvQEJvb2R5QDI1MjkwMA==";
 
@@ -147,7 +147,7 @@ class ApiCaller {
     int? tenantId,
     ResponseType? responseType,
   }) {
-    String uri = '${baseUrl}api$url?api_password=$apiPassword';
+    String uri = '${baseUrl}api$url';
     log(uri);
     //log(jsonEncode(body)); ///Warning this line must be commented in production or even if not used
     return () {

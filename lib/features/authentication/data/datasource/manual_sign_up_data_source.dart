@@ -14,7 +14,6 @@ import '../../domain/entities/sign_up_params.dart';
 
 abstract class BaseManualSignUpDataSource {
   Future<UserEntity> signUpUserManually(SignUpParams signUpParams);
-  
 }
 
 class ManualSignUpDataSource implements BaseManualSignUpDataSource {
@@ -23,15 +22,21 @@ class ManualSignUpDataSource implements BaseManualSignUpDataSource {
     return await sl<ApiCaller>().requestPost(
       ApiEndPoint.manualSignUpPath,
       (data) => UserModel.fromJson(data),
-      body: signUpParams.toJson(),
+      body: <String, dynamic>{
+        'api_password': ApiEndPoint.apiPassword,
+        'user': signUpParams.toJson()
+      },
       onFailure: (ErrorMessage failureData) {
-        throw ServerException(
-          message: failureData.message,
-          code: failureData.code,
-        );
+        failureData.code == "23000"
+            ? throw ServerException(
+                message: 'Douplicated Entry',
+                code: failureData.code,
+              )
+            : throw ServerException(
+                message: failureData.message,
+                code: failureData.code,
+              );
       },
     );
   }
-
-  
 }

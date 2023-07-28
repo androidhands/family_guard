@@ -26,10 +26,10 @@ class UserModel extends UserEntity {
         mobile: json['mobile'],
         email: json['email'],
         gender: json['gender'],
-        emailVerifiedAt: json['emailVerifiedAt'],
-        createdAt: json['createdAt'],
-        updatedAt: json['updatedAt'],
-        apiToken: json['apiToken'],
+        emailVerifiedAt: json['email_verified_at'],
+        createdAt: json['created_at'],
+        updatedAt: json['updated_at'],
+        apiToken: json['api_token'],
         uid: json['uid']);
   }
 
