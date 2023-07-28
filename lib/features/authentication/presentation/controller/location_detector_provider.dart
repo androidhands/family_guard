@@ -163,7 +163,7 @@ class LocationDetectorProvider with ChangeNotifier {
             NavigationService.goBack();
           });
     }, (r) {
-      NavigationService.offAll(page: () => HomeScreen());
+      NavigationService.offAll(page: () => const HomeScreen());
     });
     isSavingNewCountry = false;
     notifyListeners();

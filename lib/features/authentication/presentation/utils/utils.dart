@@ -1,4 +1,6 @@
 import 'package:family_guard/core/utils/app_assets.dart';
+import 'package:intl_phone_field/countries.dart';
+import 'package:intl_phone_field/phone_number.dart';
 
 
 import 'enums.dart';
@@ -39,3 +41,31 @@ Map<int, Function> socialMediaActionSignIn = {
   }, */
 
 };
+
+ bool isValidNumber(PhoneNumber phoneNumber) {
+    Country country = getCountry(phoneNumber.completeNumber);
+    if (phoneNumber.number.length < country.minLength) {
+      return false;
+    }
+
+    if (phoneNumber.number.length > country.maxLength) {
+      return false;
+    }
+    return true;
+  }
+
+   Country getCountry(String phoneNumber) {
+    final validPhoneNumber = RegExp(r'^[+0-9]*[0-9]*$');
+
+    if (!validPhoneNumber.hasMatch(phoneNumber)) {
+      throw InvalidCharactersException();
+    }
+
+    if (phoneNumber.startsWith('+')) {
+      return countries.firstWhere((country) => phoneNumber
+          .substring(1)
+          .startsWith(country.dialCode + country.regionCode));
+    }
+    return countries.firstWhere((country) =>
+        phoneNumber.startsWith(country.dialCode + country.regionCode));
+  }

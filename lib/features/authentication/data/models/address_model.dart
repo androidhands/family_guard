@@ -1,7 +1,7 @@
 import 'package:family_guard/features/authentication/domain/entities/address_entity.dart';
 
 class AddressModel extends AddressEntity {
-  AddressModel(
+  const AddressModel(
       {required id,
       required mobile,
       required country,

@@ -36,7 +36,7 @@ class SignUpScreen extends StatelessWidget {
             isScrolling: true,
             backOnPress: () => NavigationService.goBack(),
             title: tr(AppConstants.signUp),
-            onLanguageChange: () => provider.validateForm(),
+          
             body: Form(
               key: provider.formKey,
               child: Column(

@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
-import 'package:family_guard/core/utils/app_assets.dart';
 import 'package:family_guard/core/utils/app_sizes.dart';
-import 'package:family_guard/core/widget/custom_text.dart';
 
-import '../../global/theme/theme_color/theme_color_dark.dart';
-import '../custom_loading_indicator.dart';
 import '../images/custom_svg_image.dart';
 
 class CustomFloatingActionButton extends StatelessWidget {

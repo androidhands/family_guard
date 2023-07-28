@@ -7,14 +7,17 @@ import 'package:family_guard/features/authentication/presentation/screens/login_
 import 'package:family_guard/features/authentication/presentation/utils/constants.dart';
 import 'package:family_guard/features/authentication/presentation/utils/enums.dart';
 import 'package:family_guard/features/general/presentation/screens/terms_and_privacy_policy.dart';
+import 'package:get/get.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/phone_number.dart';
 
 import '../../../../core/services/navigation_service.dart';
 import '../../../../core/utils/app_constants.dart';
 
+import '../../../../core/widget/dialog_service.dart';
 import '../../domain/entities/sign_up_params.dart';
 import '../screens/verification_screen.dart';
+import '../utils/utils.dart';
 import '../validations/cancellation_reason_validation.dart';
 
 class SignUpProvider extends ChangeNotifier {
@@ -394,115 +397,35 @@ class SignUpProvider extends ChangeNotifier {
     }
   }
 
-/*   Future<bool> checkIfUserIsBlocked() async {
-    var result =
-        await VerifySpecificBlockedUser(baseBlockedUserRepository: sl()).call(
-            isUsingPhone
-                ? ( emailOrPhoneController.text)
-                : emailOrPhoneController.text);
-    late bool isBlocked = false;
-    result.fold((l) {
-      isBlocked = false;
-    }, (r) {
-      isBlocked = r;
-    });
-    return isBlocked;
-  } */
-
-  /* Future<bool> checkCredentialsExistence() async {
-    Either<Failure, bool> result;
-    bool isAllowed = false;
-    result =
-        await checkBusinessNameExistenceUseCase((businessNameController.text));
-    result.fold((l) async {
-      isAllowed = false;
-      businessNameDuplicationError = l.message;
-    }, (r) {
-      businessNameDuplicationError = null;
-      isAllowed = true;
-    });
-    return isAllowed;
-  } */
-
   void navigateToVerificationScreen() {}
 
   validateAndVerify() async {
-    _signUpParameters = SignUpParams(
-        firstName: firstNameController.text,
-        secondName: lastNameController.text,
-        familyName: familyNameController.text,
-        mobile: phoneNumber!.completeNumber,
-        email: 'example@company.com',
-        password: passwordController.text,
-        gender: selectedGenders == Genders.male ? "0" : "1",
-        uid: 'zzz');
-
-    log(_signUpParameters.toJson().toString());
-    NavigationService.navigateTo(
-        navigationMethod: NavigationMethod.push,
-        page: () => VerificationScreen(
-              signUpParams: _signUpParameters,
-            ));
-
-    /*  
-
-
-    firstNameShowValidation = true;
-    lastNameShowValidation = true;
-    businessNameShowValidation = true;
-    commercialRegistrationShowValidation = true;
-    maroofNumberShowValidation = true;
-    emailOrPhoneShowValidation = true;
-    passwordShowValidation = true;
-    confirmPasswordShowValidation = true;
-
-    bool isCredentialsAlreadyExist = await checkCredentialsExistence();
     if (formKey.currentState!.validate()) {
-      if (isCredentialsAlreadyExist) {
-        String emailOrPhone = isUsingPhone
-            ? (emailOrPhoneController.text)
-            : emailOrPhoneController.text;
-        passwordController.clear();
-        confirmPasswordController.clear();
-        bool? isVerified = await NavigationService.navigateTo(
-            navigationMethod: NavigationMethod.push,
-            page: () => VerificationScreen(
-                  emailOrPhone: emailOrPhone,
-                  isPhone: isUsingPhone,
-                ));
+      _signUpParameters = SignUpParams(
+          firstName: firstNameController.text,
+          secondName: lastNameController.text,
+          familyName: familyNameController.text,
+          mobile: phoneNumber!.completeNumber,
+          email: 'example@company.com',
+          password: passwordController.text,
+          gender: selectedGenders == Genders.male ? "0" : "1",
+          uid: 'zzz');
 
-        if (isVerified ?? false) {
-          await submitSignUp();
-        }
-      }
-    } */
-  }
-
-  submitSignUp() async {
-    /*  isLoadingSignUp = true;
-    notifyListeners();
-    var res = await manualSignUpUseCase.call(_signUpParameters);
-    res.fold((l) async {
-      await DialogWidget.showCustomDialog(
-        context: Get.context!,
-        title: tr(l.message),
-        buttonText: tr(AppConstants.ok),
-      );
-      isLoadingSignUp = false;
-      notifyListeners();
-    }, (r) async {
-      await saveAuthCredentialUseCase.call(AuthenticationResultParams(
-          accessToken: r.accessToken,
-          encryptedAccessToken: r.encryptedAccessToken,
-          expireInSeconds: r.expireInSeconds,
-          userId: r.userId,
-          thumbImageUrl: r.thumbImageUrl,
-          profileImageUrl: r.profileImageUrl,
-          fullName: r.fullName));
+      log(_signUpParameters.toJson().toString());
       NavigationService.navigateTo(
-          navigationMethod: NavigationMethod.pushReplacement,
-          page: () => const HomeControlScreen());
-    }); */
+          navigationMethod: NavigationMethod.push,
+          page: () => VerificationScreen(
+                signUpParams: _signUpParameters,
+              ));
+    } else {
+      DialogWidget.showCustomDialog(
+          context: Get.context!,
+          title: 'Please check the invalid data',
+          buttonText: tr(AppConstants.ok),
+          onPressed: () {
+            NavigationService.goBack();
+          });
+    }
   }
 
   goToSignInScreen() {
@@ -517,15 +440,6 @@ class SignUpProvider extends ChangeNotifier {
         page: () => const TermsAndPrivacyPolicyScreen());
   }
 
-  validateForm() {
-    /*  formKey.currentState!.validate();
-    if (businessNameDuplicationError != null) {
-      checkCredentialsExistence().then((_) {
-        formKey.currentState!.validate();
-      });
-    } */
-  }
-
   @override
   void notifyListeners() {
     super.notifyListeners();
@@ -536,33 +450,5 @@ class SignUpProvider extends ChangeNotifier {
     phoneNumber = phone;
     log(isValidNumber(phoneNumber!).toString());
     checkFormReadiness();
-  }
-
-  bool isValidNumber(PhoneNumber phoneNumber) {
-    Country country = getCountry(phoneNumber.completeNumber);
-    if (phoneNumber.number.length < country.minLength) {
-      return false;
-    }
-
-    if (phoneNumber.number.length > country.maxLength) {
-      return false;
-    }
-    return true;
-  }
-
-  static Country getCountry(String phoneNumber) {
-    final validPhoneNumber = RegExp(r'^[+0-9]*[0-9]*$');
-
-    if (!validPhoneNumber.hasMatch(phoneNumber)) {
-      throw InvalidCharactersException();
-    }
-
-    if (phoneNumber.startsWith('+')) {
-      return countries.firstWhere((country) => phoneNumber
-          .substring(1)
-          .startsWith(country.dialCode + country.regionCode));
-    }
-    return countries.firstWhere((country) =>
-        phoneNumber.startsWith(country.dialCode + country.regionCode));
   }
 }

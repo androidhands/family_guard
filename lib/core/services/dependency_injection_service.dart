@@ -1,9 +1,12 @@
 import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/features/authentication/data/datasource/base_user_address_data_source.dart';
 import 'package:family_guard/features/authentication/data/datasource/base_users_credentials_data_source.dart';
+import 'package:family_guard/features/authentication/data/datasource/manual_sing_in_data_source.dart';
+import 'package:family_guard/features/authentication/data/repositories/manual_sign_in_repository.dart';
 import 'package:family_guard/features/authentication/data/repositories/manual_sign_up_reposiory.dart';
 import 'package:family_guard/features/authentication/data/repositories/user_address_repository.dart';
 import 'package:family_guard/features/authentication/data/repositories/user_credentials_repository.dart';
+import 'package:family_guard/features/authentication/domain/repositories/base_manual_sign_in_repository.dart';
 import 'package:family_guard/features/authentication/domain/repositories/base_manual_sign_up_repository.dart';
 import 'package:family_guard/features/authentication/domain/repositories/base_user_address_repositoy.dart';
 import 'package:family_guard/features/authentication/domain/repositories/base_user_credentials_repository.dart';
@@ -27,6 +30,7 @@ import 'package:family_guard/core/services/location_fetcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/authentication/data/datasource/manual_sign_up_data_source.dart';
+import '../../features/authentication/domain/usecases/manual_sign_in_usecase.dart';
 import 'connectivity_services.dart';
 import 'date_parser.dart';
 
@@ -132,6 +136,17 @@ class DependencyInjectionServices {
   //main provider
   initializeLogin() {
     sl.registerLazySingleton(() => LoginProvider());
+
+    //repositories
+    sl.registerLazySingleton<BaseManualSignInRepository>(
+        () => ManualSignInRepository(baseManualSingInDataSource: sl()));
+
+    //usecases
+    sl.registerLazySingleton(
+        () => ManualSignInUsecase(baseManualSignInRepository: sl()));
+
+    sl.registerLazySingleton<BaseManualSingInDataSource>(
+        () => ManualSingInDataSource());
   }
 
   initializeSignUp() {

@@ -10,7 +10,6 @@ import 'package:family_guard/core/widget/custom_text.dart';
 import 'package:family_guard/core/widget/floating_action_buttons/extended_floating_action_button.dart';
 import 'package:family_guard/core/widget/images/custom_svg_image.dart';
 import 'package:family_guard/core/widget/text_form_field/custom_text_form_field.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';

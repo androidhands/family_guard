@@ -73,50 +73,12 @@ class LoginScreen extends StatelessWidget {
                       Icons.arrow_drop_down,
                       color: ThemeColorLight.pinkColor,
                     ),
-                    controller: provider.emailOrPhoneController,
+                    controller: provider.phoneController,
                     onChanged: (phone) {
                       provider.setPhoneNumber(phone);
                       provider.checkFormReadiness();
                     },
                   ),
-
-                  /*  InternationalPhoneNumberInput(
-                    decoration: const InputDecoration(
-                      labelText: 'Phone Number',
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(),
-                      ),
-                    ),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(r'[0.0-9.9]')),
-                    ],
-                    initialCountryCode: 'US',
-                    showCountryFlag: false,
-                    showDropdownIcon: true,
-                    onChanged: (phone) {
-                      provider.setPhoneNumber(phone);
-                      provider.checkFormReadiness();
-                    },
-                    
-
-                    /*   decoration: InputDecoration(
-                      labelText: tr(AppConstants.phoneNumber),
-                      border: const OutlineInputBorder(
-                        borderSide: BorderSide(),
-                      ),
-                      
-                    ),
-                    initialCountryCode: 'US',
-                    /*  countries: countries
-                        .where((element) =>
-                            element.code == 'US' || element.code == "CA")
-                        .toList(), */
-                    onChanged: (phone) {
-                      provider.setPhoneNumber(phone);
-                      provider.checkFormReadiness();
-                    }, */
-                  ), */
                   SizedBox(
                     height: AppSizes.pH3,
                   ),

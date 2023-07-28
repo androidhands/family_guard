@@ -1,13 +1,14 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:family_guard/features/authentication/domain/usecases/save_user_credentials_usecase.dart';
 import 'package:flutter/material.dart';
 
 import 'package:family_guard/features/authentication/presentation/screens/forget_password_screen.dart';
 
 import 'package:family_guard/features/authentication/presentation/screens/signup_screen.dart';
+import 'package:get/get.dart';
 import 'package:intl_phone_field/phone_number.dart';
-
 
 import '../../../../../core/global/localization/app_localization.dart';
 import '../../../../../core/local_data/shared_preferences_services.dart';
@@ -16,7 +17,12 @@ import '../../../../../core/services/dependency_injection_service.dart';
 import '../../../../../core/services/navigation_service.dart';
 import '../../../../../core/utils/app_constants.dart';
 
+import '../../../../../core/widget/dialog_service.dart';
+import '../../../../home/presentation/screens/home_control_screen.dart';
+import '../../../domain/entities/sign_in_params.dart';
+import '../../../domain/usecases/manual_sign_in_usecase.dart';
 import '../../utils/constants.dart';
+import '../../utils/utils.dart';
 import '../../validations/cancellation_reason_validation.dart';
 
 class LoginProvider extends ChangeNotifier {
@@ -37,9 +43,9 @@ class LoginProvider extends ChangeNotifier {
   bool isMounted = true;
 
   // SignIn Patamater
-  //late SignInParameters _signInParameters;
+  late SignInParams _signInParameters;
 
-  final TextEditingController emailOrPhoneController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   bool emailOrPhoneShowValidation = false;
@@ -110,11 +116,11 @@ class LoginProvider extends ChangeNotifier {
     if (!passwordShowValidation) return null;
     if (password.isEmpty) {
       return null; // tr(AppConstance.passwordEmpty);
-    } else if (password.length < passwordMinLength
-        //|| !passwordRegexChecker(password)
-        ) {
+    } else if (password.length < passwordMinLength ||
+        !passwordRegexChecker(password)) {
       return tr(AppConstants.passwordCriteriaInvalid);
     }
+
     return null;
   }
 
@@ -136,6 +142,7 @@ class LoginProvider extends ChangeNotifier {
     emailOrPhoneShowValidation = false;
     notifyListeners();
     formKey.currentState?.validate();
+    checkFormReadiness();
   }
 
   validatePasswordOnChange(String value) {
@@ -143,6 +150,7 @@ class LoginProvider extends ChangeNotifier {
     passwordShowValidation = false;
     notifyListeners();
     formKey.currentState?.validate();
+    checkFormReadiness();
   }
 
   ///Remove Validation If User Typed
@@ -154,6 +162,7 @@ class LoginProvider extends ChangeNotifier {
       emailOrPhoneShowValidation = true;
       notifyListeners();
       formKey.currentState?.validate();
+      checkFormReadiness();
     }
   }
 
@@ -162,6 +171,7 @@ class LoginProvider extends ChangeNotifier {
       passwordShowValidation = true;
       notifyListeners();
       formKey.currentState?.validate();
+      checkFormReadiness();
     }
   }
 
@@ -172,8 +182,9 @@ class LoginProvider extends ChangeNotifier {
   }
 
   void checkFormReadiness() {
-    bool isNotValid =
-        emailOrPhoneController.text.isEmpty || passwordController.text.isEmpty;
+    bool isNotValid = phoneController.text.isEmpty ||
+        passwordController.text.isEmpty ||
+        !isValidNumber(phoneNumber!);
     if (enableVerifyButton != !isNotValid) {
       enableVerifyButton = !isNotValid;
       notifyListeners();
@@ -181,20 +192,14 @@ class LoginProvider extends ChangeNotifier {
   }
 
   loginUser() async {
-    /*   isLoadingSignIn = true;
+    isLoadingSignIn = true;
     notifyListeners();
     passwordShowValidation = true;
     emailOrPhoneShowValidation = true;
     if (formKey.currentState!.validate()) {
-      _signInParameters = SignInParameters(
-          emailAddress: isUsingPhone ? null : emailOrPhoneController.text,
-          deviceToken: (await sl<FirebaseMessagingServices>().deviceToken())!,
-          rememberClient: true,
-          password: passwordController.text,
-          mobileNumber: isUsingPhone
-              ?emailOrPhoneController.text
-              : null,
-          availableTenantEntity: selectedAvailableTenant!);
+      _signInParameters = SignInParams(
+          mobile: phoneNumber!.completeNumber,
+          password: passwordController.text);
       var signInResults = await sl<ManualSignInUsecase>()(_signInParameters);
       signInResults.fold((l) async {
         await DialogWidget.showCustomDialog(
@@ -203,22 +208,15 @@ class LoginProvider extends ChangeNotifier {
           buttonText: tr(AppConstants.ok),
         );
       }, (r) async {
-        await sl<SaveAuthCredentialUseCase>()(AuthenticationResultParams(
-            accessToken: r.accessToken,
-            encryptedAccessToken: r.encryptedAccessToken,
-            expireInSeconds: r.expireInSeconds,
-            userId: r.userId,
-            thumbImageUrl: r.thumbImageUrl,
-            profileImageUrl: r.profileImageUrl,
-            fullName: r.fullName));
-      
+        await sl<SaveUserCredentialsUsecase>()(r);
+
         NavigationService.navigateTo(
             navigationMethod: NavigationMethod.pushReplacement,
             page: () => const HomeControlScreen());
       });
     }
     isLoadingSignIn = false;
-    notifyListeners(); */
+    notifyListeners();
   }
 
   gotoSignUpScreen() {
@@ -248,6 +246,7 @@ class LoginProvider extends ChangeNotifier {
   PhoneNumber? phoneNumber;
   void setPhoneNumber(PhoneNumber phone) {
     phoneNumber = phone;
-    log(phoneNumber!.completeNumber);
+    log(isValidNumber(phoneNumber!).toString());
+    checkFormReadiness();
   }
 }
