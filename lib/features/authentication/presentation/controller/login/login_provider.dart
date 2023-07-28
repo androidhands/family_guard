@@ -2,11 +2,14 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:family_guard/features/authentication/domain/usecases/save_user_credentials_usecase.dart';
+import 'package:family_guard/features/home/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:family_guard/features/authentication/presentation/screens/forget_password_screen.dart';
 
 import 'package:family_guard/features/authentication/presentation/screens/signup_screen.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/phone_number.dart';
 
@@ -18,7 +21,7 @@ import '../../../../../core/services/navigation_service.dart';
 import '../../../../../core/utils/app_constants.dart';
 
 import '../../../../../core/widget/dialog_service.dart';
-import '../../../../home/presentation/screens/home_control_screen.dart';
+
 import '../../../domain/entities/sign_in_params.dart';
 import '../../../domain/usecases/manual_sign_in_usecase.dart';
 import '../../utils/constants.dart';
@@ -41,6 +44,8 @@ class LoginProvider extends ChangeNotifier {
 
   //isMounted .. Don't delete
   bool isMounted = true;
+  String? countryCode;
+  bool isloadingCountryCode = true;
 
   // SignIn Patamater
   late SignInParams _signInParameters;
@@ -71,6 +76,18 @@ class LoginProvider extends ChangeNotifier {
     } else {
       sl<BaseAppLocalizations>().changeLocale(languageCode: locale);
     }
+    getCountryCode();
+  }
+
+  Future getCountryCode() async {
+    try {
+      countryCode = await FlutterSimCountryCode.simCountryCode;
+      log(countryCode!);
+    } on PlatformException {
+      log('Failed to get sim country code.');
+    }
+    isloadingCountryCode = false;
+    notifyListeners();
   }
 
   String? validateEmailOrMobilePhone(String value) {
@@ -212,7 +229,7 @@ class LoginProvider extends ChangeNotifier {
 
         NavigationService.navigateTo(
             navigationMethod: NavigationMethod.pushReplacement,
-            page: () => const HomeControlScreen());
+            page: () => const HomeScreen());
       });
     }
     isLoadingSignIn = false;

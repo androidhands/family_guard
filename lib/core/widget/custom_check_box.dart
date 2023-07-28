@@ -1,3 +1,4 @@
+import 'package:family_guard/core/widget/images/custom_svg_image.dart';
 import 'package:flutter/material.dart';
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
 import 'package:family_guard/core/utils/app_assets.dart';
@@ -65,8 +66,9 @@ class _CustomCheckBoxState extends State<CustomCheckBox> {
               border: isSelected ? null : Border.all(width: AppSizes.bs0_5),
             ),
             child: isSelected
-                ? CustomPngImage.square(
-                    path: AppAssets.checkBoxCheckedPng,
+                ? CustomSvgImage.square(
+                    path: AppAssets.checkBoxCheckedSvg,
+                    color: ThemeColorLight.whiteColor,
                   )
                 : null,
 

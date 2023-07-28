@@ -31,6 +31,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/authentication/data/datasource/manual_sign_up_data_source.dart';
 import '../../features/authentication/domain/usecases/manual_sign_in_usecase.dart';
+import '../../features/authentication/domain/usecases/sign_out_user_usecase.dart';
 import 'connectivity_services.dart';
 import 'date_parser.dart';
 
@@ -144,6 +145,9 @@ class DependencyInjectionServices {
     //usecases
     sl.registerLazySingleton(
         () => ManualSignInUsecase(baseManualSignInRepository: sl()));
+
+    sl.registerLazySingleton(
+        () => SignOutUserUsecase(baseManualSignInRepository: sl()));
 
     sl.registerLazySingleton<BaseManualSingInDataSource>(
         () => ManualSingInDataSource());

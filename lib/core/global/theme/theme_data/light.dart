@@ -5,163 +5,161 @@ import 'package:family_guard/core/utils/app_sizes.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 ThemeData get getThemeDataLight => ThemeData(
-      cardColor: ThemeColorLight.containerCardColor,
+    cardColor: ThemeColorLight.containerCardColor,
+    dialogBackgroundColor: ThemeColorLight.dialogBackgroundColor,
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        selectedItemColor: ThemeColorLight.pinkColor,
+        backgroundColor: ThemeColorLight.bottomNavigationBarColor,
+        unselectedItemColor: ThemeColorLight.pinkWhiteColor),
+    highlightColor: ThemeColorLight.highlightColorBorderForPinTextField,
+    primaryColor: ThemeColorLight.primaryColor,
+    disabledColor: ThemeColorLight.disableColor,
+    brightness: Brightness.light,
+    scaffoldBackgroundColor: ThemeColorLight.backgroundColor,
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
+      color: ThemeColorLight.pinkColor,
+    ),
+    iconTheme: IconThemeData(color: ThemeColorLight.offWhiteColor),
+    shadowColor: ThemeColorLight.shadowColor,
+    dividerColor: ThemeColorLight.gray,
+    bottomSheetTheme: const BottomSheetThemeData(
+      backgroundColor: ThemeColorLight.backgroundColor,
+    ),
 
-      dialogBackgroundColor: ThemeColorLight.dialogBackgroundColor,
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          selectedItemColor: ThemeColorLight.pinkColor,
-          backgroundColor: ThemeColorLight.bottomNavigationBarColor,
-          unselectedItemColor: ThemeColorLight.pinkWhiteColor),
-      highlightColor: ThemeColorLight.highlightColorBorderForPinTextField,
-      primaryColor: ThemeColorLight.primaryColor,
-      disabledColor: ThemeColorLight.disableColor,
-      brightness: Brightness.light,
-      scaffoldBackgroundColor: ThemeColorLight.backgroundColor,
-      progressIndicatorTheme: const ProgressIndicatorThemeData(
-        color: ThemeColorLight.pinkColor,
-      ),
-      iconTheme: IconThemeData(color: ThemeColorLight.offWhiteColor),
-      shadowColor: ThemeColorLight.shadowColor,
-      dividerColor: ThemeColorLight.gray,
-      bottomSheetTheme: const BottomSheetThemeData(
-        backgroundColor: ThemeColorLight.backgroundColor,
-      ),
+    /// ToggleButtons
+    toggleButtonsTheme: ToggleButtonsThemeData(
+      color: ThemeColorLight.secondaryColor,
+      selectedColor: ThemeColorLight.lightGray,
+      fillColor: ThemeColorLight.darkGray,
+      borderColor: ThemeColorLight.secondaryColor,
+      borderRadius: BorderRadius.circular(AppSizes.br50),
+    ),
 
-      /// ToggleButtons
-      toggleButtonsTheme: ToggleButtonsThemeData(
-        color: ThemeColorLight.secondaryColor,
-        selectedColor: ThemeColorLight.lightGray,
-        fillColor: ThemeColorLight.darkGray,
-        borderColor: ThemeColorLight.secondaryColor,
-        borderRadius: BorderRadius.circular(AppSizes.br50),
-      ),
+    /// TextFormField
 
-      /// TextFormField
-
-      inputDecorationTheme: InputDecorationTheme(
-          fillColor: ThemeColorLight.fillColorTextFormField,
-          errorMaxLines: 3,
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: ThemeColorLight.searchFormFieldColor,
-              width: AppSizes.bs1_0,
-            ),
-            borderRadius: BorderRadius.circular(AppSizes.br4),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: ThemeColorLight.searchFormFieldColor,
-              width: AppSizes.bs1_0,
-            ),
-            borderRadius: BorderRadius.circular(AppSizes.br30),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: ThemeColorLight.errorColor,
-              width: AppSizes.bs1_0,
-            ),
-          ),
-          hintStyle: TextStyle(
-              color: ThemeColorLight.hintTextFieldColor,
-              fontWeight: AppFonts.regular,
-              fontSize: AppSizes.h6),
-          outlineBorder: BorderSide(
+    inputDecorationTheme: InputDecorationTheme(
+        fillColor: ThemeColorLight.fillColorTextFormField,
+        errorMaxLines: 3,
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
             color: ThemeColorLight.searchFormFieldColor,
             width: AppSizes.bs1_0,
           ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: ThemeColorLight.searchFormFieldColor,
-              width: AppSizes.bs1_0,
-            ),
-            borderRadius: BorderRadius.circular(AppSizes.br4),
+          borderRadius: BorderRadius.circular(AppSizes.br4),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: ThemeColorLight.searchFormFieldColor,
+            width: AppSizes.bs1_0,
           ),
-          floatingLabelStyle: TextStyle(
-              color: ThemeColorLight.pinkColor,
-              fontWeight: AppFonts.medium,
-              fontSize: AppSizes.h7),
-          errorStyle: TextStyle(
+          borderRadius: BorderRadius.circular(AppSizes.br30),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
             color: ThemeColorLight.errorColor,
-            fontSize: AppSizes.h7,
+            width: AppSizes.bs1_0,
+          ),
+        ),
+        hintStyle: TextStyle(
+            color: ThemeColorLight.hintTextFieldColor,
             fontWeight: AppFonts.regular,
-            fontFamily: AppFonts.fontFamilyEnglishSimiBold,
+            fontSize: AppSizes.h6),
+        outlineBorder: BorderSide(
+          color: ThemeColorLight.searchFormFieldColor,
+          width: AppSizes.bs1_0,
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: ThemeColorLight.searchFormFieldColor,
+            width: AppSizes.bs1_0,
           ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: ThemeColorLight.pinkColor,
-              width: AppSizes.bs1_0,
-            ),
-            borderRadius: BorderRadius.circular(AppSizes.br4),
-          ),
-          labelStyle: TextStyle(
+          borderRadius: BorderRadius.circular(AppSizes.br4),
+        ),
+        floatingLabelStyle: TextStyle(
             color: ThemeColorLight.pinkColor,
-            fontSize: AppSizes.h5,
-            fontWeight: AppFonts.regular,
-            fontFamily: AppFonts.fontFamilyEnglish,
-          )),
-      tabBarTheme: TabBarTheme(
-        unselectedLabelColor: ThemeColorLight.unselectedLabelColor,
+            fontWeight: AppFonts.medium,
+            fontSize: AppSizes.h7),
+        errorStyle: TextStyle(
+          color: ThemeColorLight.errorColor,
+          fontSize: AppSizes.h7,
+          fontWeight: AppFonts.regular,
+          fontFamily: AppFonts.fontFamilyEnglishSimiBold,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: ThemeColorLight.pinkColor,
+            width: AppSizes.bs1_0,
+          ),
+          borderRadius: BorderRadius.circular(AppSizes.br4),
+        ),
         labelStyle: TextStyle(
           color: ThemeColorLight.pinkColor,
-          fontWeight: AppFonts.semiBold,
           fontSize: AppSizes.h5,
-        ),
+          fontWeight: AppFonts.regular,
+          fontFamily: AppFonts.fontFamilyEnglish,
+        )),
+    tabBarTheme: TabBarTheme(
+      unselectedLabelColor: ThemeColorLight.unselectedLabelColor,
+      labelStyle: TextStyle(
+        color: ThemeColorLight.pinkColor,
+        fontWeight: AppFonts.semiBold,
+        fontSize: AppSizes.h5,
       ),
-
-      appBarTheme: AppBarTheme(
-        backgroundColor: ThemeColorLight.containerCardColor,
-        // elevation: 0,
-        titleTextStyle: TextStyle(
-          color: ThemeColorLight.appBarTitleColor,
-          fontFamily: AppFonts.fontFamilyEnglishMedium,
-          fontWeight: AppFonts.medium,
-          fontSize: 18.sp,
-        ),
+    ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: ThemeColorLight.containerCardColor,
+      // elevation: 0,
+      titleTextStyle: TextStyle(
+        color: ThemeColorLight.appBarTitleColor,
+        fontFamily: AppFonts.fontFamilyEnglishMedium,
+        fontWeight: AppFonts.medium,
+        fontSize: 18.sp,
       ),
-      buttonTheme: ButtonThemeData(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSizes.br8),
-        ),
-        disabledColor: ThemeColorLight.disableButtonColor,
-        highlightColor: ThemeColorLight.overlayElevatedButtonColor,
-        splashColor: ThemeColorLight.overlayElevatedButtonColor,
+    ),
+    buttonTheme: ButtonThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppSizes.br8),
       ),
-      fontFamily: "Poppins-Regular",
-      elevatedButtonTheme: ElevatedButtonThemeData(
+      disabledColor: ThemeColorLight.disableButtonColor,
+      highlightColor: ThemeColorLight.overlayElevatedButtonColor,
+      splashColor: ThemeColorLight.overlayElevatedButtonColor,
+    ),
+    fontFamily: "Poppins-Regular",
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+              const EdgeInsets.all(0)),
+          shadowColor:
+              MaterialStateProperty.all<Color>(ThemeColorLight.pinkWhiteColor),
+          surfaceTintColor:
+              MaterialStateProperty.all<Color>(ThemeColorLight.pinkColor),
+          foregroundColor: MaterialStateProperty.all<Color>(
+              ThemeColorLight.disableButtonColor),
+          overlayColor: MaterialStateProperty.all<Color>(
+              ThemeColorLight.overlayElevatedButtonColor),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppSizes.br8),
+          ))),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+      side: const BorderSide(color: ThemeColorLight.pinkColor),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(AppSizes.br8))),
+    )),
+    textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
-            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                const EdgeInsets.all(0)),
-            shadowColor: MaterialStateProperty.all<Color>(
-                ThemeColorLight.pinkWhiteColor),
-            surfaceTintColor:
-                MaterialStateProperty.all<Color>(ThemeColorLight.pinkColor),
-            foregroundColor: MaterialStateProperty.all<Color>(
-                ThemeColorLight.disableButtonColor),
+            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppSizes.br40),
+            )),
             overlayColor: MaterialStateProperty.all<Color>(
-                ThemeColorLight.overlayElevatedButtonColor),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppSizes.br8),
-            ))),
-      ),
-
-      outlinedButtonTheme: OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(
-        side: const BorderSide(color: ThemeColorLight.pinkColor),
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(AppSizes.br8))),
-      )),
-
-      textButtonTheme: TextButtonThemeData(
-          style: ButtonStyle(
-              shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(AppSizes.br40),
-              )),
-              overlayColor: MaterialStateProperty.all<Color>(
-                  ThemeColorLight.overLayColor))),
-      hintColor: ThemeColorLight.lightGray,
-      textTheme: getTextTheme(),
-    );
+                ThemeColorLight.overLayColor))),
+    hintColor: ThemeColorLight.lightGray,
+    textTheme: getTextTheme(),
+    radioTheme: RadioThemeData(
+        fillColor:
+            MaterialStateProperty.all<Color>(ThemeColorLight.pinkColor)));
 
 getTextTheme() => TextTheme(
 

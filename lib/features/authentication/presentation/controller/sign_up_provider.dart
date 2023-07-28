@@ -7,6 +7,8 @@ import 'package:family_guard/features/authentication/presentation/screens/login_
 import 'package:family_guard/features/authentication/presentation/utils/constants.dart';
 import 'package:family_guard/features/authentication/presentation/utils/enums.dart';
 import 'package:family_guard/features/general/presentation/screens/terms_and_privacy_policy.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/phone_number.dart';
@@ -68,6 +70,9 @@ class SignUpProvider extends ChangeNotifier {
   bool facebookSocialMediaProfileShowValidation = false;
   bool instagramSocialMediaProfileShowValidation = false;
 
+  String? countryCode;
+  bool isloadingCountryCode = true;
+
   ///Sign up parameters
   late SignUpParams _signUpParameters;
 
@@ -75,7 +80,20 @@ class SignUpProvider extends ChangeNotifier {
   GlobalKey phoneCodePickerWidgetKey = GlobalKey();
   double textFieldHeight = 0.0;
 
-  SignUpProvider();
+  SignUpProvider() {
+    getCountryCode();
+  }
+
+  Future getCountryCode() async {
+    try {
+      countryCode = await FlutterSimCountryCode.simCountryCode;
+      log(countryCode!);
+    } on PlatformException {
+      log('Failed to get sim country code.');
+    }
+    isloadingCountryCode = false;
+    notifyListeners();
+  }
 
   ///Validations
 

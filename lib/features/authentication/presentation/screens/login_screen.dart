@@ -1,4 +1,8 @@
+import 'dart:developer';
+
+import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
+import 'package:family_guard/core/widget/custom_loading_indicator.dart';
 import 'package:flutter/material.dart';
 
 import 'package:family_guard/core/widget/custom_check_box.dart';
@@ -61,24 +65,28 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(
                     height: AppSizes.pH3,
                   ),
-                  IntlPhoneField(
-                    decoration: InputDecoration(
-                      labelText: tr(AppConstants.phoneNumber),
-                      border: const OutlineInputBorder(
-                        borderSide: BorderSide(),
-                      ),
-                    ),
-                    initialCountryCode: 'US',
-                    dropdownIcon: const Icon(
-                      Icons.arrow_drop_down,
-                      color: ThemeColorLight.pinkColor,
-                    ),
-                    controller: provider.phoneController,
-                    onChanged: (phone) {
-                      provider.setPhoneNumber(phone);
-                      provider.checkFormReadiness();
-                    },
-                  ),
+                  provider.isloadingCountryCode
+                      ? Center(
+                          child: CustomLoadingIndicators.defaultLoading(),
+                        )
+                      : IntlPhoneField(
+                          decoration: InputDecoration(
+                            labelText: tr(AppConstants.phoneNumber),
+                            border: const OutlineInputBorder(
+                              borderSide: BorderSide(),
+                            ),
+                          ),
+                          initialCountryCode: provider.countryCode,
+                          dropdownIcon: const Icon(
+                            Icons.arrow_drop_down,
+                            color: ThemeColorLight.pinkColor,
+                          ),
+                          controller: provider.phoneController,
+                          onChanged: (phone) {
+                            provider.setPhoneNumber(phone);
+                            provider.checkFormReadiness();
+                          },
+                        ),
                   SizedBox(
                     height: AppSizes.pH3,
                   ),

@@ -1,4 +1,5 @@
 import 'package:family_guard/core/controllers/main_provider.dart';
+import 'package:family_guard/core/screen/main_screen.dart';
 import 'package:family_guard/features/authentication/presentation/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -86,7 +87,7 @@ class MyApp extends StatelessWidget {
                       value: provider.appTheme.index == AppTheme.dark.index
                           ? SystemUiOverlayStyle.light
                           : SystemUiOverlayStyle.dark,
-                      child: const LoginScreen()),
+                      child: const MainScreen()),
                 );
               },
             ),

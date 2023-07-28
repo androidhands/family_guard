@@ -350,4 +350,5 @@ class AppAssets {
   static const String searchNormalSvg = "${svgImagePath}search_normal.svg";
 
   static const String pinLocation = "${svgImagePath}pin.svg";
+   
 }

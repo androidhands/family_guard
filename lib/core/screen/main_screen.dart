@@ -18,10 +18,9 @@ class MainScreen extends StatelessWidget {
         return Consumer<MainProvider>(
           builder: (context, value, child) {
             return Scaffold(
-              
               body: Center(
                 child: CustomPngImage(
-                  path: AppAssets.logoBluePng,
+                  path: AppAssets.appLogo,
                   width: AppSizes.logoImageWidth,
                   height: AppSizes.registrationPhotoHeight,
                   radius: BorderRadius.zero,

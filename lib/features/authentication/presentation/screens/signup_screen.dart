@@ -1,4 +1,5 @@
 import 'package:family_guard/core/services/navigation_service.dart';
+import 'package:family_guard/core/widget/custom_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
 
@@ -123,6 +124,7 @@ class SignUpScreen extends StatelessWidget {
                   SizedBox(
                     height: AppSizes.pH3,
                   ),
+                  provider.isloadingCountryCode?Center(child: CustomLoadingIndicators.defaultLoading(),):
                   IntlPhoneField(
                     decoration: InputDecoration(
                       labelText: tr(AppConstants.phoneNumber),
@@ -134,7 +136,7 @@ class SignUpScreen extends StatelessWidget {
                       Icons.arrow_drop_down,
                       color: ThemeColorLight.pinkColor,
                     ),
-                    initialCountryCode: 'US',
+                    initialCountryCode: provider.countryCode,
                     controller: provider.phoneController,
                     onChanged: (phone) {
                       provider.setPhoneNumber(phone);

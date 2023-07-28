@@ -1,4 +1,3 @@
-
 import 'package:family_guard/core/global/theme/theme_color/theme_color_dark.dart';
 import 'package:flutter/material.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
@@ -16,7 +15,7 @@ class ChooseGenderComponent extends StatelessWidget {
   final Genders? selectedGender;
 
   const ChooseGenderComponent(
-      {Key? key, required this.onChanged,required this.selectedGender})
+      {Key? key, required this.onChanged, required this.selectedGender})
       : super(key: key);
 
   @override
@@ -52,13 +51,13 @@ class ChooseGenderComponent extends StatelessWidget {
               Expanded(
                 child: ListTile(
                   title: CheckBoxDefaultText(
-                      text: tr(Genders.female.name.toUpperCase())),
+                      text: tr(Genders.male.name.toUpperCase())),
                   leading: Radio(
-                    value: Genders.female,
+                    value: Genders.male,
                     groupValue: selectedGender,
                     activeColor: ThemeColorDark.pinkColor,
                     onChanged: (value) {
-                      onChanged(Genders.female);
+                      onChanged(Genders.male);
                       /*  setState(() {
                                               _cTgValue = value as int;
                                               visitType = '';
@@ -70,13 +69,13 @@ class ChooseGenderComponent extends StatelessWidget {
               Expanded(
                 child: ListTile(
                   title: CheckBoxDefaultText(
-                      text: tr(Genders.male.name.toUpperCase())),
+                      text: tr(Genders.female.name.toUpperCase())),
                   leading: Radio(
-                    value: Genders.male,
+                    value: Genders.female,
                     groupValue: selectedGender,
                     activeColor: ThemeColorDark.pinkColor,
                     onChanged: (value) {
-                      onChanged(Genders.male);
+                      onChanged(Genders.female);
                       /*  setState(() {
                                               _cTgValue = value as int;
                                               visitType = '';

@@ -1,4 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:path_provider/path_provider.dart';
+
 import '../../../../core/error/exceptions.dart';
+import '../../../../core/local_data/shared_preferences_services.dart';
 import '../../../../core/network/api_caller.dart';
 import '../../../../core/network/api_endpoint.dart';
 import '../../../../core/network/model/error_message.dart';
@@ -9,6 +13,7 @@ import '../models/user_model.dart';
 
 abstract class BaseManualSingInDataSource {
   Future<UserEntity> signInUserManually(SignInParams signInParams);
+   Future<bool> signOutUser();
 }
 
 class ManualSingInDataSource implements BaseManualSingInDataSource {
@@ -29,5 +34,27 @@ class ManualSingInDataSource implements BaseManualSingInDataSource {
               );
       },
     );
+  }
+
+   @override
+  Future<bool> signOutUser() async {
+    try {
+      final cacheDir = await getTemporaryDirectory();
+
+      if (cacheDir.existsSync()) {
+        cacheDir.deleteSync(recursive: true);
+      }
+
+      final appDir = await getApplicationSupportDirectory();
+
+      if (appDir.existsSync()) {
+        appDir.deleteSync(recursive: true);
+      }
+      sl<SharedPreferencesServices>().clearAll();
+      await FirebaseAuth.instance.signOut();
+      return true;
+    } on FirebaseAuthException catch (e) {
+      throw ServerException(message: e.message!, code: '');
+    }
   }
 }
