@@ -3,6 +3,9 @@
         android:label="family_guard"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+       
+    <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyA_Cl4tTsUE0_H5N5A7OutO4O31B6cc85Q"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
