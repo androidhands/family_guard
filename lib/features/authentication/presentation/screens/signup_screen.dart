@@ -1,3 +1,4 @@
+import 'package:family_guard/core/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
 
@@ -33,6 +34,7 @@ class SignUpScreen extends StatelessWidget {
         builder: (context, provider, child) {
           return AuthenticationCommonBody(
             isScrolling: true,
+            backOnPress: () => NavigationService.goBack(),
             title: tr(AppConstants.signUp),
             onLanguageChange: () => provider.validateForm(),
             body: Form(

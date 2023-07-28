@@ -1,5 +1,6 @@
 import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/features/authentication/presentation/screens/login_screen.dart';
+import 'package:family_guard/features/authentication/presentation/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -14,6 +15,7 @@ import 'core/global/theme/theme_color/theme_color_dark.dart';
 import 'core/global/theme/theme_color/theme_color_light.dart';
 import 'core/services/dependency_injection_service.dart';
 import 'core/services/service_initializer.dart';
+import 'features/authentication/presentation/screens/location_detector_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,4 +1,3 @@
-import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/app_sizes.dart';
@@ -15,12 +14,12 @@ class CustomPngImage extends StatelessWidget {
 
   CustomPngImage.square({Key? key, required String path})
       : this(
-            key: key,
-            path: path,
-            height: AppSizes.imageWidthMedium,
-            width: AppSizes.imageWidthMedium,
-            radius: BorderRadius.circular(AppSizes.br8),
-            );
+          key: key,
+          path: path,
+          height: AppSizes.imageWidthMedium,
+          width: AppSizes.imageWidthMedium,
+          radius: BorderRadius.circular(AppSizes.br8),
+        );
 
   final String path;
   final double? height;

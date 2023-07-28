@@ -307,5 +307,10 @@ class AppConstants {
   static const String female = "FEMALE";
   static const String male = "Male";
 
-  static const String failedSavingCredentials  ="FailedSavingCredentials";
+  static const String failedSavingCredentials = "FailedSavingCredentials";
+  static const String detectingLocation = "DETECTING_LOCATION";
+
+  static const String  saveYourAddreess = "SaveYourAddress";
+
+  static const String  cachedUserAddress = "CACHED_USER_ADDRESS";
 }

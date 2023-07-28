@@ -53,11 +53,14 @@ Map<String, String> coreEn = {
 
   'SUBMIT': 'Submit',
   'REQUEST_NEW_CODE_IN': 'request new code in',
-  "DIDN\'T_RECIEVE_THE_VERIFICATION_CODE?":
+  "DIDN'T_RECIEVE_THE_VERIFICATION_CODE?":
       'Didn\'t receive the verification code?',
   'SECONDS': 'Seconds',
-  "DidN\'T_RECEIVE_A_CODE?": "Didn’t receive a code?",
+  "DidN'T_RECEIVE_A_CODE?": "Didn’t receive a code?",
   'RESEND': 'Resend',
   'FailedSavingCredentials': 'Failed Saving Credentials',
-   'ENTER_OTP_CODE': 'Enter OTP Code',
+  'ENTER_OTP_CODE': 'Enter OTP Code',
+  "DETECTING_LOCATION": 'Detect Location',
+  'SaveYourAddress':
+      'To complete your signing up your address is required. Please, pickup your right address'
 };

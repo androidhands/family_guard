@@ -24,11 +24,11 @@ class ThemeColorLight {
   static Color disableColor = const Color(0xFFF5F5F5);
   static Color disableButtonColor = const Color(0xFFF5F5F5);
 
-  static const Color overlayElevatedButtonColor = Color(0xFFD2647);
+  static const Color overlayElevatedButtonColor = Color(0x0ffd2647);
   static const Color inputBackgroundGray = Color(0xFFEFF0F6);
   static const Color fillColorTextFormField = Color(0xFFFCFCFC);
   //
-  static const Color focusBorderTextField = Color(0xFFD2647);
+  static const Color focusBorderTextField = Color(0x0ffd2647);
   static Color shadowColor = const Color(0xFF6e7191).withOpacity(0.2);
   static const Color hintTextFieldColor = Color(0xFFA0A3BD);
   static const Color labelTextFieldColor = Color(0x611C252E);

@@ -76,7 +76,7 @@ class AppSizes {
 
   static final double imageWidthSmall = 50.w;
   static final double profileImageWidth = 80.w;
-  static final double imageWidthMedium = 100.w;
+  static final double imageWidthMedium = 80.w;
   static final double imageWidthLarge = 200.w;
 
   /// Loading Indicator Size
@@ -88,13 +88,16 @@ class AppSizes {
 
   static final double loadingIndicatorThick = 1.h;
 
+  static final double locationIndicatorHight = 30.h;
+  static final double locationIndicatorWidth = 30.w;
+
   /// icons Sizes
   static final double logoSize = 47.w;
   static final double iconSize = 21.5.h;
   static final double backIconSize = 27.h;
   static final double suffixIconsSizes = 14.h;
   static final double checkIconsSizes = 45.h;
-  static final double backButtonSizes = 45.h;
+  static final double backButtonSizes = 35.h;
   static final double tryAgainButtonSize = 120.w;
 
   /// Elevated Button Sizes
@@ -263,4 +266,6 @@ class AppSizes {
   static final double amAccountListHight = 120.h;
 
   static final double chipChoiceHigh = 60.h;
+
+  static final double mapAddressHigh = 300.h;
 }

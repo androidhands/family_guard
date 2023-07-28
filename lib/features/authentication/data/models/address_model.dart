@@ -1,7 +1,7 @@
-import 'package:family_guard/features/authentication/domain/entities/user_address_entity.dart';
+import 'package:family_guard/features/authentication/domain/entities/address_entity.dart';
 
-class UserAddressModel extends UserAddressEntity {
-  UserAddressModel(
+class AddressModel extends AddressEntity {
+  AddressModel(
       {required id,
       required mobile,
       required country,
@@ -16,8 +16,8 @@ class UserAddressModel extends UserAddressEntity {
       : super(id, mobile, country, adminArea, subAdminArea, locality,
             subLocality, street, postalCode, updatedAt, createdAt);
 
-  factory UserAddressModel.fromJson(Map<String, dynamic> json) {
-    return UserAddressModel(
+  factory AddressModel.fromJson(Map<String, dynamic> json) {
+    return AddressModel(
         id: json['id'],
         mobile: json['mobile'],
         country: json['country'],
@@ -33,7 +33,7 @@ class UserAddressModel extends UserAddressEntity {
 
   Map<String, dynamic> toJson() {
     return {
-      '': id,
+      'id': id,
       'mobile': mobile,
       'country': country,
       'admin_area': adminArea,

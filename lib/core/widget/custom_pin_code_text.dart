@@ -31,7 +31,7 @@ class CustomPinCodeTextField extends StatelessWidget {
         if (onChanged != null) onChanged!(value);
       },
       separatorBuilder: (context, index) {
-        return SizedBox(
+        return const SizedBox(
           width: 3,
         );
       },

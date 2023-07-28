@@ -1,7 +1,5 @@
-import 'package:get/get.dart';
 import 'package:family_guard/core/utils/app_assets.dart';
 
-import 'package:provider/provider.dart';
 
 import 'enums.dart';
 

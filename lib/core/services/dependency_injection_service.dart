@@ -1,11 +1,15 @@
 import 'package:family_guard/core/controllers/main_provider.dart';
+import 'package:family_guard/features/authentication/data/datasource/base_user_address_data_source.dart';
 import 'package:family_guard/features/authentication/data/datasource/base_users_credentials_data_source.dart';
 import 'package:family_guard/features/authentication/data/repositories/manual_sign_up_reposiory.dart';
+import 'package:family_guard/features/authentication/data/repositories/user_address_repository.dart';
 import 'package:family_guard/features/authentication/data/repositories/user_credentials_repository.dart';
 import 'package:family_guard/features/authentication/domain/repositories/base_manual_sign_up_repository.dart';
+import 'package:family_guard/features/authentication/domain/repositories/base_user_address_repositoy.dart';
 import 'package:family_guard/features/authentication/domain/repositories/base_user_credentials_repository.dart';
 import 'package:family_guard/features/authentication/domain/usecases/get_cached_user_credentials_usecase.dart';
 import 'package:family_guard/features/authentication/domain/usecases/manual_sign_up_usecase.dart';
+import 'package:family_guard/features/authentication/domain/usecases/save_user_address_usecase.dart';
 import 'package:family_guard/features/authentication/domain/usecases/save_user_credentials_usecase.dart';
 import 'package:family_guard/features/authentication/presentation/controller/login/login_provider.dart';
 import 'package:family_guard/features/authentication/presentation/controller/sign_up_provider.dart';
@@ -49,12 +53,16 @@ class DependencyInjectionServices {
     initializeTheme();
 
     firebaseMessagingInit();
-
+//mainprovider
     initializeMainProvider();
-
+//login
     initializeLogin();
 
+//signup
     initializeSignUp();
+
+    //user address
+    initializeUserAddress();
   }
 
   initializeLocationFetcher() {
@@ -141,5 +149,19 @@ class DependencyInjectionServices {
     //datasource
     sl.registerLazySingleton<BaseManualSignUpDataSource>(
         () => ManualSignUpDataSource());
+  }
+
+  initializeUserAddress() {
+    //repository
+    sl.registerLazySingleton<BaseUserAddressRepositoy>(
+        () => UserAddressRepository(baseUserAddressDataSource: sl()));
+
+    //usecases
+    sl.registerLazySingleton(
+        () => SaveUserAddressUsecase(baseUserAddressRepositoy: sl()));
+
+    //datasource
+    sl.registerLazySingleton<BaseUserAddressDataSource>(
+        () => UserAddressDataSource());
   }
 }

@@ -345,4 +345,9 @@ class AppAssets {
   static const String refresh = "${svgImagePath}refresh_circle.svg";
 
   static const String addNew = "${svgImagePath}add.svg";
+
+  static const String gpsSvg = "${svgImagePath}gps.svg";
+  static const String searchNormalSvg = "${svgImagePath}search_normal.svg";
+
+  static const String pinLocation = "${svgImagePath}pin.svg";
 }

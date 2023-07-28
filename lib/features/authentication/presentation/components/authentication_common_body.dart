@@ -1,4 +1,3 @@
-import 'package:family_guard/core/global/theme/theme_color/theme_color_dark.dart';
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +5,6 @@ import 'package:family_guard/core/utils/app_assets.dart';
 import 'package:family_guard/core/utils/app_constants.dart';
 import 'package:family_guard/core/utils/app_sizes.dart';
 import 'package:family_guard/core/widget/custom_appbar.dart';
-import 'package:family_guard/core/widget/images/custom_svg_image.dart';
 
 import '../../../../core/global/localization/app_localization.dart';
 import '../../../../core/widget/custom_text.dart';
@@ -112,9 +110,10 @@ class _BodyContainer extends StatelessWidget {
             CustomPngImage.square(
               path: AppAssets.appLogo,
             ),
-            /* SizedBox(
-              width: AppSizes.backIconSize + (AppSizes.pW5 * 2),
-            ), */
+            if (!isSignIn)
+              SizedBox(
+                width: AppSizes.backIconSize + (AppSizes.pW5 * 2),
+              ),
           ],
         ),
         SizedBox(

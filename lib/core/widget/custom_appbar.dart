@@ -140,6 +140,7 @@ class CustomBackButton extends StatelessWidget {
       height: AppSizes.backButtonSizes,
       child: IconButton(
         padding: EdgeInsets.zero,
+        color: ThemeColorLight.whiteColor,
         constraints: const BoxConstraints(),
         onPressed: () {
           if (popOnPressed != null) {
@@ -151,7 +152,7 @@ class CustomBackButton extends StatelessWidget {
         icon: sl<BaseAppLocalizations>().isEnglish()
             ? CustomSvgImage(
                 path: AppAssets.backSvg,
-                color: Theme.of(context).iconTheme.color,
+                color: ThemeColorLight.whiteColor,
                 width: AppSizes.backButtonSizes,
                 height: AppSizes.backButtonSizes,
                 radius: BorderRadius.zero,
@@ -160,7 +161,7 @@ class CustomBackButton extends StatelessWidget {
                 angle: 180 * math.pi / 180,
                 child: CustomSvgImage(
                   path: AppAssets.backSvg,
-                  color: Theme.of(context).iconTheme.color,
+                  color: ThemeColorLight.whiteColor,
                   width: AppSizes.backButtonSizes,
                   height: AppSizes.backButtonSizes,
                   radius: BorderRadius.zero,

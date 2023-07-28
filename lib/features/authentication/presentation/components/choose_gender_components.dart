@@ -1,7 +1,5 @@
-import 'dart:developer';
 
 import 'package:family_guard/core/global/theme/theme_color/theme_color_dark.dart';
-import 'package:family_guard/features/authentication/presentation/controller/sign_up_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
 import 'package:family_guard/core/utils/app_constants.dart';
@@ -10,7 +8,6 @@ import 'package:family_guard/core/utils/app_sizes.dart';
 import 'package:family_guard/core/widget/custom_check_box.dart';
 import 'package:family_guard/core/widget/custom_text.dart';
 import 'package:family_guard/features/authentication/presentation/utils/enums.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../core/utils/app_fonts.dart';
 
