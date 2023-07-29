@@ -38,23 +38,26 @@ class LocationDetectorProvider with ChangeNotifier {
   Location location = Location();
   late PermissionStatus permissionGranted;
   late LocationData locationData;
-  final BuildContext context;
+
   late AddressEntity addressEntity;
 
   final TextEditingController locationTextController = TextEditingController();
 
   String? selectedCountry;
 
-  LocationDetectorProvider(this.context) {
+  LocationDetectorProvider() {
     initializeInitialCameraPosition();
+
     // goToMyLocation();
   }
 
-  initializeInitialCameraPosition() {
+  initializeInitialCameraPosition() async {
     initialCameraPosition = const CameraPosition(
       target: LatLng(37.42796133580664, -122.085749655962),
       zoom: 14.4746,
     );
+    await Provider.of<MainProvider>(Get.context!, listen: false)
+        .getCachedUserCredentials();
   }
 
   onMapCreated(GoogleMapController googleMapController) {
@@ -64,7 +67,7 @@ class LocationDetectorProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  changeLocation() async {
+  changeLocation(BuildContext context) async {
     isCountryInRegion = false;
     isLoadingLocation = true;
     notifyListeners();
@@ -109,19 +112,20 @@ class LocationDetectorProvider with ChangeNotifier {
     if (placemark.street?.isNotEmpty ?? false) {
       address += '${placemark.street!}.';
     }
+
     UserEntity? user =
         Provider.of<MainProvider>(Get.context!, listen: false).userCredentials;
     locationTextController.text = address;
     addressEntity = AddressModel(
         id: 0,
-        mobile: user?.mobile,
-        country: placemark.country,
-        adminArea: placemark.administrativeArea,
-        subAdminArea: placemark.subAdministrativeArea,
-        locality: placemark.locality,
-        subLocality: placemark.subLocality,
-        street: placemark.street,
-        postalCode: placemark.postalCode,
+        mobile: user?.mobile ?? "",
+        country: placemark.country ?? "",
+        adminArea: placemark.administrativeArea ?? "",
+        subAdminArea: placemark.subAdministrativeArea ?? "",
+        locality: placemark.locality ?? "",
+        subLocality: placemark.subLocality ?? "",
+        street: placemark.street ?? "",
+        postalCode: placemark.postalCode ?? "",
         updatedAt: '',
         createdAt: '');
     isLoadingLocation = false;

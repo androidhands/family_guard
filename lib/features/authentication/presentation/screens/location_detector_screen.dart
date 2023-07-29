@@ -23,7 +23,7 @@ class LocationDetectorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => LocationDetectorProvider(context),
+      create: (context) => LocationDetectorProvider(),
       child: Consumer<LocationDetectorProvider>(
         builder: (context, provider, child) => AuthenticationCommonBody(
           isScrolling: true,
@@ -58,7 +58,7 @@ class LocationDetectorScreen extends StatelessWidget {
                       mapType: MapType.normal,
                       initialCameraPosition: provider.initialCameraPosition,
                       zoomControlsEnabled: false,
-                      onCameraIdle: () => provider.changeLocation(),
+                      onCameraIdle: () => provider.changeLocation(context),
                       onMapCreated: (googleMapController) =>
                           provider.onMapCreated(googleMapController),
                     ),

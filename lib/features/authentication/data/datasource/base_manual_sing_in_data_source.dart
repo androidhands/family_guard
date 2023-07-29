@@ -55,6 +55,7 @@ class ManualSingInDataSource implements BaseManualSingInDataSource {
       }
       sl<SharedPreferencesServices>().clearAll();
       await FirebaseAuth.instance.signOut();
+
       UserEntity? user = Provider.of<MainProvider>(Get.context!, listen: false)
           .userCredentials;
       return await sl<ApiCaller>().requestPost(

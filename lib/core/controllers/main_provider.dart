@@ -45,9 +45,8 @@ class MainProvider extends ChangeNotifier {
   }
 
   Future<bool> checkUserLoggedIn() async {
-    User? user = await FirebaseAuth.instance.authStateChanges().first;
     bool cached = await getCachedUserCredentials();
-
+    User? user = await FirebaseAuth.instance.authStateChanges().first;
     return user != null && cached;
   }
 

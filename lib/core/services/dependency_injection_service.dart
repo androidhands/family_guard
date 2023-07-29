@@ -38,6 +38,7 @@ import '../../features/authentication/data/datasource/base_manual_sign_up_data_s
 import '../../features/authentication/domain/usecases/manual_sign_in_usecase.dart';
 import '../../features/authentication/domain/usecases/reset_password_usecase.dart';
 import '../../features/authentication/domain/usecases/sign_out_user_usecase.dart';
+import '../../features/authentication/presentation/controller/location_detector_provider.dart';
 import '../../features/authentication/presentation/controller/reset_password_provider.dart';
 import 'connectivity_services.dart';
 import 'date_parser.dart';
@@ -82,6 +83,7 @@ class DependencyInjectionServices {
 
   initializeLocationFetcher() {
     sl.registerLazySingleton<LocationFetcher>(() => LocationFetcher.instance);
+    sl.registerLazySingleton(() => LocationDetectorProvider());
   }
 
   internetConnectionCheckerInit() async {

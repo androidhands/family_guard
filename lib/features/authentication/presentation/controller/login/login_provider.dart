@@ -225,11 +225,17 @@ class LoginProvider extends ChangeNotifier {
           buttonText: tr(AppConstants.ok),
         );
       }, (r) async {
-        await sl<SaveUserCredentialsUsecase>()(r);
-
-        NavigationService.navigateTo(
-            navigationMethod: NavigationMethod.pushReplacement,
-            page: () => const HomeScreen());
+        (await sl<SaveUserCredentialsUsecase>()(r)).fold((l) async {
+          await DialogWidget.showCustomDialog(
+            context: Get.context!,
+            title: l.message,
+            buttonText: tr(AppConstants.ok),
+          );
+        }, (r) {
+          NavigationService.navigateTo(
+              navigationMethod: NavigationMethod.pushReplacement,
+              page: () => const HomeScreen());
+        });
       });
     }
     isLoadingSignIn = false;

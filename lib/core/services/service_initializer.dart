@@ -57,7 +57,7 @@ class ServiceInitializer {
   }
 
   Future initializeFirebase() async {
-    Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    Firebase.initializeApp( options: DefaultFirebaseOptions.currentPlatform);
   }
 
   Future cacheDefaultImages() async {

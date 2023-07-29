@@ -1,5 +1,6 @@
 import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/screen/main_screen.dart';
+import 'package:family_guard/features/authentication/presentation/screens/location_detector_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -44,17 +45,6 @@ class MyApp extends StatelessWidget {
                       appTheme: ServiceInitializer.savedAppTheme,
                       themeData:
                           appThemeData[ServiceInitializer.savedAppTheme]!)),
-              /*     ChangeNotifierProvider<TwitterProvider>(
-                  create: (context) => sl()),
-              ChangeNotifierProvider<FacebookProvider>(
-                create: (context) => sl(),
-              ),
-              ChangeNotifierProvider<GoogleProvider>(
-                create: (context) => sl(),
-              ),
-              ChangeNotifierProvider<AppleProvider>(
-                create: (context) => sl(),
-              ), */
               ChangeNotifierProvider<MainProvider>(
                 create: (context) => MainProvider(),
               ),
@@ -88,7 +78,7 @@ class MyApp extends StatelessWidget {
                           ? SystemUiOverlayStyle.light
                           : SystemUiOverlayStyle.dark,
                       child:
-                          MainScreen() /* ResetPasswordScreen(
+                          const LocationDetectorScreen() /* ResetPasswordScreen(
                         phone: "+201115583344",
                       ) */
                       ),

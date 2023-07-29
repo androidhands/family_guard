@@ -66,6 +66,8 @@ PODS:
   - Flutter (1.0.0)
   - flutter_native_splash (0.0.1):
     - Flutter
+  - flutter_sim_country_code (0.0.1):
+    - Flutter
   - fluttertoast (0.0.2):
     - Flutter
     - Toast
@@ -152,6 +154,7 @@ DEPENDENCIES:
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `Flutter`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
+  - flutter_sim_country_code (from `.symlinks/plugins/flutter_sim_country_code/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - geocoding_ios (from `.symlinks/plugins/geocoding_ios/ios`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
@@ -204,6 +207,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_native_splash:
     :path: ".symlinks/plugins/flutter_native_splash/ios"
+  flutter_sim_country_code:
+    :path: ".symlinks/plugins/flutter_sim_country_code/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
   geocoding_ios:
@@ -248,6 +253,7 @@ SPEC CHECKSUMS:
   FirebaseMessaging: bb2c4f6422a753038fe137d90ae7c1af57251316
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_native_splash: 52501b97d1c0a5f898d687f1646226c1f93c56ef
+  flutter_sim_country_code: 364e91e71f067cdec1dd1228eb4d1f13ab1a54e5
   fluttertoast: fafc4fa4d01a6a9e4f772ecd190ffa525e9e2d9c
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   geocoding_ios: a389ea40f6f548de6e63006a2e31bf66ff80769a
@@ -273,6 +279,6 @@ SPEC CHECKSUMS:
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
 
-PODFILE CHECKSUM: d2e20617c0bd3bd7073f6eae39177cd9ee5f48dd
+PODFILE CHECKSUM: eff95f13b52fba8f285a1aa3cf92742208a11262
 
 COCOAPODS: 1.12.1
