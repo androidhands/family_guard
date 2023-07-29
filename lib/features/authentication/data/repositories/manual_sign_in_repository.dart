@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:family_guard/core/error/failure.dart';
-import 'package:family_guard/features/authentication/data/datasource/manual_sing_in_data_source.dart';
+import 'package:family_guard/features/authentication/data/datasource/base_manual_sing_in_data_source.dart';
 import 'package:family_guard/features/authentication/domain/entities/sign_in_params.dart';
 import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
 import 'package:family_guard/features/authentication/domain/repositories/base_manual_sign_in_repository.dart';

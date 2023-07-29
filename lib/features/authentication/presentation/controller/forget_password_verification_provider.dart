@@ -1,30 +1,31 @@
 import 'dart:async';
-import 'dart:developer';
 
-import 'package:family_guard/features/general/utils.dart';
+import 'package:dartz/dartz.dart';
+import 'package:family_guard/features/authentication/domain/usecases/check_verification_code_usecase.dart';
+import 'package:family_guard/features/authentication/presentation/screens/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:family_guard/core/services/number_parser.dart';
+import 'package:get/get.dart';
 
-
+import '../../../../core/error/failure.dart';
 import '../../../../core/global/localization/app_localization.dart';
+import '../../../../core/services/dependency_injection_service.dart';
 import '../../../../core/services/navigation_service.dart';
 import '../../../../core/utils/app_constants.dart';
 import '../../../../core/widget/dialog_service.dart';
-
-
-import '../../domain/entities/forget_password_verification_entity.dart';
+import '../../domain/usecases/verify_user_phone_usecase.dart';
 import '../screens/reset_password_screen.dart';
+import '../utils/enums.dart';
 
 class ForgetPasswordVerificationProvider with ChangeNotifier {
-  ForgetPasswordVerificationProvider({
-    required this.forgetPasswordVerificationEntity,
-  }) {
+  ForgetPasswordVerificationProvider(
+      {required this.phone, required this.channels}) {
     startTimeout();
   }
 
   ///data
-  ForgetPasswordVerificationEntity forgetPasswordVerificationEntity;
- 
+  final String phone;
+  Channels channels;
 
   ///Timer Var
   bool timerIsRunning = true;
@@ -61,66 +62,51 @@ class ForgetPasswordVerificationProvider with ChangeNotifier {
 
   /// Resend Button
   Future<void> resendOnPress(context) async {
-  /*   if (numResendClicked < AppConstants.numBlockedVerification) {
-      isLoadingResendButton = true;
-      notifyListeners();
-      numResendClicked++;
-      var result = forgetPasswordVerificationEntity.isPhone
-          ? await sl<SendCodeForgetPasswordByPhoneUsecase>()(
-              ForgetPasswordParameters(
-                  forgetPasswordVerificationEntity.phoneCode! +
-                      forgetPasswordVerificationEntity.emailOrPhone,
-                  forgetPasswordVerificationEntity.tenantId))
-          : await sl<SendCodeForgetPasswordByEmailUsecase>()(
-              ForgetPasswordParameters(
-                  forgetPasswordVerificationEntity.emailOrPhone,
-                  forgetPasswordVerificationEntity.tenantId));
-      result.fold((l) async {
-        await DialogWidget.showCustomDialog(
-          context: context,
+    resendVerificationPhoneNumber();
+  }
+
+  void resendVerificationPhoneNumber() async {
+    isLoading = true;
+    Either<Failure, String> results = await sl<VerifyUserPhoneUsecase>()(
+        VerifyParams(phone: phone, channel: channels.name));
+    results.fold((l) async {
+      DialogWidget.showCustomDialog(
+          context: Get.context!,
           title: l.message,
           buttonText: tr(AppConstants.ok),
-        );
-        return;
-      }, (r) async {
-        forgetPasswordVerificationEntity = ForgetPasswordVerificationEntity(
-            tenantId: forgetPasswordVerificationEntity.tenantId,
-            emailOrPhone: forgetPasswordVerificationEntity.emailOrPhone,
-            isPhone: forgetPasswordVerificationEntity.isPhone,
-            sendCodeResultEntity: r,
-            phoneCode: forgetPasswordVerificationEntity.phoneCode);
-      });
-      isLoadingResendButton = false;
-      notifyListeners();
-      currentSeconds = 0;
-      timerIsRunning = true;
-      startTimeout();
-    } else {
-      if (!isBlocked) {
-        await SaveSpecificBlockedUser(baseBlockedUserRepository: sl()).call(
-            forgetPasswordVerificationEntity.isPhone
-                ? "${forgetPasswordVerificationEntity.phoneCode}${forgetPasswordVerificationEntity.emailOrPhone}"
-                : forgetPasswordVerificationEntity.emailOrPhone);
-        isBlocked = true;
-      }
-
-      ///Blocked
-      await DialogWidget.showCustomDialog(
-          context: context,
-          barrierDismissible: false,
-          title: tr(AppConstants.tooManyAttemptsPleaseTryAgainIn30Minutes),
-          buttonText: tr(AppConstants.ok),
           onPressed: () {
-            NavigationService.navigateTo(
-                navigationMethod: NavigationMethod.pushReplacement,
-                page: () => const ForgetPasswordScreen());
+            NavigationService.goBack();
           });
-    } */
+    }, (r) {});
+    isLoading = false;
+    notifyListeners();
   }
 
   ///on Submit
   void onSubmit(context) async {
-    if (forgetPasswordVerificationEntity.sendCodeResultEntity.activationCode ==
+    isLoading = true;
+
+    Either<Failure, String> results = await sl<CheckVerificationCodeUsecase>()(
+        CheckCodeParams(phone: phone, code: pinCodeController.text));
+    results.fold((l) async {
+      await DialogWidget.showCustomDialog(
+          context: context,
+          title: tr(AppConstants.incorrectOtpCode),
+          buttonText: tr(AppConstants.ok),
+          onPressed: () {
+            NavigationService.goBack();
+          });
+    }, (r) {
+      NavigationService.navigateTo(
+          navigationMethod: NavigationMethod.pushReplacement,
+          page: ResetPasswordScreen(
+            phone: phone,
+            token: r,
+          ));
+    });
+    isLoading = false;
+    notifyListeners();
+    /*  if (forgetPasswordVerificationEntity.sendCodeResultEntity.activationCode ==
         pinCodeController.text.encryptToSHA256()) {
       log('Success');
       NavigationService.navigateTo(
@@ -138,8 +124,7 @@ class ForgetPasswordVerificationProvider with ChangeNotifier {
           onPressed: () {
             NavigationService.goBack();
           });
-    }
-
+    } */
   }
 
   ///on Complete Pin Code
@@ -154,7 +139,7 @@ class ForgetPasswordVerificationProvider with ChangeNotifier {
 
   ///is Enable Submit Button
   bool isEnableSubmitButton() {
-    return pinCodeController.text.length == 4;
+    return pinCodeController.text.length == 6;
   }
 
   @override

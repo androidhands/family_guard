@@ -10,7 +10,6 @@ import 'package:family_guard/features/general/presentation/screens/terms_and_pri
 import 'package:flutter/services.dart';
 import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
 import 'package:get/get.dart';
-import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/phone_number.dart';
 
 import '../../../../core/services/navigation_service.dart';

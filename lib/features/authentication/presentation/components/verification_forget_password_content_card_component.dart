@@ -1,4 +1,3 @@
-import 'package:family_guard/core/services/number_parser.dart';
 import 'package:family_guard/core/utils/app_sizes.dart';
 import 'package:family_guard/core/widget/custom_text.dart';
 import 'package:family_guard/features/authentication/presentation/components/resend_code_component.dart';
@@ -51,10 +50,7 @@ class VerificationForgetPasswordContentCardComponent extends StatelessWidget {
                   height: AppSizes.pH1,
                 ),
                 CustomGradientText(
-                  text: provider.forgetPasswordVerificationEntity.isPhone
-                      ? "${provider.forgetPasswordVerificationEntity.phoneCode}${provider.forgetPasswordVerificationEntity.emailOrPhone}"
-                          .numberParserToArabic()
-                      : provider.forgetPasswordVerificationEntity.emailOrPhone,
+                  text: provider.phone,
                   textStyle: TextStyle(
                       fontSize: AppSizes.h7, fontWeight: AppFonts.medium),
                 ),

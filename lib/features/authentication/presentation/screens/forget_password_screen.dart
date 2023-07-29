@@ -1,16 +1,18 @@
+import 'package:family_guard/core/services/navigation_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:family_guard/features/authentication/presentation/controller/login/forget_password_provider.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/global/localization/app_localization.dart';
 
-import '../../../../core/services/dependency_injection_service.dart';
+import '../../../../core/global/theme/theme_color/theme_color_light.dart';
 import '../../../../core/utils/app_constants.dart';
 import '../../../../core/utils/app_sizes.dart';
-import '../../../../core/widget/text_form_field/custom_text_form_field.dart';
+import '../../../../core/widget/buttons/custom_elevated_button.dart';
+import '../../../../core/widget/custom_loading_indicator.dart';
 import '../components/authentication_common_body.dart';
 import '../components/authentication_header.dart';
-
+import '../components/choose_verification_channel_components.dart';
 
 class ForgetPasswordScreen extends StatelessWidget {
   const ForgetPasswordScreen({Key? key}) : super(key: key);
@@ -18,9 +20,10 @@ class ForgetPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ForgetPasswordProvider>(
-      create: (context) => ForgetPasswordProvider(sl()),
+      create: (context) => ForgetPasswordProvider(),
       child: AuthenticationCommonBody(
         title: tr(AppConstants.forgetPassword),
+        backOnPress: () => NavigationService.goBack(),
         body: Consumer<ForgetPasswordProvider>(
           builder: (context, provider, child) {
             return Form(
@@ -38,45 +41,51 @@ class ForgetPasswordScreen extends StatelessWidget {
                           horizontal: AppSizes.pW5, vertical: AppSizes.pH5),
                       child: const Divider(
                         thickness: 1,
-
                       ),
                     ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                    
-                        Expanded(
-                          child: CustomTextFormField(
-                            key: provider.countryPickerWidgetKey,
-                            controller: provider.emailOrPhoneController,
-                            onFocusChange: (hasFocus) =>
-                                provider.validateEmailOrMobilePhoneOnFocusLose(
-                                    hasFocus),
-                            labelText: tr(AppConstants.emailAddress),
-                           
-                            inputFormatters: [
-                              provider.preventLettersInPhoneField
-                                  ? FilteringTextInputFormatter.allow(
-                                      RegExp("[0-9]"))
-                                  : FilteringTextInputFormatter.allow(
-                                      RegExp("[a-zA-Z0-9@.]")),
-                            ],
-                            validator: (value) =>
-                                provider.validateEmailOrMobilePhone(value!),
-                            onChanged: (value) {
-                              provider.checkPhoneField(value);
-                              provider
-                                  .validateEmailOrMobilePhoneOnChange(value);
+                    provider.isloadingCountryCode
+                        ? Center(
+                            child: CustomLoadingIndicators.defaultLoading(),
+                          )
+                        : IntlPhoneField(
+                            decoration: InputDecoration(
+                              labelText: tr(AppConstants.phoneNumber),
+                              border: const OutlineInputBorder(
+                                borderSide: BorderSide(),
+                              ),
+                            ),
+                            initialCountryCode: provider.countryCode,
+                            dropdownIcon: const Icon(
+                              Icons.arrow_drop_down,
+                              color: ThemeColorLight.pinkColor,
+                            ),
+                            controller: provider.phoneController,
+                            onChanged: (phone) {
+                              provider.setPhoneNumber(phone);
+                              provider.checkFormReadiness();
                             },
                           ),
-                        ),
-                      ],
+                    SizedBox(
+                      height: AppSizes.pH3,
+                    ),
+                    ChooseVerificationChannelComponent(
+                      onChanged: (channels) {
+                        provider.setSelectedChannel(channels);
+                      },
+                      selectedChannel: provider.selectedChannel,
+                    ),
+                    SizedBox(
+                      height: AppSizes.pH3,
+                    ),
+                    CustomElevatedButton(
+                      onPressed: () => provider.verifyPhoneNumber(),
+                      isLoading: provider.isLoadingPhoneCodes,
+                      text: tr(AppConstants.submit),
+                      isEnabled: provider.enableVerifyButton,
                     ),
                     SizedBox(
                       height: AppSizes.pH7,
                     ),
-
-                   
                   ],
                 ));
           },

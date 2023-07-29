@@ -1,6 +1,5 @@
 import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/screen/main_screen.dart';
-import 'package:family_guard/features/authentication/presentation/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -15,6 +14,7 @@ import 'core/global/theme/theme_color/theme_color_dark.dart';
 import 'core/global/theme/theme_color/theme_color_light.dart';
 import 'core/services/dependency_injection_service.dart';
 import 'core/services/service_initializer.dart';
+import 'features/authentication/presentation/screens/reset_password_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
                 create: (context) => sl(),
               ), */
               ChangeNotifierProvider<MainProvider>(
-                create: (context) => sl(),
+                create: (context) => MainProvider(),
               ),
             ],
             child: Consumer<ThemeProvider>(
@@ -87,7 +87,11 @@ class MyApp extends StatelessWidget {
                       value: provider.appTheme.index == AppTheme.dark.index
                           ? SystemUiOverlayStyle.light
                           : SystemUiOverlayStyle.dark,
-                      child: const MainScreen()),
+                      child:
+                          MainScreen() /* ResetPasswordScreen(
+                        phone: "+201115583344",
+                      ) */
+                      ),
                 );
               },
             ),

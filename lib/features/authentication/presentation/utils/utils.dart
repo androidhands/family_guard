@@ -1,5 +1,4 @@
 import 'package:family_guard/core/utils/app_assets.dart';
-import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/phone_number.dart';
 

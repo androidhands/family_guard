@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
 import 'package:family_guard/core/widget/custom_loading_indicator.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +25,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<LoginProvider>(
-      create: (context) => sl(),
+      create: (context) => LoginProvider(),
       child: Consumer<LoginProvider>(
         builder: (context, provider, child) {
           return AuthenticationCommonBody(

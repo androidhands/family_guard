@@ -62,5 +62,12 @@ Map<String, String> coreAr = {
   'ENTER_OTP_CODE': 'Enter OTP Code',
   "DETECTING_LOCATION": 'Detect Location',
   'SaveYourAddress':
-      'To complete your signing up your address is required. Please, pickup your right address'
+      'To complete your signing up your address is required. Please, pickup your right address',
+  'ENTER_EMAIL_OR_MOBILE':
+      'Please enter the mobile number associated with your account',
+  'Sms': 'SMS',
+  'WHATSAPP': 'Whatsapp',
+  'CREATE_NEW_PASSWORD': 'Create new password',
+  'WE’LL_ASK_FOR_THIS_PASSWORD_WHENEVER_YOU_SIGN_IN':
+      'We’ll ask for this password whenever you sign in.',
 };

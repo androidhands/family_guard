@@ -22,7 +22,7 @@ class AppConstants {
   static const int defaultPageSize = 15;
 
   ///block
-  static const int numBlockedVerification = 4;
+  static const int numBlockedVerification = 2;
 
   ///MORE SCREEN
   static const int maxOrganizationName = 15;

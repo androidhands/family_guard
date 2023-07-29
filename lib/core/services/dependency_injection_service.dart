@@ -1,19 +1,24 @@
 import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/features/authentication/data/datasource/base_user_address_data_source.dart';
 import 'package:family_guard/features/authentication/data/datasource/base_users_credentials_data_source.dart';
-import 'package:family_guard/features/authentication/data/datasource/manual_sing_in_data_source.dart';
+import 'package:family_guard/features/authentication/data/datasource/base_forget_password_data_source.dart';
+import 'package:family_guard/features/authentication/data/datasource/base_manual_sing_in_data_source.dart';
+import 'package:family_guard/features/authentication/data/repositories/forget_password_repository.dart';
 import 'package:family_guard/features/authentication/data/repositories/manual_sign_in_repository.dart';
 import 'package:family_guard/features/authentication/data/repositories/manual_sign_up_reposiory.dart';
 import 'package:family_guard/features/authentication/data/repositories/user_address_repository.dart';
 import 'package:family_guard/features/authentication/data/repositories/user_credentials_repository.dart';
+import 'package:family_guard/features/authentication/domain/repositories/base_forget_password_repository.dart';
 import 'package:family_guard/features/authentication/domain/repositories/base_manual_sign_in_repository.dart';
 import 'package:family_guard/features/authentication/domain/repositories/base_manual_sign_up_repository.dart';
 import 'package:family_guard/features/authentication/domain/repositories/base_user_address_repositoy.dart';
 import 'package:family_guard/features/authentication/domain/repositories/base_user_credentials_repository.dart';
+import 'package:family_guard/features/authentication/domain/usecases/check_verification_code_usecase.dart';
 import 'package:family_guard/features/authentication/domain/usecases/get_cached_user_credentials_usecase.dart';
 import 'package:family_guard/features/authentication/domain/usecases/manual_sign_up_usecase.dart';
 import 'package:family_guard/features/authentication/domain/usecases/save_user_address_usecase.dart';
 import 'package:family_guard/features/authentication/domain/usecases/save_user_credentials_usecase.dart';
+import 'package:family_guard/features/authentication/domain/usecases/verify_user_phone_usecase.dart';
 import 'package:family_guard/features/authentication/presentation/controller/login/login_provider.dart';
 import 'package:family_guard/features/authentication/presentation/controller/sign_up_provider.dart';
 import 'package:get_it/get_it.dart';
@@ -29,9 +34,11 @@ import 'package:family_guard/core/services/location_fetcher.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../features/authentication/data/datasource/manual_sign_up_data_source.dart';
+import '../../features/authentication/data/datasource/base_manual_sign_up_data_source.dart';
 import '../../features/authentication/domain/usecases/manual_sign_in_usecase.dart';
+import '../../features/authentication/domain/usecases/reset_password_usecase.dart';
 import '../../features/authentication/domain/usecases/sign_out_user_usecase.dart';
+import '../../features/authentication/presentation/controller/reset_password_provider.dart';
 import 'connectivity_services.dart';
 import 'date_parser.dart';
 
@@ -68,6 +75,9 @@ class DependencyInjectionServices {
 
     //user address
     initializeUserAddress();
+
+    //forget password
+    initializeForgetPassword();
   }
 
   initializeLocationFetcher() {
@@ -125,6 +135,9 @@ class DependencyInjectionServices {
     sl.registerLazySingleton(() =>
         GetCachedUserCredentialsUsecase(baseUserCredentialsRepository: sl()));
 
+    sl.registerLazySingleton(
+        () => SignOutUserUsecase(baseManualSignInRepository: sl()));
+
     //repositories
     sl.registerLazySingleton<BaseUserCredentialsRepository>(
         () => UserCredentialsRepository(baseUsersCredentialsDataSource: sl()));
@@ -145,9 +158,6 @@ class DependencyInjectionServices {
     //usecases
     sl.registerLazySingleton(
         () => ManualSignInUsecase(baseManualSignInRepository: sl()));
-
-    sl.registerLazySingleton(
-        () => SignOutUserUsecase(baseManualSignInRepository: sl()));
 
     sl.registerLazySingleton<BaseManualSingInDataSource>(
         () => ManualSingInDataSource());
@@ -182,5 +192,26 @@ class DependencyInjectionServices {
     //datasource
     sl.registerLazySingleton<BaseUserAddressDataSource>(
         () => UserAddressDataSource());
+  }
+
+  initializeForgetPassword() {
+    //provider
+    sl.registerLazySingleton(() => ResetPasswordProvider());
+    //repositories
+    sl.registerLazySingleton<BaseForgetPasswordRepository>(
+        () => ForgetPasswordRepository(baseForgetPasswordDataSource: sl()));
+
+    // usecases
+    sl.registerLazySingleton(
+        () => VerifyUserPhoneUsecase(baseForgetPasswordRepository: sl()));
+
+    sl.registerLazySingleton(
+        () => ResetPasswordUsecase(baseForgetPasswordRepository: sl()));
+
+    sl.registerLazySingleton(
+        () => CheckVerificationCodeUsecase(baseForgetPasswordRepository: sl()));
+    //datasources
+    sl.registerLazySingleton<BaseForgetPasswordDataSource>(
+        () => ForgetPasswordDataSource());
   }
 }

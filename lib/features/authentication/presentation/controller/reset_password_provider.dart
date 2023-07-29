@@ -1,20 +1,25 @@
+import 'package:family_guard/features/home/presentation/screens/home_screen.dart';
 import 'package:flutter/cupertino.dart';
-
+import 'package:get/get.dart';
 
 import '../../../../core/global/localization/app_localization.dart';
 
+import '../../../../core/services/dependency_injection_service.dart';
 import '../../../../core/services/navigation_service.dart';
 import '../../../../core/utils/app_constants.dart';
 
+import '../../../../core/widget/dialog_service.dart';
 import '../../domain/entities/send_code_result_entity.dart';
 
+import '../../domain/usecases/reset_password_usecase.dart';
+import '../../domain/usecases/save_user_credentials_usecase.dart';
 import '../utils/constants.dart';
 
 class ResetPasswordProvider with ChangeNotifier {
   ResetPasswordProvider();
 
   ///Use Case
- // ResetPasswordUseCase resetPasswordUseCase;
+  // ResetPasswordUseCase resetPasswordUseCase;
 
   ///controller
   final TextEditingController passwordController = TextEditingController();
@@ -123,45 +128,29 @@ class ResetPasswordProvider with ChangeNotifier {
   }
 
   ///reset button
-  void submit(
-      {required SendCodeResultEntity sendCodeResultEntity,
-      required int tenantId,
-      required BuildContext context}) async {
-    /* passwordShowValidation = true;
+  void submit({required String phone, required String token}) async {
+    passwordShowValidation = true;
     confirmPasswordShowValidation = true;
     if (formKey.currentState!.validate()) {
       isLoadingResetPassword = true;
       notifyListeners();
-      (await resetPasswordUseCase.call(ResetPasswordParams(
-              activationCode: sendCodeResultEntity.activationCode,
-              confirmPassword: confirmPasswordController.text,
-              isAutomaticSignIn: true,
-              newPassword: passwordController.text,
-              token: sendCodeResultEntity.token,
-              tenantId: tenantId,
-              user: sendCodeResultEntity.user)))
+      (await sl<ResetPasswordUsecase>()(ResetPasswordParam(
+              mobile: phone, token: token, password: passwordController.text)))
           .fold((l) async {
+        isLoadingResetPassword = false;
         await DialogWidget.showCustomDialog(
-          context: context,
+          context: Get.context!,
           title: l.message,
           buttonText: tr(AppConstants.ok),
         );
       }, (r) async {
-        await sl<SaveAuthCredentialUseCase>()(AuthenticationResultParams(
-            accessToken: r.accessToken,
-            encryptedAccessToken: r.encryptedAccessToken,
-            expireInSeconds: r.expireInSeconds,
-            userId: r.userId,
-            thumbImageUrl: r.thumbImageUrl,
-            profileImageUrl: r.profileImageUrl,
-            fullName: r.fullName));
-        NavigationService.navigateTo(
-            navigationMethod: NavigationMethod.pushReplacement,
-            page: () => const HomeControlScreen());
+        isLoadingResetPassword = false;
+        await sl<SaveUserCredentialsUsecase>()(r);
+        NavigationService.offAll(page: () => const HomeScreen());
       });
-      isLoadingResetPassword = false;
+
       notifyListeners();
-    } */
+    }
   }
 
   goBack() {

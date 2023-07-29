@@ -1,147 +1,129 @@
+import 'dart:developer';
+
+import 'package:dartz/dartz.dart';
+import 'package:family_guard/core/error/failure.dart';
+import 'package:family_guard/features/authentication/domain/usecases/verify_user_phone_usecase.dart';
+import 'package:family_guard/features/authentication/presentation/screens/forget_password_verification_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-
-
-
+import 'package:flutter/services.dart';
+import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
+import 'package:get/get.dart';
+import 'package:intl_phone_field/phone_number.dart';
 
 import '../../../../../core/global/localization/app_localization.dart';
-
+import '../../../../../core/services/dependency_injection_service.dart';
 import '../../../../../core/services/navigation_service.dart';
+
 import '../../../../../core/utils/app_constants.dart';
-
-
-import '../../validations/cancellation_reason_validation.dart';
+import '../../../../../core/widget/dialog_service.dart';
+import '../../utils/enums.dart';
+import '../../utils/utils.dart';
 
 class ForgetPasswordProvider extends ChangeNotifier {
   ///Usecase
 
-  
-
-  ForgetPasswordProvider(sl
-   
-  ) {
-    getTextFieldHeight();
-
+  ForgetPasswordProvider() {
+    getCountryCode();
   }
 
   final formKey = GlobalKey<FormState>();
-  bool preventLettersInPhoneField = false;
+
   bool enableSendCodeButton = false;
-  bool isUsingPhone = false;
+
+  /// channneld
+  Channels selectedChannel = Channels.sms;
+
   bool isLoadingSendCode = false;
   bool isLoadingPhoneCodes = false;
+  String? countryCode;
+  bool isloadingCountryCode = true;
+  bool enableVerifyButton = false;
 
+  final TextEditingController phoneController = TextEditingController();
 
-
-  final TextEditingController emailOrPhoneController = TextEditingController();
-  late int tenantId;
-
-  bool emailOrPhoneShowValidation = true;
+  bool phoneShowValidation = true;
 
   ///Design related vars
-  final GlobalKey countryPickerWidgetKey = GlobalKey();
-  double textFieldHeight = 0.0;
 
-  getTextFieldHeight() {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      textFieldHeight = countryPickerWidgetKey.currentContext!.size!.height;
-      notifyListeners();
-    });
-  }
-
-  String? validateEmailOrMobilePhone(String value) {
-    if (!emailOrPhoneShowValidation) return null;
-    if (value.isEmpty) {
-      return tr(AppConstants.pleaseEnterAnEmailOrMobileNumber);
-    } else if (value.startsWith(RegExp(r'[A-Z]|[a-z]'))) {
-      String patternEmail =
-          r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)";
-      if (!checkPattern(pattern: patternEmail, value: value)) {
-        return tr(AppConstants.emailIsNotCorrect);
-      }
-    } else if (value.startsWith(RegExp(r'[0-9]'))) {
-    /*   if (selectedPhoneCode?.phoneCode == saPC) {
-        Pattern patternMobileNumberSA = r'^5[5|0|3|6|4|9|1|8|7][0-9]{7,8}$';
-        if (!checkPattern(pattern: patternMobileNumberSA, value: value)) {
-          return tr(AppConstants.mobileNumberIsNotCorrect);
-        }
-      } else if (selectedPhoneCode?.phoneCode == egyPC) {
-        Pattern patternMobileNumberEG = r'^1[0|1|2|5][0-9]{8}$';
-        if (!checkPattern(pattern: patternMobileNumberEG, value: value)) {
-          return tr(AppConstants.mobileNumberIsNotCorrect);
-        }
-      } else {
-        if (value.length <
-                getMinLengthFromPhoneCode(selectedPhoneCode?.phoneCode) ||
-            value.length >
-                getMaxLengthFromPhoneCode(selectedPhoneCode?.phoneCode)) {
-          return tr(AppConstants.mobileNumberIsNotCorrect);
-        }
-      } */
+  Future getCountryCode() async {
+    try {
+      countryCode = await FlutterSimCountryCode.simCountryCode;
+      log(countryCode!);
+    } on PlatformException {
+      log('Failed to get sim country code.');
     }
+    isloadingCountryCode = false;
     notifyListeners();
-    return null;
   }
 
-  // String? validateEmailOrMobilePhone(String value) {
-  //   if (!emailOrPhoneShowValidation) return null;
-  //   if (value.isEmpty) {
-  //     return tr(AppConstance.pleaseEnterAnEmailOrMobileNumber);
-  //   } else if (value.startsWith(RegExp(r'[A-Z]|[a-z]'))) {
-  //     String patternEmail =
-  //         r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)";
-  //     if (!checkPattern(pattern: patternEmail, value: value)) {
-  //       return tr(AppConstance.emailIsNotCorrect);
-  //     }
-  //   } else if (value.startsWith(RegExp(r'[0-9]'))) {
-  //     Pattern patternMobileNumberEG = r'^1[0|1|2|5][0-9]{8}$';
-  //     Pattern patternMobileNumberSA = r'^5[5|0|3|6|4|9|1|8|7][0-9]{7,8}$';
-  //     if (!checkPattern(pattern: patternMobileNumberEG, value: value) &&
-  //         !checkPattern(pattern: patternMobileNumberSA, value: value)) {
-  //       return tr(AppConstance.mobileNumberIsNotCorrect);
-  //     }
-  //   }
-  //   notifyListeners();
-  //   return null;
-  // }
+  PhoneNumber? phoneNumber;
+  void setPhoneNumber(PhoneNumber phone) {
+    phoneNumber = phone;
+    log(isValidNumber(phoneNumber!).toString());
+    checkFormReadiness();
+  }
+
+  void checkFormReadiness() {
+    bool isNotValid =
+        phoneController.text.isEmpty || !isValidNumber(phoneNumber!);
+    if (enableVerifyButton != !isNotValid) {
+      enableVerifyButton = !isNotValid;
+      notifyListeners();
+    }
+  }
 
   validateEmailOrMobilePhoneOnChange(String value) {
-    if (value.length > 1 && !emailOrPhoneShowValidation) return;
-    emailOrPhoneShowValidation = false;
+    if (value.length > 1 && !phoneShowValidation) return;
+    phoneShowValidation = false;
     notifyListeners();
     formKey.currentState?.validate();
   }
 
   validateEmailOrMobilePhoneOnFocusLose(bool hasFocus) {
     if (!hasFocus) {
-      emailOrPhoneShowValidation = true;
+      phoneShowValidation = true;
       notifyListeners();
       formKey.currentState?.validate();
+      checkFormReadiness();
     }
-  }
-
-  void checkPhoneField(value) {
-    if (value.startsWith(RegExp(r'[0-9]'))) {
-      preventLettersInPhoneField = true;
-      isUsingPhone = true;
-    } else {
-      preventLettersInPhoneField = false;
-      isUsingPhone = false;
-    }
-    notifyListeners();
   }
 
   void backToLogin() {
     NavigationService.goBack();
   }
 
-  Future<bool> checkIfUserIsBlocked() async {
-  
-    return false;
+  void verifyPhoneNumber() async {
+    if (formKey.currentState!.validate()) {
+      isLoadingPhoneCodes = true;
+      notifyListeners();
+      log('start sending');
+      Either<Failure, String> results = await sl<VerifyUserPhoneUsecase>()(
+          VerifyParams(
+              phone: phoneNumber!.completeNumber,
+              channel: selectedChannel.name));
+      results.fold((l) async {
+        DialogWidget.showCustomDialog(
+            context: Get.context!,
+            title: l.message,
+            buttonText: tr(AppConstants.ok),
+            onPressed: () {
+              NavigationService.goBack();
+            });
+      }, (r) {
+        NavigationService.navigateTo(
+            navigationMethod: NavigationMethod.pushReplacement,
+            page: () => ForgetPasswordVerificationScreen(
+                  phone: phoneNumber!.completeNumber,
+                  channels: selectedChannel,
+                ));
+      });
+      isLoadingPhoneCodes = false;
+      notifyListeners();
+    }
   }
 
- 
-
- 
-  
+  void setSelectedChannel(Channels channels) {
+    selectedChannel = channels;
+    notifyListeners();
+  }
 }

@@ -8,7 +8,6 @@ import 'package:family_guard/features/authentication/domain/entities/user_entity
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
 import 'package:get/get.dart';
 
 import '../../features/authentication/domain/usecases/get_cached_user_credentials_usecase.dart';
@@ -28,11 +27,7 @@ class MainProvider extends ChangeNotifier {
     initializeConnectivityChecker();
   }
 
- 
-
   late UserEntity? userCredentials;
-
-
 
   Future<bool> getCachedUserCredentials() async {
     Either<Failure, UserEntity?> results =
@@ -55,7 +50,6 @@ class MainProvider extends ChangeNotifier {
 
     return user != null && cached;
   }
-
 
   Future initializeConnectivityChecker() async {
     String? locale = await sl<SharedPreferencesServices>()
@@ -89,7 +83,7 @@ class MainProvider extends ChangeNotifier {
           navigationMethod: NavigationMethod.pushReplacement,
           page: () => const NoNetWorkScreen()); */
     }
-   
+
     await sl<ConnectivityService>().initializeConnectivityListeners();
   }
 
@@ -104,13 +98,12 @@ class MainProvider extends ChangeNotifier {
       if (r) {
         NavigationService.goBack();
         NavigationService.offAll(page: () => const LoginScreen());
-        if (Platform.isAndroid) {
+        /* if (Platform.isAndroid) {
           SystemNavigator.pop();
         } else if (Platform.isIOS) {
           exit(0);
-        }
+        } */
       }
     });
   }
-
 }

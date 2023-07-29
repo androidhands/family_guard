@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../core/controllers/main_provider.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/local_data/shared_preferences_services.dart';
 import '../../../../core/network/api_caller.dart';
@@ -13,7 +16,7 @@ import '../models/user_model.dart';
 
 abstract class BaseManualSingInDataSource {
   Future<UserEntity> signInUserManually(SignInParams signInParams);
-   Future<bool> signOutUser();
+  Future<bool> signOutUser();
 }
 
 class ManualSingInDataSource implements BaseManualSingInDataSource {
@@ -28,15 +31,15 @@ class ManualSingInDataSource implements BaseManualSingInDataSource {
         'password': signInParams.password
       },
       onFailure: (ErrorMessage failureData) {
-      throw ServerException(
-                message: failureData.message,
-                code: failureData.code,
-              );
+        throw ServerException(
+          message: failureData.message,
+          code: failureData.code,
+        );
       },
     );
   }
 
-   @override
+  @override
   Future<bool> signOutUser() async {
     try {
       final cacheDir = await getTemporaryDirectory();
@@ -52,7 +55,19 @@ class ManualSingInDataSource implements BaseManualSingInDataSource {
       }
       sl<SharedPreferencesServices>().clearAll();
       await FirebaseAuth.instance.signOut();
-      return true;
+      UserEntity? user = Provider.of<MainProvider>(Get.context!, listen: false)
+          .userCredentials;
+      return await sl<ApiCaller>().requestPost(
+        ApiEndPoint.logoutPath,
+        (data) => true,
+        token: user!.apiToken,
+        onFailure: (ErrorMessage failureData) {
+          throw ServerException(
+            message: failureData.message,
+            code: failureData.code,
+          );
+        },
+      );
     } on FirebaseAuthException catch (e) {
       throw ServerException(message: e.message!, code: '');
     }

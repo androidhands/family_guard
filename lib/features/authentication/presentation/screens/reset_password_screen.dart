@@ -11,17 +11,16 @@ import '../../../../core/widget/custom_check_box.dart';
 import '../../../../core/widget/custom_links.dart';
 import '../../../../core/widget/custom_text.dart';
 import '../../../../core/widget/text_form_field/custom_text_form_field.dart';
-import '../../domain/entities/send_code_result_entity.dart';
 import '../components/authentication_common_body.dart';
 import '../components/authentication_header.dart';
 import '../controller/reset_password_provider.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
-  final int tenantId;
-  final SendCodeResultEntity sendCodeResultEntity;
+  final String phone;
+  final String token;
 
   const ResetPasswordScreen(
-      {Key? key, required this.sendCodeResultEntity, required this.tenantId})
+      {Key? key, required this.phone, required this.token})
       : super(key: key);
 
   @override
@@ -129,10 +128,8 @@ class ResetPasswordScreen extends StatelessWidget {
                         ///Reset password button
                         CustomElevatedButton(
                             isEnabled: provider.enableVerifyButton,
-                            onPressed: () => provider.submit(
-                                sendCodeResultEntity: sendCodeResultEntity,
-                                tenantId: tenantId,
-                                context: context),
+                            onPressed: () =>
+                                provider.submit(phone: phone, token: token),
                             isLoading: provider.isLoadingResetPassword,
                             text: tr(AppConstants.submit)),
                         SizedBox(
