@@ -1,6 +1,8 @@
+import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/features/home/presentation/screens/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/global/localization/app_localization.dart';
 
@@ -145,8 +147,20 @@ class ResetPasswordProvider with ChangeNotifier {
         );
       }, (r) async {
         isLoadingResetPassword = false;
-        await sl<SaveUserCredentialsUsecase>()(r);
-        NavigationService.offAll(page: () => const HomeScreen());
+
+        (await sl<SaveUserCredentialsUsecase>()(r)).fold((l) async {
+          await DialogWidget.showCustomDialog(
+            context: Get.context!,
+            title: l.message,
+            buttonText: tr(AppConstants.ok),
+          );
+        }, (r) async {
+          await Provider.of<MainProvider>(Get.context!, listen: false)
+              .getCachedUserCredentials()
+              .then((value) {
+            NavigationService.offAll(page: () => const HomeScreen());
+          });
+        });
       });
 
       notifyListeners();

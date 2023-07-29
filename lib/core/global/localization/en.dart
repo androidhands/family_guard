@@ -70,4 +70,5 @@ Map<String, String> coreEn = {
     'CREATE_NEW_PASSWORD': 'Create new password',
   'WE’LL_ASK_FOR_THIS_PASSWORD_WHENEVER_YOU_SIGN_IN':
       'We’ll ask for this password whenever you sign in.',
+      'SELECT_CHANNEL':'Select Channel'
 };

@@ -313,4 +313,6 @@ class AppConstants {
   static const String  saveYourAddreess = "SaveYourAddress";
 
   static const String  cachedUserAddress = "CACHED_USER_ADDRESS";
+
+  static const  String selectChannel = "SELECT_CHANNEL";
 }

@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
                           ? SystemUiOverlayStyle.light
                           : SystemUiOverlayStyle.dark,
                       child:
-                          const LocationDetectorScreen() /* ResetPasswordScreen(
+                          const MainScreen() /* ResetPasswordScreen(
                         phone: "+201115583344",
                       ) */
                       ),

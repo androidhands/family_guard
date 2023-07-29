@@ -38,7 +38,7 @@ class ChooseVerificationChannelComponent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomText.primaryBodyLarge(
-              tr(AppConstants.selectGender),
+              tr(AppConstants.selectChannel),
               textStyle: Theme.of(context)
                   .textTheme
                   .bodyLarge!

@@ -8,27 +8,21 @@
          "name": "family_guard",
          "request": "launch",
          "type": "dart",
-         "args": [
-            "--no-enable-impeller"
-         ]
       },
       {
          "name": "family_guard (profile mode)",
          "request": "launch",
          "type": "dart",
          "flutterMode": "profile",
-         "args": [
-            "--no-enable-impeller"
-         ]
       },
       {
          "name": "family_guard (release mode)",
          "request": "launch",
          "type": "dart",
          "flutterMode": "release",
-         "args": [
+         /*   "args": [
             "--no-enable-impeller"
-         ]
+         ] */
       }
    ]
 }
