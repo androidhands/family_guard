@@ -11,7 +11,6 @@ import '../../../../core/services/navigation_service.dart';
 import '../../../../core/utils/app_constants.dart';
 
 import '../../../../core/widget/dialog_service.dart';
-import '../../domain/entities/send_code_result_entity.dart';
 
 import '../../domain/usecases/reset_password_usecase.dart';
 import '../../domain/usecases/save_user_credentials_usecase.dart';

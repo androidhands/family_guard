@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 import 'package:family_guard/features/authentication/domain/usecases/check_verification_code_usecase.dart';
-import 'package:family_guard/features/authentication/presentation/screens/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:family_guard/core/services/number_parser.dart';
 import 'package:get/get.dart';

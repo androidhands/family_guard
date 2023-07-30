@@ -127,7 +127,9 @@ class LocationDetectorProvider with ChangeNotifier {
         street: placemark.street ?? "",
         postalCode: placemark.postalCode ?? "",
         updatedAt: '',
-        createdAt: '');
+        createdAt: '',
+        lat: coordinates.latitude,
+        lon: coordinates.longitude);
     isLoadingLocation = false;
     notifyListeners();
   }

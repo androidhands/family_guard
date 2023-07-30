@@ -28,6 +28,7 @@ class ForgetPasswordVerificationScreen extends StatelessWidget {
         builder: (context, provider, child) {
           return AuthenticationCommonBody(
               title: tr(AppConstants.verification),
+              
               backOnPress: () => NavigationService.goBack(),
               body: const VerificationForgetPasswordContentCardComponent());
         },

@@ -10,7 +10,6 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/global/localization/app_localization.dart';
-import '../../../../core/services/dependency_injection_service.dart';
 import '../../../../core/utils/app_constants.dart';
 import '../../../../core/utils/app_sizes.dart';
 import '../../../../core/widget/buttons/custom_elevated_button.dart';

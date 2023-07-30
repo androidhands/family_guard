@@ -1,6 +1,8 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/screen/main_screen.dart';
-import 'package:family_guard/features/authentication/presentation/screens/location_detector_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -13,9 +15,7 @@ import 'core/global/theme/app_theme.dart';
 import 'core/global/theme/controller/theme_provider.dart';
 import 'core/global/theme/theme_color/theme_color_dark.dart';
 import 'core/global/theme/theme_color/theme_color_light.dart';
-import 'core/services/dependency_injection_service.dart';
 import 'core/services/service_initializer.dart';
-import 'features/authentication/presentation/screens/reset_password_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    log(Platform.operatingSystem);
     return GestureDetector(
       onTap: () {
         ///TO Handle keyboard Focus

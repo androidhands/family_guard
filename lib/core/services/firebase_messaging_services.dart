@@ -34,8 +34,7 @@ class FirebaseMessagingServices {
       NotificationModel notificationModel = getEventMessage(message);
       log('Message data: ${notificationModel.toMap()}');
       if (message.notification != null) {
-        log(
-            'Message also contained a notification: ${message.notification!.toMap()}');
+        log('Message also contained a notification: ${message.notification!.toMap()}');
         CustomSnackBar.showSnackBarSingleLine(
             description: message.notification!.body ?? ' ',
             title: message.notification!.title ?? ' ',
@@ -45,13 +44,18 @@ class FirebaseMessagingServices {
       }
     });
 
+    FirebaseMessaging.instance.onTokenRefresh
+        .listen((event)async {
+          
+        })
+        .onError((error) {});
+
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       log('Got a message whilst in the foreground!');
       NotificationModel notificationModel = getEventMessage(message);
       log('Message data: ${notificationModel.toMap()}');
       if (message.notification != null) {
-        log(
-            'Message also contained a notification: ${message.notification!.toMap()}');
+        log('Message also contained a notification: ${message.notification!.toMap()}');
         CustomSnackBar.showSnackBarSingleLine(
             description: message.notification!.body ?? ' ',
             title: message.notification!.title ?? ' ',

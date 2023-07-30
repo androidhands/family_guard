@@ -12,9 +12,11 @@ class AddressModel extends AddressEntity {
       required street,
       required postalCode,
       required updatedAt,
-      required createdAt})
+      required createdAt,
+      required lat,
+      required lon})
       : super(id, mobile, country, adminArea, subAdminArea, locality,
-            subLocality, street, postalCode, updatedAt, createdAt);
+            subLocality, street, postalCode, updatedAt, createdAt, lat, lon);
 
   factory AddressModel.fromJson(Map<String, dynamic> json) {
     return AddressModel(
@@ -28,7 +30,9 @@ class AddressModel extends AddressEntity {
         street: json['street'],
         postalCode: json['postal_code'],
         updatedAt: json['updated_at'],
-        createdAt: json['created_at']);
+        createdAt: json['created_at'],
+        lat: json['lat'],
+        lon: json['lon']);
   }
 
   Map<String, dynamic> toJson() {
@@ -44,6 +48,8 @@ class AddressModel extends AddressEntity {
       'postal_code': postalCode,
       'updated_at': updatedAt,
       'created_at': createdAt,
+      'lat': lat,
+      'lon': lon
     };
   }
 }

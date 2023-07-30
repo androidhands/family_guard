@@ -7,7 +7,6 @@ import 'package:family_guard/core/error/failure.dart';
 import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../features/authentication/domain/usecases/get_cached_user_credentials_usecase.dart';

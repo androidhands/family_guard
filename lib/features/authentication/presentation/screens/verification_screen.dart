@@ -1,3 +1,4 @@
+import 'package:family_guard/core/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:family_guard/core/widget/custom_loading_indicator.dart';
 import 'package:provider/provider.dart';
@@ -11,10 +12,8 @@ import '../controller/verification_provider.dart';
 
 class VerificationScreen extends StatelessWidget {
   final SignUpParams signUpParams;
- 
 
-  const VerificationScreen(
-      {Key? key, required this.signUpParams})
+  const VerificationScreen({Key? key, required this.signUpParams})
       : super(key: key);
 
   @override
@@ -22,7 +21,6 @@ class VerificationScreen extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => VerificationProvider(
         signUpParams: signUpParams,
-       
       ),
       child: Consumer<VerificationProvider>(
         builder: (context, provider, child) {
@@ -33,9 +31,9 @@ class VerificationScreen extends StatelessWidget {
                 )
               : AuthenticationCommonBody(
                   title: tr(AppConstants.verification),
+                  backOnPress: () => NavigationService.goBack(),
                   body: VerificationContentCardComponent(
                     signUpParams: signUpParams,
-                   
                   ));
         },
       ),
