@@ -47,4 +47,14 @@ class NotificationCountRepository implements BaseNotificationRepository {
       return Left(ServerFailure(code: ex.code, message: ex.message));
     }
   }
+  
+  @override
+  Future<Either<Failure, bool>> refreshToken(String token) async{
+    try {
+      return Right(
+          await baseNotificationDataSource.refreshToken(token));
+    } on ServerException catch (ex) {
+      return Left(ServerFailure(code: ex.code, message: ex.message));
+    }
+  }
 }

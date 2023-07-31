@@ -1,6 +1,8 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:family_guard/core/controllers/main_provider.dart';
+import 'package:family_guard/core/services/firebase_messaging_services.dart';
 import 'package:family_guard/features/authentication/domain/usecases/save_user_credentials_usecase.dart';
 import 'package:family_guard/features/home/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/phone_number.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../core/global/localization/app_localization.dart';
 import '../../../../../core/local_data/shared_preferences_services.dart';
@@ -216,7 +219,9 @@ class LoginProvider extends ChangeNotifier {
     if (formKey.currentState!.validate()) {
       _signInParameters = SignInParams(
           mobile: phoneNumber!.completeNumber,
-          password: passwordController.text);
+          password: passwordController.text,
+          token: (await sl<FirebaseMessagingServices>().deviceToken())!,
+          platform: Platform.operatingSystem);
       var signInResults = await sl<ManualSignInUsecase>()(_signInParameters);
       signInResults.fold((l) async {
         await DialogWidget.showCustomDialog(
@@ -231,10 +236,12 @@ class LoginProvider extends ChangeNotifier {
             title: l.message,
             buttonText: tr(AppConstants.ok),
           );
-        }, (r) {
-          NavigationService.navigateTo(
-              navigationMethod: NavigationMethod.pushReplacement,
-              page: () => const HomeScreen());
+        }, (r) async {
+          await Provider.of<MainProvider>(Get.context!, listen: false)
+              .getCachedUserCredentials()
+              .then((value) => NavigationService.navigateTo(
+                  navigationMethod: NavigationMethod.pushReplacement,
+                  page: () => const HomeScreen()));
         });
       });
     }

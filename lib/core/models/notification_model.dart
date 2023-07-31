@@ -30,10 +30,10 @@ class NotificationModel {
       isPinned: !(event.data["IsPinned"].toString().toLowerCase() == 'false'),
       isRead: !(event.data["IsReaded"].toString().toLowerCase() == 'false'),
       routePath: event.data["RoutePath"],
-      body: event.data['Body'] ?? '',
-      imageUrl: event.data['ImageUrl'] ?? '',
-      title: event.data['Title'] ?? '',
-      id: int.tryParse(event.data['Id'].toString()),
+      body: event.data['body'] ?? '',
+      imageUrl: event.data['imageUrl'] ?? '',
+      title: event.data['title'] ?? '',
+      id: int.tryParse(event.data['id'].toString()),
     );
   }
 
@@ -42,11 +42,11 @@ class NotificationModel {
       "IsPinned": isPinned,
       "IsReaded": isRead,
       "RoutePath": routePath,
-      "Body": body,
-      "ImageUrl": imageUrl,
-      "Title": title,
+      "body": body,
+      "imageUrl": imageUrl,
+      "title": title,
       "sentTime": sentTime,
-      "Id": id
+      "id": id
     };
   }
 }

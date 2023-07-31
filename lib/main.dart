@@ -15,6 +15,7 @@ import 'core/global/theme/app_theme.dart';
 import 'core/global/theme/controller/theme_provider.dart';
 import 'core/global/theme/theme_color/theme_color_dark.dart';
 import 'core/global/theme/theme_color/theme_color_light.dart';
+import 'core/services/dependency_injection_service.dart';
 import 'core/services/service_initializer.dart';
 
 void main() async {
@@ -41,14 +42,15 @@ class MyApp extends StatelessWidget {
         builder: (_, __) {
           return MultiProvider(
             providers: [
+              ChangeNotifierProvider<MainProvider>(
+                create: (context) =>
+                    MainProvider(getCachedUserCredentialsUsecase: sl()),
+              ),
               ChangeNotifierProvider<ThemeProvider>(
                   create: (context) => ThemeProvider(
                       appTheme: ServiceInitializer.savedAppTheme,
                       themeData:
                           appThemeData[ServiceInitializer.savedAppTheme]!)),
-              ChangeNotifierProvider<MainProvider>(
-                create: (context) => MainProvider(),
-              ),
             ],
             child: Consumer<ThemeProvider>(
               builder: (BuildContext context, provider, _) {

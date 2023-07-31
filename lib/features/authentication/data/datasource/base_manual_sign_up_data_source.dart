@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:family_guard/features/authentication/data/models/user_model.dart';
 import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
@@ -16,6 +17,7 @@ abstract class BaseManualSignUpDataSource {
 class ManualSignUpDataSource implements BaseManualSignUpDataSource {
   @override
   Future<UserEntity> signUpUserManually(SignUpParams signUpParams) async {
+    log(signUpParams.toJson().toString());
     return await sl<ApiCaller>().requestPost(
       ApiEndPoint.manualSignUpPath,
       (data) => UserModel.fromJson(data),

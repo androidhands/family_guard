@@ -29,6 +29,12 @@ class HomeScreen extends StatelessWidget {
                       tr(AppConstants.welcome),
                       textStyle: Theme.of(context).textTheme.displayLarge!,
                     ),
+                    CustomText(
+                      Provider.of<MainProvider>(context, listen: false)
+                          .userCredentials!
+                          .mobile,
+                      textStyle: Theme.of(context).textTheme.displayLarge!,
+                    ),
                     CustomElevatedButton(
                       text: tr(AppConstants.logOut),
                       onPressed: () async {

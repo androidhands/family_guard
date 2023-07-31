@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
@@ -22,13 +24,16 @@ abstract class BaseManualSingInDataSource {
 class ManualSingInDataSource implements BaseManualSingInDataSource {
   @override
   Future<UserEntity> signInUserManually(SignInParams signInParams) async {
+   
     return await sl<ApiCaller>().requestPost(
       ApiEndPoint.manualSignInPath,
       (data) => UserModel.fromJson(data),
       body: <String, dynamic>{
         'api_password': ApiEndPoint.apiPassword,
         'mobile': signInParams.mobile,
-        'password': signInParams.password
+        'password': signInParams.password,
+        'token': signInParams.token,
+        'platform': signInParams.platform
       },
       onFailure: (ErrorMessage failureData) {
         throw ServerException(

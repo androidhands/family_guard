@@ -13,6 +13,7 @@ import 'package:family_guard/features/authentication/domain/repositories/base_ma
 import 'package:family_guard/features/authentication/domain/repositories/base_manual_sign_up_repository.dart';
 import 'package:family_guard/features/authentication/domain/repositories/base_user_address_repositoy.dart';
 import 'package:family_guard/features/authentication/domain/repositories/base_user_credentials_repository.dart';
+import 'package:family_guard/features/authentication/domain/usecases/check_user_credentials_usecase.dart';
 import 'package:family_guard/features/authentication/domain/usecases/check_verification_code_usecase.dart';
 import 'package:family_guard/features/authentication/domain/usecases/get_cached_user_credentials_usecase.dart';
 import 'package:family_guard/features/authentication/domain/usecases/manual_sign_up_usecase.dart';
@@ -21,6 +22,9 @@ import 'package:family_guard/features/authentication/domain/usecases/save_user_c
 import 'package:family_guard/features/authentication/domain/usecases/verify_user_phone_usecase.dart';
 import 'package:family_guard/features/authentication/presentation/controller/login/login_provider.dart';
 import 'package:family_guard/features/authentication/presentation/controller/sign_up_provider.dart';
+import 'package:family_guard/features/notifications/data/datasource/notifications_datasource.dart';
+import 'package:family_guard/features/notifications/data/repositories/notification_count_repository.dart';
+import 'package:family_guard/features/notifications/domain/repositories/base_notification_repository.dart';
 import 'package:get_it/get_it.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
 import 'package:family_guard/core/global/theme/data/datasource/theme_datasource.dart';
@@ -40,6 +44,7 @@ import '../../features/authentication/domain/usecases/reset_password_usecase.dar
 import '../../features/authentication/domain/usecases/sign_out_user_usecase.dart';
 import '../../features/authentication/presentation/controller/location_detector_provider.dart';
 import '../../features/authentication/presentation/controller/reset_password_provider.dart';
+import '../../features/notifications/domain/usecases/refresh_token_usecase.dart';
 import 'connectivity_services.dart';
 import 'date_parser.dart';
 
@@ -79,6 +84,9 @@ class DependencyInjectionServices {
 
     //forget password
     initializeForgetPassword();
+
+    //notifications
+    intializeNotifications();
   }
 
   initializeLocationFetcher() {
@@ -128,11 +136,13 @@ class DependencyInjectionServices {
 
   //main provider
   initializeMainProvider() {
-    sl.registerLazySingleton(() => MainProvider());
+    sl.registerFactory(() => MainProvider(getCachedUserCredentialsUsecase: sl()));
 
     //usecases
     sl.registerLazySingleton(
         () => SaveUserCredentialsUsecase(baseUserCredentialsRepository: sl()));
+    sl.registerLazySingleton(
+        () => CheckUserCredentialsUsecase(baseUserCredentialsRepository: sl()));
 
     sl.registerLazySingleton(() =>
         GetCachedUserCredentialsUsecase(baseUserCredentialsRepository: sl()));
@@ -215,5 +225,19 @@ class DependencyInjectionServices {
     //datasources
     sl.registerLazySingleton<BaseForgetPasswordDataSource>(
         () => ForgetPasswordDataSource());
+  }
+
+  intializeNotifications() {
+    //repostiories
+    sl.registerLazySingleton<BaseNotificationRepository>(
+        () => NotificationCountRepository(baseNotificationDataSource: sl()));
+
+    //usecases
+    sl.registerLazySingleton(
+        () => RefreshTokenUsecase(baseNotificationRepository: sl()));
+
+    //datasources
+    sl.registerLazySingleton<BaseNotificationDataSource>(
+        () => NotificationDataSource());
   }
 }

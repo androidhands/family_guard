@@ -12,6 +12,7 @@ import '../../domain/entities/user_entity.dart';
 abstract class BaseUsersCredentialsDataSource {
   Future<bool> saveUserCredentials(UserEntity userEntity);
   Future<UserEntity?> getCachedUserCredentials();
+  bool checkUserCredentials();
 }
 
 class UsersCredentialsDataSource implements BaseUsersCredentialsDataSource {
@@ -45,5 +46,12 @@ class UsersCredentialsDataSource implements BaseUsersCredentialsDataSource {
       throw CacheException(
           message: 'Error caching... ${ex.toString()}', code: 0);
     }
+  }
+
+  @override
+  bool checkUserCredentials() {
+    return sl<SharedPreferencesServices>().checkByKey(
+      key: AppConstants.authCredential,
+    );
   }
 }

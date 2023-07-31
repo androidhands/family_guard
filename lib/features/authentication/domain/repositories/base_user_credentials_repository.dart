@@ -4,6 +4,7 @@ import 'package:family_guard/core/error/failure.dart';
 import '../entities/user_entity.dart';
 
 abstract class BaseUserCredentialsRepository {
- Future<Either<Failure,bool>> saveUserCredentials(UserEntity userEntity);
-  Future<Either<Failure,UserEntity?>> getCachedUserCredentials();
+  Future<Either<Failure, bool>> saveUserCredentials(UserEntity userEntity);
+  Future<Either<Failure, UserEntity?>> getCachedUserCredentials();
+  Either<Failure, bool> checkCashUser();
 }

@@ -12,6 +12,9 @@ class ApiEndPoint {
   static const String logoutPath = '/users/logout?api_password=$apiPassword';
 
   static const String getAllNotifications = "";
+
+  //notifications
+    static const String addFCMTokenPath = "/users/AddFCMToken";
 //userAddress
   static const String addUserAddressPath = "/users/AddUserAddress";
   static const String getUserAddressPath = "/users/GetUserAddress";

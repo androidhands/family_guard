@@ -13,6 +13,7 @@ class UserEntity extends Equatable {
   final String updatedAt;
   final String apiToken;
   final String uid;
+  final String imageUrl;
 
   const UserEntity(
       this.id,
@@ -26,7 +27,8 @@ class UserEntity extends Equatable {
       this.createdAt,
       this.updatedAt,
       this.apiToken,
-      this.uid);
+      this.uid,
+      this.imageUrl);
 
   @override
   List<Object?> get props => [
@@ -41,6 +43,7 @@ class UserEntity extends Equatable {
         createdAt,
         updatedAt,
         apiToken,
-        uid
+        uid,
+        imageUrl
       ];
 }

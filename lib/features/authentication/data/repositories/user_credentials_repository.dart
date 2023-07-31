@@ -29,4 +29,13 @@ class UserCredentialsRepository implements BaseUserCredentialsRepository {
       return Left(CacheFailure(code: ex.code, message: ex.message));
     }
   }
+
+  @override
+  Either<Failure, bool> checkCashUser() {
+    try {
+      return Right(baseUsersCredentialsDataSource.checkUserCredentials());
+    } on CacheFailure catch (ex) {
+      return Left(CacheFailure(code: ex.code, message: ex.message));
+    }
+  }
 }

@@ -12,6 +12,7 @@ import '../global/theme/app_theme.dart';
 import '../local_data/shared_preferences_services.dart';
 import '../utils/app_assets.dart';
 import '../utils/utils.dart';
+import 'firebase_messaging_services.dart';
 
 class ServiceInitializer {
   ServiceInitializer._();
@@ -27,6 +28,7 @@ class ServiceInitializer {
       getSavedLocale(),
       getSavedAppTheme(),
       initializeFirebase(),
+     // initializeNotifications()
     ];
     await Future.wait<dynamic>([...futures]);
   }
@@ -55,9 +57,13 @@ class ServiceInitializer {
         .then(
             (value) => value == null ? AppTheme.light : AppTheme.values[value]);
   }
-
   Future initializeFirebase() async {
-    Firebase.initializeApp( options: DefaultFirebaseOptions.currentPlatform);
+    await Firebase.initializeApp();
+    await initializeNotifications();
+  }
+  
+  Future initializeNotifications() async {
+    await sl<FirebaseMessagingServices>().initializeNotifications();
   }
 
   Future cacheDefaultImages() async {

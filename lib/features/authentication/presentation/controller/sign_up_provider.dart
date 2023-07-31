@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
@@ -12,6 +13,8 @@ import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/phone_number.dart';
 
+import '../../../../core/services/dependency_injection_service.dart';
+import '../../../../core/services/firebase_messaging_services.dart';
 import '../../../../core/services/navigation_service.dart';
 import '../../../../core/utils/app_constants.dart';
 
@@ -426,7 +429,10 @@ class SignUpProvider extends ChangeNotifier {
           email: 'example@company.com',
           password: passwordController.text,
           gender: selectedGenders == Genders.male ? "0" : "1",
-          uid: 'zzz');
+          uid: 'zzz',
+          token: (await sl<FirebaseMessagingServices>().deviceToken())!,
+          platform: Platform.operatingSystem,
+          imageUrl: "sss");
 
       log(_signUpParameters.toJson().toString());
       NavigationService.navigateTo(

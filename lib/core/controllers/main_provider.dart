@@ -4,7 +4,10 @@ import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
 import 'package:family_guard/core/error/failure.dart';
+import 'package:family_guard/core/services/firebase_messaging_services.dart';
 import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
+import 'package:family_guard/features/authentication/domain/usecases/check_user_credentials_usecase.dart';
+import 'package:family_guard/features/notifications/domain/usecases/refresh_token_usecase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,34 +25,35 @@ import '../utils/app_constants.dart';
 import '../widget/dialog_service.dart';
 
 class MainProvider extends ChangeNotifier {
-  MainProvider() {
+  final GetCachedUserCredentialsUsecase getCachedUserCredentialsUsecase;
+  MainProvider({required this.getCachedUserCredentialsUsecase}) {
     initializeConnectivityChecker();
   }
 
   late UserEntity? userCredentials;
 
-  Future<bool> getCachedUserCredentials() async {
+  Future<UserEntity> getCachedUserCredentials() async {
     Either<Failure, UserEntity?> results =
-        await sl<GetCachedUserCredentialsUsecase>()();
-    bool cached = false;
+        await getCachedUserCredentialsUsecase();
+
     results.fold((l) {
       log('No cached user');
       userCredentials = null;
-      cached = false;
     }, (r) {
+      log('cached user ${r?.mobile}');
       userCredentials = r;
-      cached = r != null;
     });
-    return cached;
+    return userCredentials!;
   }
 
   Future<bool> checkUserLoggedIn() async {
-    bool cached = await getCachedUserCredentials();
-    User? user = await FirebaseAuth.instance.authStateChanges().first;
-    return user != null && cached;
+    bool cached = await checkCashedUser();
+    //  User? user = await FirebaseAuth.instance.authStateChanges().first;
+    return cached; //user != null && cached;
   }
 
   Future initializeConnectivityChecker() async {
+    getCachedUserCredentials();
     String? locale = await sl<SharedPreferencesServices>()
         .getData(key: AppConstants.userStoredLocale, dataType: DataType.string);
     if (locale == null) {
@@ -63,26 +67,31 @@ class MainProvider extends ChangeNotifier {
         await sl<ConnectivityService>().isConnected();
     bool isConnected = (connectivityResult == ConnectivityResult.wifi ||
         connectivityResult == ConnectivityResult.mobile);
-    bool isCached = await checkUserLoggedIn();
-
-    if (isConnected) {
-      isCached
-          ? NavigationService.navigateTo(
+    await checkUserLoggedIn().then((isCached) async {
+      log('initialized cached is cached $isCached');
+      if (isConnected) {
+        if (isCached) {
+          NavigationService.navigateTo(
               navigationMethod: NavigationMethod.pushReplacement,
-              page: () => const HomeScreen())
-          : NavigationService.navigateTo(
+              page: () => const HomeScreen());
+          await sl<ConnectivityService>().initializeConnectivityListeners();
+          String? token = await sl<FirebaseMessagingServices>().deviceToken();
+          log(token!);
+          await sl<RefreshTokenUsecase>()(token);
+        } else {
+          NavigationService.navigateTo(
               navigationMethod: NavigationMethod.pushReplacement,
               page: () => const LoginScreen());
-    } else {
-      NavigationService.navigateTo(
-          navigationMethod: NavigationMethod.pushReplacement,
-          page: () => const HomeScreen());
-      /*  NavigationService.navigateTo(
+        }
+      } else {
+        NavigationService.navigateTo(
+            navigationMethod: NavigationMethod.pushReplacement,
+            page: () => const HomeScreen());
+        /*  NavigationService.navigateTo(
           navigationMethod: NavigationMethod.pushReplacement,
           page: () => const NoNetWorkScreen()); */
-    }
-
-    await sl<ConnectivityService>().initializeConnectivityListeners();
+      }
+    });
   }
 
   logoutUser() async {
@@ -103,5 +112,15 @@ class MainProvider extends ChangeNotifier {
         } */
       }
     });
+  }
+
+  ///check if exist Cashed User
+  Future<bool> checkCashedUser() async {
+    bool result = (await sl<CheckUserCredentialsUsecase>()()).fold((l) {
+      return false;
+    }, (r) {
+      return r;
+    });
+    return result;
   }
 }

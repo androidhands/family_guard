@@ -9,6 +9,9 @@ class SignUpParams extends Equatable {
   final String password;
   final String gender;
   String uid;
+  final String token;
+  final String platform;
+  final String imageUrl;
 
   SignUpParams(
       {required this.firstName,
@@ -18,11 +21,25 @@ class SignUpParams extends Equatable {
       required this.email,
       required this.password,
       required this.gender,
-      required this.uid});
+      required this.uid,
+      required this.token,
+      required this.platform,
+      required this.imageUrl});
 
   @override
-  List<Object?> get props =>
-      [firstName, secondName, familyName, mobile, email, password, gender, uid];
+  List<Object?> get props => [
+        firstName,
+        secondName,
+        familyName,
+        mobile,
+        email,
+        password,
+        gender,
+        uid,
+        token,
+        platform,
+        imageUrl
+      ];
 
   Map<String, dynamic> toJson() {
     return {
@@ -33,7 +50,10 @@ class SignUpParams extends Equatable {
       'email': email,
       'password': password,
       'gender': gender,
-      'uid': uid
+      'uid': uid,
+      'imageUrl': imageUrl,
+      'token': token,
+      'platform': platform
     };
   }
 

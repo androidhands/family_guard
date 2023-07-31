@@ -13,9 +13,10 @@ class UserModel extends UserEntity {
       required createdAt,
       required updatedAt,
       required apiToken,
-      required uid})
+      required uid,
+      required imageUrl})
       : super(id, firstName, secondName, familyName, mobile, email, gender,
-            emailVerifiedAt, createdAt, updatedAt, apiToken, uid);
+            emailVerifiedAt, createdAt, updatedAt, apiToken, uid,imageUrl);
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
@@ -30,7 +31,8 @@ class UserModel extends UserEntity {
         createdAt: json['created_at'],
         updatedAt: json['updated_at'],
         apiToken: json['api_token'],
-        uid: json['uid']);
+        uid: json['uid'],
+        imageUrl: json['imageUrl']);
   }
 
   Map<String, dynamic> toJson() {
@@ -47,6 +49,7 @@ class UserModel extends UserEntity {
       'updated_at': updatedAt,
       'api_token': apiToken,
       'uid': uid,
+      'imageUrl':imageUrl
     };
   }
 }
