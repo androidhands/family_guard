@@ -12,6 +12,7 @@ import '../../domain/entities/sign_up_params.dart';
 
 abstract class BaseManualSignUpDataSource {
   Future<UserEntity> signUpUserManually(SignUpParams signUpParams);
+  Future<bool> checkMobileRegistered(String mobile);
 }
 
 class ManualSignUpDataSource implements BaseManualSignUpDataSource {
@@ -29,6 +30,29 @@ class ManualSignUpDataSource implements BaseManualSignUpDataSource {
         failureData.code == "23000"
             ? throw ServerException(
                 message: 'Douplicated Entry',
+                code: failureData.code,
+              )
+            : throw ServerException(
+                message: failureData.message,
+                code: failureData.code,
+              );
+      },
+    );
+  }
+
+  @override
+  Future<bool> checkMobileRegistered(String mobile) async {
+    return await sl<ApiCaller>().requestPost(
+      ApiEndPoint.checkMobileRegisteredPath,
+      (data) => data,
+      body: <String, dynamic>{
+        'api_password': ApiEndPoint.apiPassword,
+        'mobile': mobile
+      },
+      onFailure: (ErrorMessage failureData) {
+        failureData.code == "23000"
+            ? throw ServerException(
+                message: 'There is data error, please try agian later',
                 code: failureData.code,
               )
             : throw ServerException(

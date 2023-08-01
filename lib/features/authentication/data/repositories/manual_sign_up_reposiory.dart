@@ -25,4 +25,14 @@ class ManualSignUpReposiory implements BaseManualSignUpRepository {
       return Left(ServerFailure(message: ex.message, code: ex.code));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> checkMobileRegistered(String mobile) async {
+    try {
+      return Right(
+          await baseManualSignUpDataSource.checkMobileRegistered(mobile));
+    } on ServerException catch (ex) {
+      return Left(ServerFailure(message: ex.message, code: ex.code));
+    }
+  }
 }

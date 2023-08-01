@@ -1,19 +1,13 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:dartz/dartz.dart';
-import 'package:family_guard/core/error/failure.dart';
 import 'package:family_guard/core/services/navigation_service.dart';
 import 'package:family_guard/core/services/number_parser.dart';
-import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
-import 'package:family_guard/features/authentication/domain/usecases/manual_sign_up_usecase.dart';
-import 'package:family_guard/features/authentication/domain/usecases/save_user_credentials_usecase.dart';
 import 'package:family_guard/features/authentication/presentation/screens/location_detector_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/global/localization/app_localization.dart';
-import '../../../../core/services/dependency_injection_service.dart';
 import '../../../../core/utils/app_constants.dart';
 import '../../../../core/widget/dialog_service.dart';
 import '../../domain/entities/sign_up_params.dart';
@@ -55,7 +49,7 @@ class VerificationProvider with ChangeNotifier {
   }
 
   initialization() async {
-    // verify();
+    verify();
     isLoading = false;
     notifyListeners();
     startTimeout();
@@ -76,9 +70,11 @@ class VerificationProvider with ChangeNotifier {
     await _auth.verifyPhoneNumber(
         phoneNumber: signUpParams.mobile,
         verificationCompleted: (PhoneAuthCredential credential) {
+          log('verificationCompleted');
           _auth.signInWithCredential(credential);
         },
         verificationFailed: (FirebaseAuthException e) async {
+          log('verificationFailed');
           log(e.message!);
           await DialogWidget.showCustomDialog(
             context: Get.context!,
@@ -87,25 +83,43 @@ class VerificationProvider with ChangeNotifier {
           );
         },
         codeSent: (String verificationId, int? resendToken) {
+          log('codeSent');
           myVerificationId = verificationId;
         },
         codeAutoRetrievalTimeout: (String verificationId) {
+          log('codeAutoRetrievalTimeout');
           myVerificationId = verificationId;
         },
         timeout: const Duration(seconds: 120));
   }
 
-  Future<bool> verifyOtp(String otp) async {
-    UserCredential credential = await _auth
-        .signInWithCredential(PhoneAuthProvider.credential(
-            smsCode: otp, verificationId: myVerificationId))
-        .onError(
-            (error, stackTrace) async => await DialogWidget.showCustomDialog(
-                  context: Get.context!,
-                  title: 'OTP Error',
-                  buttonText: tr(AppConstants.ok),
-                ));
-    return credential.user != null ? true : false;
+  Future<bool> verifyOtp(String otp, context) async {
+    try {
+      isLoadingSubmitOtp = true;
+      notifyListeners();
+      UserCredential credential = await _auth
+          .signInWithCredential(PhoneAuthProvider.credential(
+              smsCode: otp, verificationId: myVerificationId))
+          .onError((error, stackTrace) async {
+        log('verifications error');
+        return await DialogWidget.showCustomDialog(
+          context: Get.context!,
+          title: 'OTP Error',
+          buttonText: tr(AppConstants.ok),
+        );
+      });
+
+      return credential.user != null ? true : false;
+    } on FirebaseAuthException catch (ex) {
+      await DialogWidget.showCustomDialog(
+        context: context,
+        title: ex.message,
+        buttonText: tr(AppConstants.ok),
+      );
+      isLoadingSubmitOtp = false;
+      notifyListeners();
+      return false;
+    }
   }
 
   /// Resend Button
@@ -122,70 +136,30 @@ class VerificationProvider with ChangeNotifier {
       startTimeout();
     } else {
       ///Blocked
+      log('user blocked');
       await DialogWidget.showCustomDialog(
-          context: context,
-          barrierDismissible: false,
-          title: tr(AppConstants.tooManyAttemptsPleaseTryAgainIn30Minutes),
-          buttonText: tr(AppConstants.ok),
-          onPressed: () {
-            NavigationService.navigateTo(
-                navigationMethod: NavigationMethod.pushReplacement,
-                page: () => const SignUpScreen());
-          });
+        context: context,
+        barrierDismissible: false,
+        title: tr(AppConstants.tooManyAttemptsPleaseTryAgainIn30Minutes),
+        buttonText: tr(AppConstants.ok),
+      );
     }
   }
 
   ///on Submit
   void onSubmit(context) async {
-    isLoadingSubmitOtp = true;
-    notifyListeners();
-    bool verified = true; //await verifyOtp(pinCodeController.text);
+    bool verified = await verifyOtp(pinCodeController.text, context);
     if (verified) {
       log('Success');
       signUpParams.setUid = _auth.currentUser?.uid ?? "xccccdc";
-      Either<Failure, UserEntity> results =
-          await sl<ManualSignUpUsecase>()(signUpParams);
-
-      results.fold((l) async {
-        isLoadingSubmitOtp = false;
-        await DialogWidget.showCustomDialog(
-            context: context,
-            title: l.message,
-            buttonText: tr(AppConstants.ok),
-            onPressed: () {
-              NavigationService.goBack();
-            });
-      }, (r) async {
-        Either<Failure, bool> credentialsResult =
-            await sl<SaveUserCredentialsUsecase>()(r);
-        credentialsResult.fold((l) async {
-          isLoadingSubmitOtp = false;
-          await DialogWidget.showCustomDialog(
-              context: context,
-              title: l.message,
-              buttonText: tr(AppConstants.ok),
-              onPressed: () {
-                NavigationService.goBack();
-              });
-        }, (r) async {
-          if (r) {
-            isLoadingSubmitOtp = false;
-            NavigationService.navigateTo(
-                navigationMethod: NavigationMethod.pushReplacement,
-                page: () => const LocationDetectorScreen());
-          } else {
-            isLoadingSubmitOtp = false;
-            await DialogWidget.showCustomDialog(
-                context: context,
-                title: tr(AppConstants.failedSavingCredentials),
-                buttonText: tr(AppConstants.ok),
-                onPressed: () {
-                  NavigationService.goBack();
-                });
-          }
-        });
-      });
+      isLoadingSubmitOtp = false;
+      NavigationService.navigateTo(
+          navigationMethod: NavigationMethod.pushReplacement,
+          page: () => LocationDetectorScreen(
+                signUpParams: signUpParams,
+              ));
     } else {
+       log('not verified');
       isLoadingSubmitOtp = false;
       await DialogWidget.showCustomDialog(
           context: context,

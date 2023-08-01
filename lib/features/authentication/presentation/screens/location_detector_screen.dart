@@ -1,4 +1,6 @@
 import 'package:family_guard/core/services/navigation_service.dart';
+import 'package:family_guard/features/authentication/domain/entities/sign_in_params.dart';
+import 'package:family_guard/features/authentication/domain/entities/sign_up_params.dart';
 import 'package:flutter/material.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
 import 'package:family_guard/core/utils/app_assets.dart';
@@ -18,12 +20,13 @@ import '../components/authentication_common_body.dart';
 import '../controller/location_detector_provider.dart';
 
 class LocationDetectorScreen extends StatelessWidget {
-  const LocationDetectorScreen({Key? key}) : super(key: key);
+   SignUpParams signUpParams;
+   LocationDetectorScreen({Key? key,required this.signUpParams}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => LocationDetectorProvider(),
+      create: (context) => LocationDetectorProvider(signUpParams: signUpParams),
       child: Consumer<LocationDetectorProvider>(
         builder: (context, provider, child) => AuthenticationCommonBody(
           isScrolling: true,

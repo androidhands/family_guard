@@ -3,19 +3,17 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/error/failure.dart';
-import 'package:family_guard/features/authentication/data/models/address_model.dart';
+import 'package:family_guard/features/authentication/domain/entities/sign_up_params.dart';
 
-import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
-import 'package:family_guard/features/authentication/domain/usecases/save_user_address_usecase.dart';
 import 'package:family_guard/features/home/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart' as gc;
 import 'package:geolocator/geolocator.dart' as gl;
-import 'package:get/get.dart';
+
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:provider/provider.dart';
+
 
 import '../../../../core/global/localization/app_localization.dart';
 import '../../../../core/services/dependency_injection_service.dart';
@@ -24,8 +22,12 @@ import '../../../../core/utils/app_constants.dart';
 import '../../../../core/utils/app_sizes.dart';
 import '../../../../core/widget/dialog_service.dart';
 import '../../domain/entities/address_entity.dart';
+import '../../domain/entities/user_entity.dart';
+import '../../domain/usecases/manual_sign_up_usecase.dart';
+import '../../domain/usecases/save_user_credentials_usecase.dart';
 
 class LocationDetectorProvider with ChangeNotifier {
+  SignUpParams signUpParams;
   bool isLoadingLocation = true;
   bool isCountryInRegion = false;
   bool isSavingNewCountry = false;
@@ -45,19 +47,19 @@ class LocationDetectorProvider with ChangeNotifier {
 
   String? selectedCountry;
 
-  LocationDetectorProvider() {
+  LocationDetectorProvider({required this.signUpParams}) {
     initializeInitialCameraPosition();
 
     // goToMyLocation();
   }
 
   initializeInitialCameraPosition() async {
+   
     initialCameraPosition = const CameraPosition(
       target: LatLng(37.42796133580664, -122.085749655962),
       zoom: 14.4746,
     );
-    await Provider.of<MainProvider>(Get.context!, listen: false)
-        .getCachedUserCredentials();
+   
   }
 
   onMapCreated(GoogleMapController googleMapController) {
@@ -113,23 +115,40 @@ class LocationDetectorProvider with ChangeNotifier {
       address += '${placemark.street!}.';
     }
 
-    UserEntity? user =
-        Provider.of<MainProvider>(Get.context!, listen: false).userCredentials;
+    /*    UserEntity? user =
+        Provider.of<MainProvider>(Get.context!, listen: false).userCredentials; */
     locationTextController.text = address;
-    addressEntity = AddressModel(
-        id: 0,
-        mobile: user?.mobile ?? "",
-        country: placemark.country ?? "",
-        adminArea: placemark.administrativeArea ?? "",
-        subAdminArea: placemark.subAdministrativeArea ?? "",
-        locality: placemark.locality ?? "",
-        subLocality: placemark.subLocality ?? "",
-        street: placemark.street ?? "",
-        postalCode: placemark.postalCode ?? "",
-        updatedAt: '',
-        createdAt: '',
-        lat: coordinates.latitude,
-        lon: coordinates.longitude);
+    signUpParams.setCountry =
+        placemark.country == null || placemark.country!.isEmpty
+            ? "No Country"
+            : placemark.country!;
+    signUpParams.setAdmimArea = placemark.administrativeArea == null ||
+            placemark.administrativeArea!.isEmpty
+        ? "No Admin Area"
+        : placemark.administrativeArea!;
+    signUpParams.setSubAdminArea = placemark.subAdministrativeArea == null ||
+            placemark.subAdministrativeArea!.isEmpty
+        ? "No Sub Admin Area"
+        : placemark.subAdministrativeArea!;
+    signUpParams.setLocality =
+        placemark.locality == null || placemark.locality!.isEmpty
+            ? "No Locality"
+            : placemark.locality!;
+    signUpParams.setSubLocality =
+        placemark.subLocality == null || placemark.subLocality!.isEmpty
+            ? "No Sub Locality"
+            : placemark.subLocality!;
+    signUpParams.setStreet =
+        placemark.street == null || placemark.street!.isEmpty
+            ? "No Street Name"
+            : placemark.street!;
+    signUpParams.setPostalCode =
+        placemark.postalCode == null || placemark.postalCode!.isEmpty
+            ? "No Postal Code"
+            : placemark.postalCode!;
+    signUpParams.setLat = coordinates.latitude;
+    signUpParams.setLon = coordinates.longitude;
+
     isLoadingLocation = false;
     notifyListeners();
   }
@@ -157,10 +176,10 @@ class LocationDetectorProvider with ChangeNotifier {
 
   saveNewLocation(BuildContext context) async {
     isSavingNewCountry = true;
-
-    Either<Failure, AddressEntity> results =
-        await sl<SaveUserAddressUsecase>()(addressEntity);
+    Either<Failure, UserEntity> results =
+        await sl<ManualSignUpUsecase>()(signUpParams);
     results.fold((l) async {
+      isSavingNewCountry = false;
       await DialogWidget.showCustomDialog(
           context: context,
           title: l.message,
@@ -168,9 +187,35 @@ class LocationDetectorProvider with ChangeNotifier {
           onPressed: () {
             NavigationService.goBack();
           });
-    }, (r) {
-      NavigationService.offAll(page: () => const HomeScreen());
+    }, (r) async {
+      Either<Failure, bool> credentialsResult =
+          await sl<SaveUserCredentialsUsecase>()(r);
+      credentialsResult.fold((l) async {
+        isSavingNewCountry = false;
+        await DialogWidget.showCustomDialog(
+            context: context,
+            title: l.message,
+            buttonText: tr(AppConstants.ok),
+            onPressed: () {
+              NavigationService.goBack();
+            });
+      }, (r) async {
+        if (r) {
+          isSavingNewCountry = false;
+          NavigationService.offAll(page: () => const HomeScreen());
+        } else {
+          isSavingNewCountry = false;
+          await DialogWidget.showCustomDialog(
+              context: context,
+              title: tr(AppConstants.failedSavingCredentials),
+              buttonText: tr(AppConstants.ok),
+              onPressed: () {
+                NavigationService.goBack();
+              });
+        }
+      });
     });
+
     isSavingNewCountry = false;
     notifyListeners();
   }

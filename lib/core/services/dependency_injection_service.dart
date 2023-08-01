@@ -39,6 +39,7 @@ import 'package:family_guard/core/services/location_fetcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/authentication/data/datasource/base_manual_sign_up_data_source.dart';
+import '../../features/authentication/domain/usecases/check_mobile_registered_usecase.dart';
 import '../../features/authentication/domain/usecases/manual_sign_in_usecase.dart';
 import '../../features/authentication/domain/usecases/reset_password_usecase.dart';
 import '../../features/authentication/domain/usecases/sign_out_user_usecase.dart';
@@ -91,7 +92,7 @@ class DependencyInjectionServices {
 
   initializeLocationFetcher() {
     sl.registerLazySingleton<LocationFetcher>(() => LocationFetcher.instance);
-    sl.registerLazySingleton(() => LocationDetectorProvider());
+    //sl.registerLazySingleton(() => LocationDetectorProvider());
   }
 
   internetConnectionCheckerInit() async {
@@ -136,7 +137,8 @@ class DependencyInjectionServices {
 
   //main provider
   initializeMainProvider() {
-    sl.registerFactory(() => MainProvider(getCachedUserCredentialsUsecase: sl()));
+    sl.registerFactory(
+        () => MainProvider(getCachedUserCredentialsUsecase: sl()));
 
     //usecases
     sl.registerLazySingleton(
@@ -182,6 +184,9 @@ class DependencyInjectionServices {
     //usecases
     sl.registerLazySingleton(
         () => ManualSignUpUsecase(baseManualSignUpRepository: sl()));
+
+    sl.registerLazySingleton(
+        () => CheckMobileRegisteredUsecase(baseManualSignUpRepository: sl()));
 
     //repositories
     sl.registerLazySingleton<BaseManualSignUpRepository>(

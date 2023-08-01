@@ -315,4 +315,6 @@ class AppConstants {
   static const String  cachedUserAddress = "CACHED_USER_ADDRESS";
 
   static const  String selectChannel = "SELECT_CHANNEL";
+
+  static const  String mobileAleadyRegistered = "AlreadyRegisteredMobile";
 }

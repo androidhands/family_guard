@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
             providers: [
               ChangeNotifierProvider<MainProvider>(
                 create: (context) =>
-                    MainProvider(getCachedUserCredentialsUsecase: sl()),
+                    sl(),
               ),
               ChangeNotifierProvider<ThemeProvider>(
                   create: (context) => ThemeProvider(

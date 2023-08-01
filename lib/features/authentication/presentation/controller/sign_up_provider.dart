@@ -1,6 +1,9 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
+import 'package:family_guard/core/error/failure.dart';
+import 'package:family_guard/features/authentication/domain/usecases/check_mobile_registered_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
 
@@ -36,11 +39,17 @@ class SignUpProvider extends ChangeNotifier {
   bool isLoadingActiveCountries = false;
   bool isLoadingPhoneCodes = false;
   String? businessNameDuplicationError;
+
   FocusNode phoneFocus = FocusNode();
 
   ///Data
 
   Genders? selectedGenders;
+  late SignUpParams _signUpParameters;
+
+  ///Design related vars
+  GlobalKey phoneCodePickerWidgetKey = GlobalKey();
+  double textFieldHeight = 0.0;
 
   ///Controllers
   final TextEditingController firstNameController = TextEditingController();
@@ -54,6 +63,7 @@ class SignUpProvider extends ChangeNotifier {
   final TextEditingController confirmPasswordController =
       TextEditingController();
 
+//controller
   final TextEditingController facebookSocialMediaProfileController =
       TextEditingController();
   final TextEditingController instagramSocialMediaProfileController =
@@ -76,11 +86,6 @@ class SignUpProvider extends ChangeNotifier {
   bool isloadingCountryCode = true;
 
   ///Sign up parameters
-  late SignUpParams _signUpParameters;
-
-  ///Design related vars
-  GlobalKey phoneCodePickerWidgetKey = GlobalKey();
-  double textFieldHeight = 0.0;
 
   SignUpProvider() {
     getCountryCode();
@@ -129,40 +134,6 @@ class SignUpProvider extends ChangeNotifier {
         pattern: r'[a-zA-Zء-ي ]+$', value: familyName.trim())) {
       return tr(AppConstants.familyNameAcceptLettersOnly);
     }
-    return null;
-  }
-
-  String? validateEmailOrMobilePhone(String value) {
-    if (!emailOrPhoneShowValidation) return null;
-    if (value.isEmpty) {
-      return tr(AppConstants.pleaseEnterAnEmailOrMobileNumber);
-    } else if (value.startsWith(RegExp(r'[A-Z]|[a-z]'))) {
-      String patternEmail =
-          r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)";
-      if (!checkPattern(pattern: patternEmail, value: value)) {
-        return tr(AppConstants.emailIsNotCorrect);
-      }
-    } else if (value.startsWith(RegExp(r'[0-9]'))) {
-      /*  if (selectedPhoneCode?.phoneCode == saPC) {
-        Pattern patternMobileNumberSA = r'^5[5|0|3|6|4|9|1|8|7][0-9]{7,8}$';
-        if (!checkPattern(pattern: patternMobileNumberSA, value: value)) {
-          return tr(AppConstance.mobileNumberIsNotCorrect);
-        }
-      } else if (selectedPhoneCode?.phoneCode == egyPC) {
-        Pattern patternMobileNumberEG = r'^1[0|1|2|5][0-9]{8}$';
-        if (!checkPattern(pattern: patternMobileNumberEG, value: value)) {
-          return tr(AppConstance.mobileNumberIsNotCorrect);
-        }
-      } else {
-        if (value.length <
-                getMinLengthFromPhoneCode(selectedPhoneCode?.phoneCode) ||
-            value.length >
-                getMaxLengthFromPhoneCode(selectedPhoneCode?.phoneCode)) {
-          return tr(AppConstance.mobileNumberIsNotCorrect);
-        }
-      } */
-    }
-    notifyListeners();
     return null;
   }
 
@@ -386,11 +357,6 @@ class SignUpProvider extends ChangeNotifier {
     selectedGenders = gender;
     notifyListeners();
     log(selectedGenders.toString());
-    /*  if (selectedGenders.any((element) => element == gender)) {
-      selectedGenders.remove(gender);
-    } else {
-      selectedGenders.add(gender);
-    } */
     checkFormReadiness();
   }
 
@@ -421,26 +387,62 @@ class SignUpProvider extends ChangeNotifier {
 
   validateAndVerify() async {
     if (formKey.currentState!.validate()) {
-      _signUpParameters = SignUpParams(
-          firstName: firstNameController.text,
-          secondName: lastNameController.text,
-          familyName: familyNameController.text,
-          mobile: phoneNumber!.completeNumber,
-          email: 'example@company.com',
-          password: passwordController.text,
-          gender: selectedGenders == Genders.male ? "0" : "1",
-          uid: 'zzz',
-          token: (await sl<FirebaseMessagingServices>().deviceToken())!,
-          platform: Platform.operatingSystem,
-          imageUrl: "sss");
+      isLoadingSignUp = true;
+      notifyListeners();
+      Either<Failure, bool> results =
+          await sl<CheckMobileRegisteredUsecase>()(phoneNumber!.completeNumber);
+      results.fold((l) {
+        isLoadingSignUp = false;
+        DialogWidget.showCustomDialog(
+          context: Get.context!,
+          title: 'Please check the invalid data',
+          buttonText: tr(AppConstants.ok),
+        );
+      }, (r) async {
+        isLoadingSignUp = false;
+        if (r) {
+          DialogWidget.showCustomDialog(
+              context: Get.context!,
+              title: 'Already registered number, try sign in',
+              buttonText: tr(AppConstants.signIn),
+              onPressed: () {
+                NavigationService.goBack();
+                NavigationService.goBack();
+              });
+        } else {
+          _signUpParameters = SignUpParams(
+            firstName: firstNameController.text,
+            secondName: lastNameController.text,
+            familyName: familyNameController.text,
+            mobile: phoneNumber!.completeNumber,
+            email: 'example@company.com',
+            password: passwordController.text,
+            gender: selectedGenders == Genders.male ? "0" : "1",
+            uid: 'zzz',
+            token: (await sl<FirebaseMessagingServices>().deviceToken())!,
+            platform: Platform.operatingSystem,
+            imageUrl: "sss",
+            country: "",
+            adminArea: "",
+            subAdminArea: "",
+            locality: "",
+            subLocality: "",
+            street: "",
+            postalCode: "",
+            lat: 0.0,
+            lon: 0.0,
+          );
 
-      log(_signUpParameters.toJson().toString());
-      NavigationService.navigateTo(
-          navigationMethod: NavigationMethod.push,
-          page: () => VerificationScreen(
-                signUpParams: _signUpParameters,
-              ));
+          log(_signUpParameters.toJson().toString());
+          NavigationService.navigateTo(
+              navigationMethod: NavigationMethod.push,
+              page: () => VerificationScreen(
+                    signUpParams: _signUpParameters,
+                  ));
+        }
+      });
     } else {
+      isLoadingSignUp = false;
       DialogWidget.showCustomDialog(
           context: Get.context!,
           title: 'Please check the invalid data',
@@ -449,6 +451,7 @@ class SignUpProvider extends ChangeNotifier {
             NavigationService.goBack();
           });
     }
+    notifyListeners();
   }
 
   goToSignInScreen() {

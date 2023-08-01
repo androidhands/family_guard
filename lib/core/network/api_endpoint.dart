@@ -2,6 +2,8 @@ class ApiEndPoint {
   ///Login Endpoints
   /// SignUp
   static const String apiPassword = "COLgGMo6KEiaY3cFhysY920Kd33SHmGG5cXD";
+  static const String checkMobileRegisteredPath =
+      '/users/CheckMobileRegistered';
   static const String manualSignUpPath = '/users/register';
   static const String verifyPhoneNumberPath = '/users/VerifyPhoneNumber';
   static const String checkVerificationCodePath =
@@ -14,7 +16,7 @@ class ApiEndPoint {
   static const String getAllNotifications = "";
 
   //notifications
-    static const String addFCMTokenPath = "/users/AddFCMToken";
+  static const String addFCMTokenPath = "/users/AddFCMToken";
 //userAddress
   static const String addUserAddressPath = "/users/AddUserAddress";
   static const String getUserAddressPath = "/users/GetUserAddress";

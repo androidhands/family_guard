@@ -8,7 +8,6 @@ import 'package:family_guard/core/services/firebase_messaging_services.dart';
 import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
 import 'package:family_guard/features/authentication/domain/usecases/check_user_credentials_usecase.dart';
 import 'package:family_guard/features/notifications/domain/usecases/refresh_token_usecase.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -30,9 +29,9 @@ class MainProvider extends ChangeNotifier {
     initializeConnectivityChecker();
   }
 
-  late UserEntity? userCredentials;
+   UserEntity? userCredentials;
 
-  Future<UserEntity> getCachedUserCredentials() async {
+  Future<UserEntity?> getCachedUserCredentials() async {
     Either<Failure, UserEntity?> results =
         await getCachedUserCredentialsUsecase();
 
@@ -43,7 +42,7 @@ class MainProvider extends ChangeNotifier {
       log('cached user ${r?.mobile}');
       userCredentials = r;
     });
-    return userCredentials!;
+    return userCredentials;
   }
 
   Future<bool> checkUserLoggedIn() async {

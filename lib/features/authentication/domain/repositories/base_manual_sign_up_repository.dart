@@ -6,4 +6,5 @@ import '../entities/user_entity.dart';
 
 abstract class BaseManualSignUpRepository {
  Future<Either<Failure,UserEntity>> signUpUserManually(SignUpParams signUpParams);
+ Future<Either<Failure,bool>> checkMobileRegistered(String mobile);
 }

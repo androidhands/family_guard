@@ -8,16 +8,17 @@ import 'package:provider/provider.dart';
 
 import '../../../../core/utils/app_constants.dart';
 import '../../../../core/widget/buttons/custom_elevated_button.dart';
+import '../controller/home_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<LoginProvider>(
-      create: (context) => LoginProvider(),
+    return ChangeNotifierProvider<HomeProvider>(
+      create: (context) => HomeProvider(),
       builder: (context, child) {
-        return Consumer<LoginProvider>(
+        return Consumer<HomeProvider>(
           builder: (context, value, child) {
             return Scaffold(
               appBar: const CustomAppbar(),

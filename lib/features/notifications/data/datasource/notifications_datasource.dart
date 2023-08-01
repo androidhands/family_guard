@@ -13,7 +13,6 @@ import '../../../../core/network/api_endpoint.dart';
 import '../../../../core/network/model/error_message.dart';
 
 import '../../../../core/services/dependency_injection_service.dart';
-import '../../../../core/services/firebase_messaging_services.dart';
 import '../../../authentication/domain/entities/user_entity.dart';
 import '../../domain/usecases/set_is_read_notification_usecase.dart';
 
@@ -93,9 +92,10 @@ class NotificationDataSource extends BaseNotificationDataSource {
 
   @override
   Future<bool> refreshToken(String token) async {
-    UserEntity userEntity =await
-        Provider.of<MainProvider>(Get.context!, listen: false).getCachedUserCredentials();
-
+    UserEntity? userEntity =
+        await Provider.of<MainProvider>(Get.context!, listen: false)
+            .getCachedUserCredentials();
+    if (userEntity == null) return false;
     return await sl<ApiCaller>().requestPost(
       ApiEndPoint.addFCMTokenPath,
       (data) => true,

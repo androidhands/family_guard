@@ -12,6 +12,16 @@ class SignUpParams extends Equatable {
   final String token;
   final String platform;
   final String imageUrl;
+  String country;
+  String adminArea;
+  String subAdminArea;
+  String locality;
+  String subLocality;
+  String street;
+  String postalCode;
+  
+  double lat;
+  double lon;
 
   SignUpParams(
       {required this.firstName,
@@ -24,7 +34,17 @@ class SignUpParams extends Equatable {
       required this.uid,
       required this.token,
       required this.platform,
-      required this.imageUrl});
+      required this.imageUrl,
+      required this.country,
+      required this.adminArea,
+      required this.subAdminArea,
+      required this.locality,
+      required this.subLocality,
+      required this.street,
+      required this.postalCode,
+  
+      required this.lat,
+      required this.lon});
 
   @override
   List<Object?> get props => [
@@ -38,7 +58,17 @@ class SignUpParams extends Equatable {
         uid,
         token,
         platform,
-        imageUrl
+        imageUrl,
+        country,
+        adminArea,
+        subAdminArea,
+        locality,
+        subLocality,
+        street,
+        postalCode,
+       
+        lat,
+        lon
       ];
 
   Map<String, dynamic> toJson() {
@@ -53,9 +83,27 @@ class SignUpParams extends Equatable {
       'uid': uid,
       'imageUrl': imageUrl,
       'token': token,
-      'platform': platform
+      'platform': platform,
+      'country': country,
+      'admin_area': adminArea,
+      'sub_admin_area': subAdminArea,
+      'locality': locality,
+      'sub_locality': subLocality,
+      'street': street,
+      'postal_code': postalCode,
+      'lat': lat,
+      'lon': lon
     };
   }
 
   set setUid(String u) => uid = u;
+  set setCountry(String u) => country = u;
+  set setAdmimArea(String u) => adminArea = u;
+  set setSubAdminArea(String u) => subAdminArea = u;
+  set setLocality(String u) => locality = u;
+  set setSubLocality(String u) => subLocality = u;
+  set setStreet(String u) => street = u;
+  set setPostalCode(String u) => postalCode = u;
+  set setLat(double u) => lat = u;
+  set setLon(double u) => lon = u;
 }

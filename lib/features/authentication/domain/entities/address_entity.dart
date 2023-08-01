@@ -27,7 +27,8 @@ class AddressEntity extends Equatable {
       this.postalCode,
       this.updatedAt,
       this.createdAt,
-      this.lat,this.lon);
+      this.lat,
+      this.lon);
 
   @override
   List<Object?> get props => [
@@ -42,6 +43,7 @@ class AddressEntity extends Equatable {
         postalCode,
         updatedAt,
         createdAt,
-        lat,lon
+        lat,
+        lon
       ];
 }
