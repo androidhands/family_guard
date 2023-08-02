@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
-import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/error/failure.dart';
 import 'package:family_guard/features/authentication/domain/entities/sign_up_params.dart';
 
@@ -10,10 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart' as gc;
 import 'package:geolocator/geolocator.dart' as gl;
 
-
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-
 
 import '../../../../core/global/localization/app_localization.dart';
 import '../../../../core/services/dependency_injection_service.dart';
@@ -54,12 +51,10 @@ class LocationDetectorProvider with ChangeNotifier {
   }
 
   initializeInitialCameraPosition() async {
-   
     initialCameraPosition = const CameraPosition(
       target: LatLng(37.42796133580664, -122.085749655962),
       zoom: 14.4746,
     );
-   
   }
 
   onMapCreated(GoogleMapController googleMapController) {
@@ -176,6 +171,7 @@ class LocationDetectorProvider with ChangeNotifier {
 
   saveNewLocation(BuildContext context) async {
     isSavingNewCountry = true;
+    notifyListeners();
     Either<Failure, UserEntity> results =
         await sl<ManualSignUpUsecase>()(signUpParams);
     results.fold((l) async {
@@ -216,7 +212,6 @@ class LocationDetectorProvider with ChangeNotifier {
       });
     });
 
-    isSavingNewCountry = false;
     notifyListeners();
   }
 

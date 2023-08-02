@@ -1,14 +1,12 @@
-import 'dart:developer';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:family_guard/core/controllers/main_provider.dart';
-import 'package:family_guard/features/home/presentation/screens/home_screen.dart';
 import 'package:get/get.dart';
 
 import 'package:family_guard/core/services/navigation_service.dart';
 import 'package:provider/provider.dart';
 
 import '../../features/authentication/presentation/screens/login_screen.dart';
+import '../../features/home/presentation/screens/home_control_screen.dart';
 import '../screens/no_network_screen.dart';
 
 class ConnectivityService {
@@ -19,7 +17,7 @@ class ConnectivityService {
   /// Start listening to connectivity stream
   /// Connectivity stream is triggered whenever app connection to the internet method changed
 
-   initializeConnectivityListeners() {
+  initializeConnectivityListeners() {
     if (_isInitialized) return;
     Connectivity()
         .onConnectivityChanged
@@ -41,28 +39,26 @@ class ConnectivityService {
               ? NavigationService.navigateTo(
                   navigationMethod: NavigationMethod.pushReplacement,
                   preventDuplicates: false,
-                  page: () => const HomeScreen())
+                  page: () => const HomeControlScreen())
               : NavigationService.navigateTo(
                   navigationMethod: NavigationMethod.pushReplacement,
                   preventDuplicates: false,
                   page: () => const LoginScreen());
         }
       } else {
-        NavigationService.navigateTo(
+        /*  NavigationService.navigateTo(
             navigationMethod: NavigationMethod.push,
-            page: () => const NoNetWorkScreen());
+            page: () => const HomeControlScreen()); */
       }
     });
 
     _isInitialized = true;
   }
 
-
   Future<bool> getScreenToNavigate() async {
     return await Provider.of<MainProvider>(Get.context!, listen: false)
         .checkCashedUser();
   }
-
 
   Future<ConnectivityResult> isConnected() async {
     return await Connectivity().checkConnectivity();

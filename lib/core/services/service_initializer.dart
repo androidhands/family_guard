@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
 import 'package:family_guard/core/services/dependency_injection_service.dart';
 import 'package:family_guard/core/utils/app_constants.dart';
-import 'package:family_guard/firebase_options.dart';
 
 import '../global/theme/app_theme.dart';
 import '../local_data/shared_preferences_services.dart';

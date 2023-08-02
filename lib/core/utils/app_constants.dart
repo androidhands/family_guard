@@ -310,11 +310,17 @@ class AppConstants {
   static const String failedSavingCredentials = "FailedSavingCredentials";
   static const String detectingLocation = "DETECTING_LOCATION";
 
-  static const String  saveYourAddreess = "SaveYourAddress";
+  static const String saveYourAddreess = "SaveYourAddress";
 
-  static const String  cachedUserAddress = "CACHED_USER_ADDRESS";
+  static const String cachedUserAddress = "CACHED_USER_ADDRESS";
 
-  static const  String selectChannel = "SELECT_CHANNEL";
+  static const String selectChannel = "SELECT_CHANNEL";
 
-  static const  String mobileAleadyRegistered = "AlreadyRegisteredMobile";
+  static const String mobileAleadyRegistered = "AlreadyRegisteredMobile";
+
+  static const String map = "MAP";
+
+  static const String family = "FAMILY";
+
+  static const String welcomeProfile = "WELCOME_PROFILE";
 }

@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:family_guard/core/services/dependency_injection_service.dart';
 import 'package:family_guard/features/notifications/domain/usecases/refresh_token_usecase.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:family_guard/core/models/notification_model.dart';
 import 'package:family_guard/core/widget/custom_snackbar.dart';

@@ -1,5 +1,4 @@
 import 'package:family_guard/core/services/navigation_service.dart';
-import 'package:family_guard/features/authentication/domain/entities/sign_in_params.dart';
 import 'package:family_guard/features/authentication/domain/entities/sign_up_params.dart';
 import 'package:flutter/material.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';

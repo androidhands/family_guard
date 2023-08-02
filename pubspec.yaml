@@ -91,6 +91,8 @@ dependencies:
   intl_phone_field: ^3.2.0
   flutter_sim_country_code: ^0.1.2
   flutter_local_notifications: ^15.1.0+1
+  badges: ^3.1.1
+
 
 
 

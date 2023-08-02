@@ -91,6 +91,8 @@ class AppSizes {
   static final double locationIndicatorHight = 30.h;
   static final double locationIndicatorWidth = 30.w;
 
+  static final double profileImageHight = 80.h;
+
   /// icons Sizes
   static final double logoSize = 47.w;
   static final double iconSize = 21.5.h;
@@ -187,7 +189,7 @@ class AppSizes {
   static final double customCardH2 = 72.h;
   static final double logoImageHeight = 75.h;
   static final double sizedBoxH = 36.h;
-  static final double bottomNavBarHeight = 65.h;
+  static final double bottomNavBarHeight = 70.h;
   static final double commonButtonsHight = 52.h;
   static final double enableLocationIconHight = 200.h;
   static final double registrationPhotoHeight = 237.h;
@@ -268,4 +270,7 @@ class AppSizes {
   static final double chipChoiceHigh = 60.h;
 
   static final double mapAddressHigh = 300.h;
+
+  static final double bottomBarIconHigh = 50.h;
+  static final double bottomBarIconWidth = 50.w;
 }

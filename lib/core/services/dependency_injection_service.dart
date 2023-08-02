@@ -43,8 +43,8 @@ import '../../features/authentication/domain/usecases/check_mobile_registered_us
 import '../../features/authentication/domain/usecases/manual_sign_in_usecase.dart';
 import '../../features/authentication/domain/usecases/reset_password_usecase.dart';
 import '../../features/authentication/domain/usecases/sign_out_user_usecase.dart';
-import '../../features/authentication/presentation/controller/location_detector_provider.dart';
 import '../../features/authentication/presentation/controller/reset_password_provider.dart';
+import '../../features/home/presentation/controller/home_control_provider.dart';
 import '../../features/notifications/domain/usecases/refresh_token_usecase.dart';
 import 'connectivity_services.dart';
 import 'date_parser.dart';
@@ -88,6 +88,9 @@ class DependencyInjectionServices {
 
     //notifications
     intializeNotifications();
+
+    //home
+    intialozeHome();
   }
 
   initializeLocationFetcher() {
@@ -244,5 +247,11 @@ class DependencyInjectionServices {
     //datasources
     sl.registerLazySingleton<BaseNotificationDataSource>(
         () => NotificationDataSource());
+  }
+
+  intialozeHome() {
+    //providers
+    sl.registerFactory(() => HomeControlProvider(
+        checkCashUser: sl(), getCachedUserCredentialDataUseCase: sl()));
   }
 }

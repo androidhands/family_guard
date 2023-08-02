@@ -1,5 +1,6 @@
 
 import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
+import 'package:family_guard/core/utils/app_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:family_guard/core/integrated_library/bottom_navigation_bar/tab_item.dart' as tap;
 
@@ -35,6 +36,8 @@ class BuildIcon extends StatelessWidget {
           CustomSvgImage(
             path: item.iconPath,
             color: iconColor,
+            width: AppSizes.bottomBarIconWidth,
+             height: AppSizes.bottomBarIconHigh,
           ),
 
           PositionedDirectional(

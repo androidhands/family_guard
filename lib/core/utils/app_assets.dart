@@ -31,6 +31,9 @@ class AppAssets {
   static const String logoBluePng = "${imagePath}logo_blue.png";
   static const String appLogo = "${imagePath}hs_app_logo_colored.png";
 
+  static const String mapPng = "${imagePath}map.svg";
+  static const String familyPng = "${imagePath}family.svg";
+
   /// SvgImages
 
   static const String testSvg = "${svgImagePath}reset.svg";
@@ -350,5 +353,11 @@ class AppAssets {
   static const String searchNormalSvg = "${svgImagePath}search_normal.svg";
 
   static const String pinLocation = "${svgImagePath}pin.svg";
-   
+
+  static const String sosSvig = "${svgImagePath}sos.svg";
+
+  static const String mapSvg = "${svgImagePath}map.svg";
+  static const String familySvg = "${svgImagePath}family.svg";
+
+  static const String  profileMan = "${svgImagePath}profile_man.svg";
 }

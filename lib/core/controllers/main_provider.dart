@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 import '../../features/authentication/domain/usecases/get_cached_user_credentials_usecase.dart';
 import '../../features/authentication/domain/usecases/sign_out_user_usecase.dart';
 import '../../features/authentication/presentation/screens/login_screen.dart';
+import '../../features/home/presentation/screens/home_control_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../global/localization/app_localization.dart';
 import '../local_data/shared_preferences_services.dart';
@@ -29,7 +30,7 @@ class MainProvider extends ChangeNotifier {
     initializeConnectivityChecker();
   }
 
-   UserEntity? userCredentials;
+  UserEntity? userCredentials;
 
   Future<UserEntity?> getCachedUserCredentials() async {
     Either<Failure, UserEntity?> results =
@@ -72,7 +73,7 @@ class MainProvider extends ChangeNotifier {
         if (isCached) {
           NavigationService.navigateTo(
               navigationMethod: NavigationMethod.pushReplacement,
-              page: () => const HomeScreen());
+              page: () => const HomeControlScreen());
           await sl<ConnectivityService>().initializeConnectivityListeners();
           String? token = await sl<FirebaseMessagingServices>().deviceToken();
           log(token!);
@@ -83,12 +84,9 @@ class MainProvider extends ChangeNotifier {
               page: () => const LoginScreen());
         }
       } else {
-        NavigationService.navigateTo(
+        /*   NavigationService.navigateTo(
             navigationMethod: NavigationMethod.pushReplacement,
-            page: () => const HomeScreen());
-        /*  NavigationService.navigateTo(
-          navigationMethod: NavigationMethod.pushReplacement,
-          page: () => const NoNetWorkScreen()); */
+            page: () => const HomeControlScreen()); */
       }
     });
   }

@@ -88,7 +88,7 @@ class BottomBarCreativeState extends State<BottomBarCreative> {
         ? EdgeInsets.symmetric(vertical: 12.0.h)
         : padDefault;
 
-    double sizeHighlight = 56.h;
+    double sizeHighlight = 40.h;
 
     isShadow = widget.enableShadow!;
 

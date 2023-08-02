@@ -71,5 +71,8 @@ Map<String, String> coreEn = {
   'WE’LL_ASK_FOR_THIS_PASSWORD_WHENEVER_YOU_SIGN_IN':
       'We’ll ask for this password whenever you sign in.',
   'SELECT_CHANNEL': 'Select Channel',
-  'AlreadyRegisteredMobile': 'This number is Already registered!!!'
+  'AlreadyRegisteredMobile': 'This number is Already registered!!!',
+  'MAP':'Map',
+  'FAMILY':'Family',
+  'WELCOME_PROFILE':'Welcome'
 };

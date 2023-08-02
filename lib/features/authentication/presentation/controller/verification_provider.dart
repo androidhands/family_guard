@@ -11,7 +11,6 @@ import '../../../../core/global/localization/app_localization.dart';
 import '../../../../core/utils/app_constants.dart';
 import '../../../../core/widget/dialog_service.dart';
 import '../../domain/entities/sign_up_params.dart';
-import '../screens/signup_screen.dart';
 
 class VerificationProvider with ChangeNotifier {
   bool isLoadingSubmitOtp = false;
