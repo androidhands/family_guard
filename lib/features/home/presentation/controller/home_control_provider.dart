@@ -13,8 +13,6 @@ import 'package:family_guard/features/notifications/presentation/screens/notific
 import 'package:provider/provider.dart';
 
 import '../../../../core/services/navigation_service.dart';
-import '../../../authentication/domain/usecases/check_user_credentials_usecase.dart';
-import '../../../authentication/domain/usecases/get_cached_user_credentials_usecase.dart';
 import '../../../authentication/presentation/screens/login_screen.dart';
 import '../../../family/presentation/screens/family_screen.dart';
 
@@ -22,25 +20,17 @@ class HomeControlProvider with ChangeNotifier {
   bool isMounted = true;
 
   ///Constructor
-  HomeControlProvider({
-    required this.checkCashUser,
-    required this.getCachedUserCredentialDataUseCase,
-  }) {
+  HomeControlProvider() {
     initializeDataSharedInSubScreen();
   }
 
-  final UserEntity userEntity =
-      Provider.of<MainProvider>(Get.context!, listen: false).userCredentials!;
+   
 
   ///var
 
   List<NotificationEntity>? notificationsList;
   int unReadNotificationsCount = 0;
   int currentIndex = 0;
-
-  ///use case
-  GetCachedUserCredentialsUsecase getCachedUserCredentialDataUseCase;
-  CheckUserCredentialsUsecase checkCashUser;
 
   ///Loading
   bool isLoadingDataSharedInSubScreen = true;
@@ -60,16 +50,13 @@ class HomeControlProvider with ChangeNotifier {
 
   ///initialize Data Shared In SubScreen in bottom nav bar
   initializeDataSharedInSubScreen() async {
-    await getAuthenticationResultModel();
+  
     //  await getMoreProfileData();
     // await getProfileDetails();
     // await getUnreadNotificationsCount();
   }
 
-  Future<void> getAuthenticationResultModel() async {
-    await Provider.of<MainProvider>(Get.context!, listen: false)
-        .getCachedUserCredentials();
-  }
+
 
   ///change current Index
   changeCurrentIndex(int index) {

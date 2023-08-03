@@ -15,13 +15,17 @@ class HomeProvider extends ChangeNotifier {
   ///constructor
   HomeProvider() {
     initializeInitialCameraPosition();
+    getAuthenticationResultModel();
   }
+
+  UserEntity? userEntity;
 
   bool isLoadingLocation = true;
   bool isCountryInRegion = false;
   final TextEditingController locationTextController = TextEditingController();
 
-
+  double middleX = 0.0;
+  double middleY = 0.0;
 
   ///
   late CameraPosition initialCameraPosition;
@@ -38,6 +42,16 @@ class HomeProvider extends ChangeNotifier {
       target: LatLng(37.42796133580664, -122.085749655962),
       zoom: 14.4746,
     );
+  }
+
+  Future<void> getAuthenticationResultModel() async {
+    await Provider.of<MainProvider>(Get.context!, listen: false)
+        .getCachedUserCredentials()
+        .then((value) {
+      userEntity = Provider.of<MainProvider>(Get.context!, listen: false)
+          .userCredentials!;
+      notifyListeners();
+    });
   }
 
   onMapCreated(GoogleMapController googleMapController) {
@@ -84,13 +98,11 @@ class HomeProvider extends ChangeNotifier {
     isLoadingLocation = true;
     notifyListeners();
 
-    double screenWidth = MediaQuery.of(context).size.width *
-        MediaQuery.of(context).devicePixelRatio;
-    double screenHeight = MediaQuery.of(context).size.height *
-        MediaQuery.of(context).devicePixelRatio;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
 
-    double middleX = screenWidth / 2;
-    double middleY = screenHeight / 2;
+    middleX = screenWidth / 2;
+    middleY = screenHeight / 2;
 
     ScreenCoordinate screenCoordinate =
         ScreenCoordinate(x: middleX.round(), y: middleY.round());

@@ -23,8 +23,7 @@ class HeaderHomeComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
-    return Consumer<HomeControlProvider>(
+    return Consumer<HomeProvider>(
       builder: (context, homeControlProvider, child) {
         return Padding(
           padding: EdgeInsets.only(
@@ -49,7 +48,8 @@ class HeaderHomeComponent extends StatelessWidget {
                 children: [
                   ///Welcome
                   CustomGradientText(
-                    text: '${tr(AppConstants.welcomeProfile)} ${homeControlProvider.userEntity.firstName}',
+                    text:
+                        '${tr(AppConstants.welcomeProfile)} ${homeControlProvider.userEntity?.firstName??''}',
                     textStyle: TextStyle(
                       fontSize: AppSizes.h5,
                       fontWeight: AppFonts.regular,

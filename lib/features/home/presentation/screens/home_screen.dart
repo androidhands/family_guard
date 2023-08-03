@@ -56,8 +56,8 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                      top: AppSizes.mapAddressHigh / 2,
-                      right: MediaQuery.of(context).size.width / 2,
+                      top: provider.middleY,
+                      right:provider.middleX,
                       child: CustomSvgImage(
                         path: AppAssets.pinLocation,
                         width: AppSizes.locationIndicatorWidth,
