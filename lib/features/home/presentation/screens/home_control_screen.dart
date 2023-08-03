@@ -16,7 +16,7 @@ class HomeControlScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HomeControlProvider>(
-      create: (context) => sl(),
+      create: (context) => HomeControlProvider(),
       child: Consumer<HomeControlProvider>(
         builder: (context, provider, child) {
           return  WillPopScope(

@@ -22,6 +22,7 @@ import 'package:family_guard/features/authentication/domain/usecases/save_user_c
 import 'package:family_guard/features/authentication/domain/usecases/verify_user_phone_usecase.dart';
 import 'package:family_guard/features/authentication/presentation/controller/login/login_provider.dart';
 import 'package:family_guard/features/authentication/presentation/controller/sign_up_provider.dart';
+import 'package:family_guard/features/home/presentation/controller/home_provider.dart';
 import 'package:family_guard/features/notifications/data/datasource/notifications_datasource.dart';
 import 'package:family_guard/features/notifications/data/repositories/notification_count_repository.dart';
 import 'package:family_guard/features/notifications/domain/repositories/base_notification_repository.dart';
@@ -251,7 +252,7 @@ class DependencyInjectionServices {
 
   intialozeHome() {
     //providers
-    sl.registerFactory(() => HomeControlProvider(
-        checkCashUser: sl(), getCachedUserCredentialDataUseCase: sl()));
+    sl.registerLazySingleton(() => HomeControlProvider());
+    sl.registerLazySingleton(() => HomeProvider());
   }
 }
