@@ -65,15 +65,15 @@ class ProfileDetailsComponent extends StatelessWidget {
                     path: AppAssets.calendar, text: tr(AppConstants.myReviews)),
                 const CustomProfileDivider(),
                 ProfileItemComponent(
-                    path: AppAssets.notification,
+                    path: '',//AppAssets.notification,
                     text: tr(AppConstants.notifications)),
                 const CustomProfileDivider(),
-                ProfileToggleItem(
+                /* ProfileToggleItem(
                     onChange: () {
                       provider.changeTheme(context);
                     },
                     value: Provider.of<ThemeProvider>(context).appTheme ==
-                        AppTheme.values[0])
+                        AppTheme.values[0]) */
               ],
             ),
 
@@ -85,12 +85,12 @@ class ProfileDetailsComponent extends StatelessWidget {
             CustomContainerWidget(
               children: [
                 ProfileItemComponent(
-                    path: AppAssets.changePassword,
+                    path:'',// AppAssets.changePassword,
                     text: tr(AppConstants.changePassword)),
                 const CustomProfileDivider(),
                 ProfileItemComponent(
                     path: AppAssets.language, text: tr(AppConstants.language),onTap: (){
-                  provider.changeLanguage();
+                //  provider.changeLanguage();
                 }),
                 const CustomProfileDivider(),
                 ProfileItemComponent(
@@ -108,13 +108,14 @@ class ProfileDetailsComponent extends StatelessWidget {
                     path: AppAssets.callSvg, text: tr(AppConstants.contactUs)),
                 const CustomProfileDivider(),
                 ProfileItemComponent(
-                    path: AppAssets.share, text: tr(AppConstants.shareApp)),
+                    path: '',//AppAssets.share, 
+                    text: tr(AppConstants.shareApp)),
                 const CustomProfileDivider(),
                 ProfileItemComponent(
                     onTap: () {
-                      provider.logOut(context);
+                     // provider.logOut(context);
                     },
-                    path: AppAssets.logoutSvg,
+                    path: '',//AppAssets.logoutSvg,
                     text: tr(
                       AppConstants.logOut,
                     )),

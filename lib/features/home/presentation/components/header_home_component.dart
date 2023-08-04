@@ -1,3 +1,5 @@
+import 'package:family_guard/core/controllers/main_provider.dart';
+import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
 import 'package:flutter/material.dart';
 
 import 'package:family_guard/core/utils/app_assets.dart';
@@ -32,9 +34,11 @@ class HeaderHomeComponent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ///image profile
-              InkWell(
-                  onTap: () {
+              GestureDetector(
+                  onTap: () async {
                     // provider.onProfileImagePress(context);
+                    await Provider.of<MainProvider>(context, listen: false)
+                        .logoutUser();
                   },
                   child: CustomSvgImage(
                     path: AppAssets.profileMan,
@@ -47,34 +51,37 @@ class HeaderHomeComponent extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ///Welcome
-                  CustomGradientText(
-                    text:
-                        '${tr(AppConstants.welcomeProfile)} ${homeControlProvider.userEntity?.firstName??''}',
+                  CustomText(
+                    '${tr(AppConstants.welcomeProfile)}\n ${homeControlProvider.userEntity?.firstName ?? ''}',
                     textStyle: TextStyle(
-                      fontSize: AppSizes.h5,
-                      fontWeight: AppFonts.regular,
-                      fontFamily: AppFonts.fontFamilyEnglish,
-                    ),
+                        fontSize: AppSizes.h5,
+                        fontWeight: AppFonts.regular,
+                        fontFamily: AppFonts.fontFamilyEnglish,
+                        color: ThemeColorLight.pinkColor),
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
 
               ///Notification Icon Button
-              GestureDetector(
-                  onTap: () {
-                     homeControlProvider.navigateToNotificationScreen();
-                  },
-                  child: badges.Badge(
-                      badgeContent: CustomText(
-                        '0',
-                        textStyle: const TextStyle(color: Colors.white),
-                      ),
-                      position: badges.BadgePosition.topEnd(),
-                      child: CustomBorderIcon(
-                        path: AppAssets.notificationSvg,
-                        color: Theme.of(context).primaryColor,
-                        margin: EdgeInsetsDirectional.only(top: AppSizes.pH1),
-                      ))),
+              Padding(
+                padding: EdgeInsets.only(right: AppSizes.pW1),
+                child: GestureDetector(
+                    onTap: () {
+                      homeControlProvider.navigateToNotificationScreen();
+                    },
+                    child: badges.Badge(
+                        badgeContent: CustomText(
+                          '0',
+                          textStyle: const TextStyle(color: Colors.white),
+                        ),
+                        position: badges.BadgePosition.topEnd(),
+                        child: CustomBorderIcon(
+                          path: AppAssets.notificationSvg,
+                          color: Theme.of(context).primaryColor,
+                          margin: EdgeInsetsDirectional.only(top: AppSizes.pH1),
+                        ))),
+              ),
 
               /* CustomCashedNetworkImage.circle(
                         imageUrl: refineImage(

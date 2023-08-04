@@ -2,6 +2,7 @@ import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
 import 'package:family_guard/core/widget/custom_appbar.dart';
+import 'package:family_guard/core/widget/custom_loading_indicator.dart';
 import 'package:family_guard/core/widget/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -37,6 +38,7 @@ class HomeScreen extends StatelessWidget {
                     onCameraIdle: () => provider.changeLocation(context),
                     onMapCreated: (googleMapController) =>
                         provider.onMapCreated(googleMapController),
+                    myLocationButtonEnabled: false,
                   ),
                   Positioned(
                     bottom: 0,
@@ -47,7 +49,8 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         Padding(
                           padding: EdgeInsets.all(AppSizes.pW6),
-                          child: CustomFloatingActionButton(
+                          child: provider.isLoadingLocation?CustomLoadingIndicators.defaultLoading():
+                          CustomFloatingActionButton(
                             iconSVGPath: AppAssets.gpsSvg,
                             onTap: () => provider.goToMyLocation(),
                           ),

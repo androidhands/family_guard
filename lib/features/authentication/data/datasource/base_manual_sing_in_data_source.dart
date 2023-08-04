@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
@@ -49,13 +51,19 @@ class ManualSingInDataSource implements BaseManualSingInDataSource {
       final cacheDir = await getTemporaryDirectory();
 
       if (cacheDir.existsSync()) {
-        cacheDir.deleteSync(recursive: true);
+        if(Platform.isAndroid){
+cacheDir.deleteSync(recursive: true);
+        }
+        
       }
 
       final appDir = await getApplicationSupportDirectory();
 
       if (appDir.existsSync()) {
-        appDir.deleteSync(recursive: true);
+        if(Platform.isAndroid){
+appDir.deleteSync(recursive: true);
+        }
+        
       }
       sl<SharedPreferencesServices>().clearAll();
       await FirebaseAuth.instance.signOut();
