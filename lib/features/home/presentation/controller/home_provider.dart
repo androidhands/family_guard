@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/services/navigation_service.dart';
@@ -19,8 +20,9 @@ class HomeProvider extends ChangeNotifier {
   bool _disposed = false;
   @override
   void dispose() async {
+    log('home provider disposes');
     _disposed = true;
-    mapController = await completer.future;
+    // mapController = await completer.future;
     super.dispose();
   }
 
@@ -61,6 +63,7 @@ class HomeProvider extends ChangeNotifier {
       target: LatLng(37.42796133580664, -122.085749655962),
       zoom: 14.4746,
     );
+    await goToMyLocation();
   }
 
   Future<void> getAuthenticationResultModel() async {
@@ -77,10 +80,11 @@ class HomeProvider extends ChangeNotifier {
     if (!completer.isCompleted) {
       completer.complete(googleMapController);
     }
-    goToMyLocation();
+    notifyListeners();
   }
 
   goToMyLocation() async {
+    log('Go to my location');
     isLoadingLocation = true;
     notifyListeners();
     if (!(await requestLocationPermission())) {
@@ -96,6 +100,10 @@ class HomeProvider extends ChangeNotifier {
         .then((currentLocation) {
       mapController.animateCamera(CameraUpdate.newLatLngZoom(
           LatLng(currentLocation.latitude, currentLocation.longitude), 16));
+      isLoadingLocation = false;
+      notifyListeners();
+    }).catchError((error) {
+      log(error.toString());
       isLoadingLocation = false;
       notifyListeners();
     });
@@ -150,13 +158,10 @@ class HomeProvider extends ChangeNotifier {
 
   Future<bool> requestLocationPermission() async {
     permissionGranted = await location.hasPermission();
-    if (permissionGranted == PermissionStatus.denied ||
-        permissionGranted == PermissionStatus.grantedLimited) {
+    if (permissionGranted == PermissionStatus.denied) {
       permissionGranted = await location.requestPermission();
       if (permissionGranted != PermissionStatus.granted) {
         return false;
-      } else {
-        permissionGranted = await location.requestPermission();
       }
     }
     return true;
