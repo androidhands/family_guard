@@ -27,72 +27,80 @@ class HeaderHomeComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<HomeProvider>(
       builder: (context, homeControlProvider, child) {
-        return Padding(
-          padding: EdgeInsets.only(
-              left: AppSizes.pH4, right: AppSizes.pH4, top: AppSizes.pH6),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ///image profile
-              GestureDetector(
-                  onTap: () async {
-                    // provider.onProfileImagePress(context);
-                    await Provider.of<MainProvider>(context, listen: false)
-                        .logoutUser();
-                  },
-                  child: CustomSvgImage(
-                    path: AppAssets.profileMan,
-                    width: AppSizes.profileImageWidth,
-                    height: AppSizes.profileImageHight,
-                  )),
-
-              ///Welcome,Location
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ///Welcome
-                  CustomText(
-                    '${tr(AppConstants.welcomeProfile)}\n ${homeControlProvider.userEntity?.firstName ?? ''}',
-                    textStyle: TextStyle(
-                        fontSize: AppSizes.h5,
-                        fontWeight: AppFonts.regular,
-                        fontFamily: AppFonts.fontFamilyEnglish,
-                        color: ThemeColorLight.pinkColor),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-
-              ///Notification Icon Button
-              Padding(
-                padding: EdgeInsets.only(right: AppSizes.pW1),
-                child: GestureDetector(
-                    onTap: () {
-                      homeControlProvider.navigateToNotificationScreen();
+        return Container(
+          decoration: BoxDecoration(
+              color: Theme.of(context).appBarTheme.backgroundColor,
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(AppSizes.br30),
+                  bottomRight: Radius.circular(AppSizes.br30))),
+          child: Padding(
+            padding: EdgeInsets.only(
+                left: AppSizes.pH1, right: AppSizes.pH4, top: AppSizes.pH1),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ///image profile
+                GestureDetector(
+                    onTap: () async {
+                      // provider.onProfileImagePress(context);
+                      await Provider.of<MainProvider>(context, listen: false)
+                          .logoutUser();
                     },
-                    child: badges.Badge(
-                        badgeContent: CustomText(
-                          '0',
-                          textStyle: const TextStyle(color: Colors.white),
-                        ),
-                        position: badges.BadgePosition.topEnd(),
-                        child: CustomBorderIcon(
-                          path: AppAssets.notificationSvg,
-                          color: Theme.of(context).primaryColor,
-                          margin: EdgeInsetsDirectional.only(top: AppSizes.pH1),
-                        ))),
-              ),
+                    child: CustomSvgImage(
+                      path: AppAssets.profileMan,
+                      width: AppSizes.profileImageWidth,
+                      height: AppSizes.profileImageHight,
+                    )),
 
-              /* CustomCashedNetworkImage.circle(
-                        imageUrl: refineImage(
-                            homeControlProvider.userData.thumbImageUrl),
-                        size: AppSizes.imageProfileHeightInHomeScreen,
-                      ),
-                    )
-                  : SizedBox(
-                      width: AppSizes.imageProfileHeightInHomeScreen,
-                    ) */
-            ],
+                ///Welcome,Location
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ///Welcome
+                    CustomText(
+                      '${tr(AppConstants.welcomeProfile)}\n ${homeControlProvider.userEntity?.firstName ?? ''}',
+                      textStyle: TextStyle(
+                          fontSize: AppSizes.h5,
+                          fontWeight: AppFonts.regular,
+                          fontFamily: AppFonts.fontFamilyEnglish,
+                          color: ThemeColorLight.pinkColor),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+
+                ///Notification Icon Button
+                Padding(
+                  padding: EdgeInsets.only(right: AppSizes.pW1),
+                  child: GestureDetector(
+                      onTap: () {
+                        homeControlProvider.navigateToNotificationScreen();
+                      },
+                      child: badges.Badge(
+                          badgeContent: CustomText(
+                            '0',
+                            textStyle: const TextStyle(color: Colors.white),
+                          ),
+                          position: badges.BadgePosition.topEnd(),
+                          child: CustomBorderIcon(
+                            path: AppAssets.notificationSvg,
+                            color: Theme.of(context).primaryColor,
+                            margin:
+                                EdgeInsetsDirectional.only(top: AppSizes.pH1),
+                          ))),
+                ),
+
+                /* CustomCashedNetworkImage.circle(
+                          imageUrl: refineImage(
+                              homeControlProvider.userData.thumbImageUrl),
+                          size: AppSizes.imageProfileHeightInHomeScreen,
+                        ),
+                      )
+                    : SizedBox(
+                        width: AppSizes.imageProfileHeightInHomeScreen,
+                      ) */
+              ],
+            ),
           ),
         );
       },
