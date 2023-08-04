@@ -1,4 +1,6 @@
+import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
 import 'package:family_guard/core/services/dependency_injection_service.dart';
+import 'package:family_guard/core/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 
 import 'package:family_guard/core/utils/utils.dart';
@@ -6,7 +8,6 @@ import 'package:family_guard/core/widget/custom_loading_indicator.dart';
 import 'package:family_guard/features/notifications/domain/entities/notification_entity.dart';
 import 'package:family_guard/features/notifications/presentation/components/notification_group_separator_widget.dart';
 import 'package:family_guard/features/notifications/presentation/controller/notification_provider.dart';
-
 
 import 'package:grouped_list/grouped_list.dart';
 import 'package:provider/provider.dart';
@@ -30,8 +31,10 @@ class NotificationsScreen extends StatelessWidget {
             return Scaffold(
               appBar: CustomAppbar(
                 title: tr(AppConstants.notifications),
-                withMenu: true,
-                actions: const [SizedBox()],
+                withMenu: false,
+               
+                popOnPressed: () => NavigationService.goBack(),
+                popIconsColor: ThemeColorLight.pinkColor,
               ),
               body: Stack(
                 children: [

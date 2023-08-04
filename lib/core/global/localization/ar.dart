@@ -74,5 +74,6 @@ Map<String, String> coreAr = {
   'AlreadyRegisteredMobile': 'This number is Already registered!!!',
   'MAP': 'Map',
   'FAMILY': 'Family',
-   'WELCOME_PROFILE':'Welcome'
+  'WELCOME_PROFILE': 'Welcome',
+  'NOTIFICATIONS': 'Nofitifications'
 };

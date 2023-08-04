@@ -47,6 +47,8 @@ import '../../features/authentication/domain/usecases/sign_out_user_usecase.dart
 import '../../features/authentication/presentation/controller/reset_password_provider.dart';
 import '../../features/home/presentation/controller/home_control_provider.dart';
 import '../../features/notifications/domain/usecases/refresh_token_usecase.dart';
+import '../../features/notifications/domain/usecases/set_is_read_notification_usecase.dart';
+import '../../features/notifications/presentation/controller/notification_provider.dart';
 import 'connectivity_services.dart';
 import 'date_parser.dart';
 
@@ -92,6 +94,8 @@ class DependencyInjectionServices {
 
     //home
     intialozeHome();
+
+ 
   }
 
   initializeLocationFetcher() {
@@ -237,6 +241,9 @@ class DependencyInjectionServices {
   }
 
   intializeNotifications() {
+    //providers
+    sl.registerFactory(() => NotificationProvider(sl()));
+
     //repostiories
     sl.registerLazySingleton<BaseNotificationRepository>(
         () => NotificationCountRepository(baseNotificationDataSource: sl()));
@@ -244,6 +251,8 @@ class DependencyInjectionServices {
     //usecases
     sl.registerLazySingleton(
         () => RefreshTokenUsecase(baseNotificationRepository: sl()));
+    sl.registerLazySingleton(
+        () => SetIsReadNotificationUseCase(baseNotificationRepository: sl()));
 
     //datasources
     sl.registerLazySingleton<BaseNotificationDataSource>(

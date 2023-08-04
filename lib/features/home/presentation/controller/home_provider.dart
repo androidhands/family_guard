@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:family_guard/core/controllers/main_provider.dart';
+import 'package:family_guard/core/services/navigation_service.dart';
+import 'package:family_guard/features/notifications/presentation/screens/notifications_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -42,6 +44,7 @@ class HomeProvider extends ChangeNotifier {
       target: LatLng(37.42796133580664, -122.085749655962),
       zoom: 14.4746,
     );
+    goToMyLocation();
   }
 
   Future<void> getAuthenticationResultModel() async {
@@ -145,5 +148,11 @@ class HomeProvider extends ChangeNotifier {
 
     isLoadingLocation = false;
     notifyListeners();
+  }
+
+  void navigateToNotificationScreen() {
+    NavigationService.navigateTo(
+        navigationMethod: NavigationMethod.push,
+        page: () => const NotificationsScreen());
   }
 }

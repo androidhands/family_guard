@@ -27,8 +27,8 @@ class ConnectivityService {
           (status == ConnectivityResult.wifi));
       canGoBack = Get.previousRoute != '/';
       if (isConnected) {
-        bool isCached = await getScreenToNavigate();
-        if (canGoBack) {
+       await getScreenToNavigate().then((isCached) {
+ if (canGoBack) {
           NavigationService.goBack();
         } else {
           // NavigationService.navigateTo(
@@ -45,6 +45,8 @@ class ConnectivityService {
                   preventDuplicates: false,
                   page: () => const LoginScreen());
         }
+        });
+       
       } else {
         /*  NavigationService.navigateTo(
             navigationMethod: NavigationMethod.push,
