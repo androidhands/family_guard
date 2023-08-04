@@ -190,7 +190,7 @@ class AppSizes {
   static final double logoImageHeight = 75.h;
   static final double sizedBoxH = 36.h;
   static final double bottomNavBarHeight = 70.h;
-  static final double commonButtonsHight = 52.h;
+  static final double commonButtonsHight = 60.h;
   static final double enableLocationIconHight = 200.h;
   static final double registrationPhotoHeight = 237.h;
   static final double imageProfileLargeSize = 120.h;
