@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../core/services/dependency_injection_service.dart';
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_constants.dart';
 import '../../../../core/utils/app_sizes.dart';
@@ -39,6 +40,7 @@ class HomeScreen extends StatelessWidget {
                     onMapCreated: (googleMapController) =>
                         provider.onMapCreated(googleMapController),
                     myLocationButtonEnabled: false,
+                    myLocationEnabled: true,
                   ),
                   Positioned(
                     bottom: 0,
@@ -75,9 +77,8 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Positioned(
-                      top: provider.middleY,
-                      right: provider.middleX,
+                  Center(
+                     
                       child: CustomSvgImage(
                         path: AppAssets.pinLocation,
                         width: AppSizes.locationIndicatorWidth,

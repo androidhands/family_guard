@@ -9,10 +9,14 @@ import 'package:family_guard/features/home/presentation/screens/home_screen.dart
 
 import 'package:family_guard/features/notifications/domain/entities/notification_entity.dart';
 import 'package:family_guard/features/notifications/presentation/screens/notifications_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../../../core/global/localization/app_localization.dart';
 import '../../../../core/services/navigation_service.dart';
+import '../../../../core/utils/app_constants.dart';
+import '../../../../core/widget/dialog_service.dart';
 import '../../../authentication/presentation/screens/login_screen.dart';
 import '../../../family/presentation/screens/family_screen.dart';
 
@@ -21,10 +25,9 @@ class HomeControlProvider with ChangeNotifier {
 
   ///Constructor
   HomeControlProvider() {
+  
     initializeDataSharedInSubScreen();
   }
-
-   
 
   ///var
 
@@ -50,13 +53,11 @@ class HomeControlProvider with ChangeNotifier {
 
   ///initialize Data Shared In SubScreen in bottom nav bar
   initializeDataSharedInSubScreen() async {
-  
+  //    handlAppPermissions();
     //  await getMoreProfileData();
     // await getProfileDetails();
     // await getUnreadNotificationsCount();
   }
-
-
 
   ///change current Index
   changeCurrentIndex(int index) {
@@ -131,5 +132,17 @@ class HomeControlProvider with ChangeNotifier {
   void dispose() {
     isMounted = false;
     super.dispose();
+  }
+
+  void handlAppPermissions() async {
+    await [
+      Permission.location,
+      Permission.storage,
+    
+      //add more permission to request here.
+    ].request().then((value) async {
+    
+      return value;
+    });
   }
 }

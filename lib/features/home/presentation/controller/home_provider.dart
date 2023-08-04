@@ -6,14 +6,31 @@ import 'package:family_guard/features/notifications/presentation/screens/notific
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
+
 import 'package:geocoding/geocoding.dart' as gc;
 import 'package:geolocator/geolocator.dart' as gl;
+import 'package:location/location.dart';
+
 import 'package:provider/provider.dart';
 
 import '../../../authentication/domain/entities/user_entity.dart';
 
 class HomeProvider extends ChangeNotifier {
+  bool _disposed = false;
+  @override
+  void dispose() async {
+    _disposed = true;
+    mapController = await completer.future;
+    super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    if (!_disposed) {
+      super.notifyListeners();
+    }
+  }
+
   ///constructor
   HomeProvider() {
     initializeInitialCameraPosition();
@@ -44,7 +61,6 @@ class HomeProvider extends ChangeNotifier {
       target: LatLng(37.42796133580664, -122.085749655962),
       zoom: 14.4746,
     );
-    goToMyLocation();
   }
 
   Future<void> getAuthenticationResultModel() async {
@@ -61,7 +77,7 @@ class HomeProvider extends ChangeNotifier {
     if (!completer.isCompleted) {
       completer.complete(googleMapController);
     }
-    notifyListeners();
+    goToMyLocation();
   }
 
   goToMyLocation() async {
@@ -85,12 +101,62 @@ class HomeProvider extends ChangeNotifier {
     });
   }
 
+/* 
+    permissionServiceCall() async {
+    await permissionServices().then(
+      (value) {
+        if (value != null) {
+          if (value[Permission.location]!.isGranted ) {
+            /* ========= New Screen Added  ============= */
+
+          
+            
+          }
+        }
+      },
+    );
+  }
+
+  /*Permission services*/
+  Future<Map<Permission, PermissionStatus>> permissionServices() async {
+    // You can request multiple permissions at once.
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.location,
+
+      //add more permission to request here.
+    ].request();
+
+    if (statuses[Permission.location]!.isPermanentlyDenied) {
+      await openAppSettings().then(
+        (value) async {
+          if (value) {
+            if (await Permission.location.status.isPermanentlyDenied == true &&
+                await Permission.location.status.isGranted == false) {
+              // openAppSettings();
+              permissionServiceCall(); /* opens app settings until permission is granted */
+            }
+          }
+        },
+      );
+    } else {
+      if (statuses[Permission.location]!.isDenied) {
+        permissionServiceCall();
+      }
+    }
+
+    /*{Permission.camera: PermissionStatus.granted, Permission.storage: PermissionStatus.granted}*/
+    return statuses;
+  } */
+
   Future<bool> requestLocationPermission() async {
     permissionGranted = await location.hasPermission();
-    if (permissionGranted == PermissionStatus.denied) {
+    if (permissionGranted == PermissionStatus.denied ||
+        permissionGranted == PermissionStatus.grantedLimited) {
       permissionGranted = await location.requestPermission();
       if (permissionGranted != PermissionStatus.granted) {
         return false;
+      } else {
+        permissionGranted = await location.requestPermission();
       }
     }
     return true;

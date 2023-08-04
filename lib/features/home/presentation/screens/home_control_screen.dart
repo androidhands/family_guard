@@ -35,7 +35,11 @@ class HomeControlScreen extends StatelessWidget {
 
                     ///Floating Action Button
                     floatingActionButton:
-                       const FloatingActionButtonHomeWidget(),
+                        FloatingActionButtonHomeWidget(
+                        onPressed: (){
+
+                        },
+                       ),
                   ),
                 );
         },

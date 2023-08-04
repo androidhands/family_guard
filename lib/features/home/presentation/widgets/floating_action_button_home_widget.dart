@@ -6,7 +6,9 @@ import '../../../../core/utils/app_sizes.dart';
 import '../../../../core/widget/images/custom_svg_image.dart';
 
 class FloatingActionButtonHomeWidget extends StatelessWidget {
-  const FloatingActionButtonHomeWidget({Key? key}) : super(key: key);
+  const FloatingActionButtonHomeWidget({Key? key, required this.onPressed})
+      : super(key: key);
+  final Function onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,9 @@ class FloatingActionButtonHomeWidget extends StatelessWidget {
         child: const CustomSvgImage(
             path: AppAssets.sosSvig, color: ThemeColorLight.whiteIconColor),
       ),
-      onPressed: () {},
+      onPressed: () {
+        onPressed.call();
+      },
     );
   }
 }

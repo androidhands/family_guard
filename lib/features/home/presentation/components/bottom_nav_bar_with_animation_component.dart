@@ -28,7 +28,7 @@ class BottomNavBarWithAnimationComponent extends StatefulWidget {
 
 class _BottomNavBarWithAnimationComponentState
     extends State<BottomNavBarWithAnimationComponent> {
-  bool isVisible = true;
+ /*  bool isVisible = true;
 
   @override
   void initState() {
@@ -70,7 +70,7 @@ class _BottomNavBarWithAnimationComponentState
       }
     });
   }
-
+ */
   @override
   Widget build(BuildContext context) {
     return Consumer<HomeControlProvider>(
@@ -78,7 +78,7 @@ class _BottomNavBarWithAnimationComponentState
         return AnimatedContainer(
           curve: Curves.decelerate,
           duration: const Duration(milliseconds: 200),
-          height: isVisible ? AppSizes.bottomNavBarHeight : 0,
+          height:  AppSizes.bottomNavBarHeight ,
           child: Wrap(
             children: [
               Card(

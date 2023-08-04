@@ -323,4 +323,8 @@ class AppConstants {
   static const String family = "FAMILY";
 
   static const String welcomeProfile = "WELCOME_PROFILE";
+
+  static const  String storagePermissionsRequired = "Storage_Permissions_Rquired";
+
+  static const String mediaLibraryPermissionsRequired = "Media_Permissions_Rquired";
 }

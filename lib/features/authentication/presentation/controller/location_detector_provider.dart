@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:family_guard/core/error/failure.dart';
 import 'package:family_guard/features/authentication/domain/entities/sign_up_params.dart';
+import 'package:family_guard/features/home/presentation/screens/home_control_screen.dart';
 
 import 'package:family_guard/features/home/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -198,7 +199,7 @@ class LocationDetectorProvider with ChangeNotifier {
       }, (r) async {
         if (r) {
           isSavingNewCountry = false;
-          NavigationService.offAll(page: () => const HomeScreen());
+          NavigationService.offAll(page: () => const HomeControlScreen());
         } else {
           isSavingNewCountry = false;
           await DialogWidget.showCustomDialog(
