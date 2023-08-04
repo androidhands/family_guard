@@ -62,7 +62,7 @@ class HeaderHomeComponent extends StatelessWidget {
               ///Notification Icon Button
               GestureDetector(
                   onTap: () {
-                    // provider.navigateToNotificationScreen();
+                     homeControlProvider.navigateToNotificationScreen();
                   },
                   child: badges.Badge(
                       badgeContent: CustomText(

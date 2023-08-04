@@ -56,8 +56,25 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   Positioned(
+                    bottom: 100,
+                    left: 0,
+                    right: 0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(AppSizes.pW6),
+                          child: CustomFloatingActionButton(
+                            iconSVGPath: AppAssets.familySvg,
+                            onTap: () => provider.goToMyLocation(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
                       top: provider.middleY,
-                      right:provider.middleX,
+                      right: provider.middleX,
                       child: CustomSvgImage(
                         path: AppAssets.pinLocation,
                         width: AppSizes.locationIndicatorWidth,
@@ -69,8 +86,6 @@ class HomeScreen extends StatelessWidget {
                     right: 0,
                     child: HeaderHomeComponent(),
                   ),
-
-                  
                 ],
               ),
 

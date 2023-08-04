@@ -21,18 +21,20 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final bool centerTitle;
   final List<Widget> actions;
+  final Color? popIconsColor;
 
-  const CustomAppbar({
-    Key? key,
-    this.canPop = true,
-    this.withMenu = false,
-    this.popOnPressed,
-    this.title,
-    this.centerTitle = true,
-    this.actions = const <Widget>[],
-    this.withTransparent = false,
-    this.withOutElevation = false,
-  }) : super(key: key);
+  const CustomAppbar(
+      {Key? key,
+      this.canPop = true,
+      this.withMenu = false,
+      this.popOnPressed,
+      this.title,
+      this.centerTitle = true,
+      this.actions = const <Widget>[],
+      this.withTransparent = false,
+      this.withOutElevation = false,
+      this.popIconsColor})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,11 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ///Back Button
-              if (canPop) CustomBackButton(popOnPressed: popOnPressed),
+              if (canPop)
+                CustomBackButton(
+                  popOnPressed: popOnPressed,
+                  color: popIconsColor,
+                ),
 
               ///Title
               Expanded(
@@ -79,8 +85,12 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                                 : EdgeInsets.zero,
                             child: CustomText(
                               title!,
-                              textStyle:
-                                  Theme.of(context).appBarTheme.titleTextStyle,
+                              textStyle: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(
+                                      color: ThemeColorLight.pinkColor,
+                                      fontSize: AppSizes.h5),
                               maxLines: 1,
                             ),
                           ))
@@ -129,8 +139,10 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
 
 class CustomBackButton extends StatelessWidget {
   final void Function()? popOnPressed;
+  final Color? color;
 
-  const CustomBackButton({Key? key, this.popOnPressed}) : super(key: key);
+  const CustomBackButton({Key? key, this.popOnPressed, this.color})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +164,7 @@ class CustomBackButton extends StatelessWidget {
         icon: sl<BaseAppLocalizations>().isEnglish()
             ? CustomSvgImage(
                 path: AppAssets.backSvg,
-                color: ThemeColorLight.whiteColor,
+                color: color ?? ThemeColorLight.whiteColor,
                 width: AppSizes.backButtonSizes,
                 height: AppSizes.backButtonSizes,
                 radius: BorderRadius.zero,
@@ -161,7 +173,7 @@ class CustomBackButton extends StatelessWidget {
                 angle: 180 * math.pi / 180,
                 child: CustomSvgImage(
                   path: AppAssets.backSvg,
-                  color: ThemeColorLight.whiteColor,
+                  color: color ?? ThemeColorLight.whiteColor,
                   width: AppSizes.backButtonSizes,
                   height: AppSizes.backButtonSizes,
                   radius: BorderRadius.zero,
