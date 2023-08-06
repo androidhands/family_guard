@@ -15,7 +15,6 @@ import '../../features/authentication/domain/usecases/get_cached_user_credential
 import '../../features/authentication/domain/usecases/sign_out_user_usecase.dart';
 import '../../features/authentication/presentation/screens/login_screen.dart';
 import '../../features/home/presentation/screens/home_control_screen.dart';
-import '../../features/home/presentation/screens/home_screen.dart';
 import '../global/localization/app_localization.dart';
 import '../local_data/shared_preferences_services.dart';
 import '../services/connectivity_services.dart';

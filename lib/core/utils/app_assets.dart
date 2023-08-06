@@ -359,5 +359,10 @@ class AppAssets {
   static const String mapSvg = "${svgImagePath}map.svg";
   static const String familySvg = "${svgImagePath}family.svg";
 
-  static const String  profileMan = "${svgImagePath}profile_man.svg";
+  static const String profileMan = "${svgImagePath}profile_man.svg";
+
+  static const String logoutSvg = "${svgImagePath}logout.svg";
+  static const String shareAppSvg = "${svgImagePath}share.svg";
+
+  static const String changePassword = "${svgImagePath}changePassword.svg";
 }

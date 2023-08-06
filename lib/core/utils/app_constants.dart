@@ -192,7 +192,7 @@ class AppConstants {
   static const String likes = "LIKES";
   static const String profileSetting = "PROFILE_SETTING";
   static const String myDetails = "MY_DETAILS";
-  static const String addresses = "ADDRESSES";
+  static const String addresses = "MYADDRESS";
   static const String wallet = "WALLET";
   static const String application = "APPLICATION";
   static const String myReviews = "MY_REVIEWS";
@@ -327,4 +327,6 @@ class AppConstants {
   static const  String storagePermissionsRequired = "Storage_Permissions_Rquired";
 
   static const String mediaLibraryPermissionsRequired = "Media_Permissions_Rquired";
+
+  static const String personal = "PERSONAL";
 }

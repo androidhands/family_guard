@@ -1,9 +1,8 @@
-import 'package:family_guard/core/controllers/main_provider.dart';
-import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 
 import 'package:family_guard/features/home/presentation/screens/home_screen.dart';
 
@@ -11,21 +10,18 @@ import 'package:family_guard/features/notifications/domain/entities/notification
 import 'package:family_guard/features/notifications/presentation/screens/notifications_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:provider/provider.dart';
 
-import '../../../../core/global/localization/app_localization.dart';
 import '../../../../core/services/navigation_service.dart';
-import '../../../../core/utils/app_constants.dart';
-import '../../../../core/widget/dialog_service.dart';
 import '../../../authentication/presentation/screens/login_screen.dart';
 import '../../../family/presentation/screens/family_screen.dart';
 
 class HomeControlProvider with ChangeNotifier {
   bool isMounted = true;
 
+  final SingleTickerProviderStateMixin singleTickerProviderStateMixin;
+
   ///Constructor
-  HomeControlProvider() {
-  
+  HomeControlProvider({required this.singleTickerProviderStateMixin}) {
     initializeDataSharedInSubScreen();
   }
 
@@ -38,6 +34,8 @@ class HomeControlProvider with ChangeNotifier {
   ///Loading
   bool isLoadingDataSharedInSubScreen = true;
   bool isLoadingHomeScreen = true;
+
+  late AnimationController animationController;
 
   ///controller
   final ScrollController scrollController = ScrollController();
@@ -53,7 +51,11 @@ class HomeControlProvider with ChangeNotifier {
 
   ///initialize Data Shared In SubScreen in bottom nav bar
   initializeDataSharedInSubScreen() async {
-  //    handlAppPermissions();
+    animationController = AnimationController(
+        vsync: singleTickerProviderStateMixin,
+        duration: const Duration(seconds: 5),
+        );
+    //    handlAppPermissions();
     //  await getMoreProfileData();
     // await getProfileDetails();
     // await getUnreadNotificationsCount();
@@ -131,6 +133,7 @@ class HomeControlProvider with ChangeNotifier {
   @override
   void dispose() {
     isMounted = false;
+    animationController.dispose();
     super.dispose();
   }
 
@@ -138,11 +141,30 @@ class HomeControlProvider with ChangeNotifier {
     await [
       Permission.location,
       Permission.storage,
-    
+
       //add more permission to request here.
     ].request().then((value) async {
-    
       return value;
     });
+  }
+
+  bool isLoadingAnimation = false;
+  void startAnimation() {
+    log('start animation');
+    if (animationController.isAnimating) {
+      isLoadingAnimation = false;
+      animationController.stop();
+      notifyListeners();
+    } else {
+      isLoadingAnimation = true;
+      animationController.fling();
+//animationController.forward();
+      animationController.repeat();
+
+      /*  animationController.fling();
+      animationController.repeat(); */
+
+      notifyListeners();
+    }
   }
 }

@@ -5,7 +5,6 @@ import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/services/firebase_messaging_services.dart';
 import 'package:family_guard/features/authentication/domain/usecases/save_user_credentials_usecase.dart';
 import 'package:family_guard/features/home/presentation/screens/home_control_screen.dart';
-import 'package:family_guard/features/home/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:family_guard/features/authentication/presentation/screens/forget_password_screen.dart';

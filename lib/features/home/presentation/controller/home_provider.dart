@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/services/navigation_service.dart';
 import 'package:family_guard/features/notifications/presentation/screens/notifications_screen.dart';
+import 'package:family_guard/features/profile/presentation/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -109,53 +110,6 @@ class HomeProvider extends ChangeNotifier {
     });
   }
 
-/* 
-    permissionServiceCall() async {
-    await permissionServices().then(
-      (value) {
-        if (value != null) {
-          if (value[Permission.location]!.isGranted ) {
-            /* ========= New Screen Added  ============= */
-
-          
-            
-          }
-        }
-      },
-    );
-  }
-
-  /*Permission services*/
-  Future<Map<Permission, PermissionStatus>> permissionServices() async {
-    // You can request multiple permissions at once.
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.location,
-
-      //add more permission to request here.
-    ].request();
-
-    if (statuses[Permission.location]!.isPermanentlyDenied) {
-      await openAppSettings().then(
-        (value) async {
-          if (value) {
-            if (await Permission.location.status.isPermanentlyDenied == true &&
-                await Permission.location.status.isGranted == false) {
-              // openAppSettings();
-              permissionServiceCall(); /* opens app settings until permission is granted */
-            }
-          }
-        },
-      );
-    } else {
-      if (statuses[Permission.location]!.isDenied) {
-        permissionServiceCall();
-      }
-    }
-
-    /*{Permission.camera: PermissionStatus.granted, Permission.storage: PermissionStatus.granted}*/
-    return statuses;
-  } */
-
   Future<bool> requestLocationPermission() async {
     permissionGranted = await location.hasPermission();
     if (permissionGranted == PermissionStatus.denied) {
@@ -225,5 +179,11 @@ class HomeProvider extends ChangeNotifier {
     NavigationService.navigateTo(
         navigationMethod: NavigationMethod.push,
         page: () => const NotificationsScreen());
+  }
+
+  void navigateToProfileScreen() {
+    NavigationService.navigateTo(
+        navigationMethod: NavigationMethod.push,
+        page: () => const ProfileScreen());
   }
 }

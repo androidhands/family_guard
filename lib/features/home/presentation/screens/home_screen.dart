@@ -1,18 +1,10 @@
-import 'package:family_guard/core/controllers/main_provider.dart';
-import 'package:family_guard/core/global/localization/app_localization.dart';
-import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
-import 'package:family_guard/core/widget/custom_appbar.dart';
 import 'package:family_guard/core/widget/custom_loading_indicator.dart';
-import 'package:family_guard/core/widget/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/services/dependency_injection_service.dart';
 import '../../../../core/utils/app_assets.dart';
-import '../../../../core/utils/app_constants.dart';
 import '../../../../core/utils/app_sizes.dart';
-import '../../../../core/widget/buttons/custom_elevated_button.dart';
 import '../../../../core/widget/floating_action_buttons/extended_floating_action_button.dart';
 import '../../../../core/widget/images/custom_svg_image.dart';
 import '../components/header_home_component.dart';

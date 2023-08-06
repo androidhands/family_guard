@@ -1,16 +1,8 @@
-import 'package:family_guard/core/global/theme/theme_color/theme_color_dark.dart';
-import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
-import 'package:family_guard/core/utils/app_constants.dart';
-import 'package:family_guard/core/utils/app_fonts.dart';
-import 'package:family_guard/core/widget/custom_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/integrated_library/bottom_navigation_bar/bottom_bar_creative.dart';
-import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_sizes.dart';
-import '../../../../core/widget/images/custom_svg_image.dart';
 import '../../utils/utils.dart';
 import '../controller/home_control_provider.dart';
 

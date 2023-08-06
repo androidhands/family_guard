@@ -5,7 +5,6 @@ import 'package:family_guard/core/error/failure.dart';
 import 'package:family_guard/features/authentication/domain/entities/sign_up_params.dart';
 import 'package:family_guard/features/home/presentation/screens/home_control_screen.dart';
 
-import 'package:family_guard/features/home/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart' as gc;
 import 'package:geolocator/geolocator.dart' as gl;

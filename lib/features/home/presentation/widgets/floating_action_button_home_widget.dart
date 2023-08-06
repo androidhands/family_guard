@@ -29,7 +29,7 @@ class FloatingActionButtonHomeWidget extends StatelessWidget {
             path: AppAssets.sosSvig, color: ThemeColorLight.whiteIconColor),
       ),
       onPressed: () {
-        onPressed.call();
+        onPressed();
       },
     );
   }

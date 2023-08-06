@@ -45,7 +45,6 @@ import '../../features/authentication/domain/usecases/manual_sign_in_usecase.dar
 import '../../features/authentication/domain/usecases/reset_password_usecase.dart';
 import '../../features/authentication/domain/usecases/sign_out_user_usecase.dart';
 import '../../features/authentication/presentation/controller/reset_password_provider.dart';
-import '../../features/home/presentation/controller/home_control_provider.dart';
 import '../../features/notifications/domain/usecases/refresh_token_usecase.dart';
 import '../../features/notifications/domain/usecases/set_is_read_notification_usecase.dart';
 import '../../features/notifications/presentation/controller/notification_provider.dart';
@@ -261,7 +260,9 @@ class DependencyInjectionServices {
 
   intialozeHome() {
     //providers
-    sl.registerLazySingleton(() => HomeControlProvider());
+   // sl.registerLazySingleton(() => HomeControlProvider());
     sl.registerLazySingleton(() => HomeProvider());
   }
+
+  
 }

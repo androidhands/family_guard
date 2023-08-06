@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:family_guard/core/global/localization/app_localization.dart';
 
-import 'package:family_guard/core/utils/app_assets.dart';
 
 import 'package:family_guard/core/utils/app_sizes.dart';
 import 'package:family_guard/core/widget/custom_text.dart';
 import 'package:family_guard/core/widget/images/custom_svg_image.dart';
-import 'dart:math' as math;
 
-import '../../../../core/services/dependency_injection_service.dart';
 import '../../../../core/utils/app_fonts.dart';
 
 class ProfileItemComponent extends StatelessWidget {

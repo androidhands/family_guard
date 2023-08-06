@@ -75,5 +75,12 @@ Map<String, String> coreAr = {
   'MAP': 'Map',
   'FAMILY': 'Family',
   'WELCOME_PROFILE': 'Welcome',
-  'NOTIFICATIONS': 'Nofitifications'
+  'NOTIFICATIONS': 'Nofitifications',
+  'PROFILE': 'Profile',
+  'MY_DETAILS': 'My Details',
+  'MYADDRESS': 'My Address',
+  'PERSONAL': 'Personal',
+  'SETTINGS': 'Settings',
+  'CHANGE_PASSWORD': 'Change Password',
+  'LOG_OUT': 'Log out'
 };

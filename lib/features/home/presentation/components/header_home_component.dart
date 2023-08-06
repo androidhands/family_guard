@@ -6,17 +6,13 @@ import 'package:family_guard/core/utils/app_assets.dart';
 import 'package:family_guard/core/utils/app_constants.dart';
 import 'package:family_guard/core/utils/app_sizes.dart';
 import 'package:family_guard/core/widget/custom_boder_icon.dart';
-import 'package:family_guard/core/widget/images/custom_cashed_network_image.dart';
 import 'package:family_guard/core/widget/images/custom_svg_image.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/global/localization/app_localization.dart';
 
 import '../../../../core/utils/app_fonts.dart';
-import '../../../../core/utils/utils.dart';
-import '../../../../core/widget/custom_gradient_text.dart';
 import '../../../../core/widget/custom_text.dart';
-import '../controller/home_control_provider.dart';
 import '../controller/home_provider.dart';
 import 'package:badges/badges.dart' as badges;
 
@@ -26,7 +22,7 @@ class HeaderHomeComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<HomeProvider>(
-      builder: (context, homeControlProvider, child) {
+      builder: (context, provider, child) {
         return Container(
           decoration: BoxDecoration(
               color: Theme.of(context).appBarTheme.backgroundColor,
@@ -42,9 +38,7 @@ class HeaderHomeComponent extends StatelessWidget {
                 ///image profile
                 GestureDetector(
                     onTap: () async {
-                      // provider.onProfileImagePress(context);
-                      await Provider.of<MainProvider>(context, listen: false)
-                          .logoutUser();
+                      provider.navigateToProfileScreen();
                     },
                     child: CustomSvgImage(
                       path: AppAssets.profileMan,
@@ -58,7 +52,7 @@ class HeaderHomeComponent extends StatelessWidget {
                   children: [
                     ///Welcome
                     CustomText(
-                      '${tr(AppConstants.welcomeProfile)}\n ${homeControlProvider.userEntity?.firstName ?? ''}',
+                      '${tr(AppConstants.welcomeProfile)}\n ${provider.userEntity?.firstName ?? ''}',
                       textStyle: TextStyle(
                           fontSize: AppSizes.h5,
                           fontWeight: AppFonts.regular,
@@ -74,12 +68,12 @@ class HeaderHomeComponent extends StatelessWidget {
                   padding: EdgeInsets.only(right: AppSizes.pW1),
                   child: GestureDetector(
                       onTap: () {
-                        homeControlProvider.navigateToNotificationScreen();
+                        provider.navigateToNotificationScreen();
                       },
                       child: badges.Badge(
-                          badgeContent: CustomText(
+                          badgeContent: const CustomText(
                             '0',
-                            textStyle: const TextStyle(color: Colors.white),
+                            textStyle: TextStyle(color: Colors.white),
                           ),
                           position: badges.BadgePosition.topEnd(),
                           child: CustomBorderIcon(

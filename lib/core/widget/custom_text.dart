@@ -215,6 +215,7 @@ class CustomText extends StatelessWidget {
       textDirection: textDirection,
       overflow: overflow,
       maxLines: maxLines,
+    
 
     );
   }

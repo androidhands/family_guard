@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 
 import '../../features/authentication/presentation/screens/login_screen.dart';
 import '../../features/home/presentation/screens/home_control_screen.dart';
-import '../screens/no_network_screen.dart';
 
 class ConnectivityService {
   /// `_isInitialized` is used to ensure that the listeners are only called once
