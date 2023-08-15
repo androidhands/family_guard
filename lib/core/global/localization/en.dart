@@ -80,8 +80,12 @@ Map<String, String> coreEn = {
   'MY_DETAILS': 'My Details',
   'MYADDRESS': 'My Address',
   'PERSONAL': 'Personal',
-  'SETTINGS':'Settings',
-  'CHANGE_PASSWORD':'Change Password',
-  'SHARE_APP':'Share App',
-  'LOG_OUT':'Log out'
+  'SETTINGS': 'Settings',
+  'CHANGE_PASSWORD': 'Change Password',
+  'SHARE_APP': 'Share App',
+  'LOG_OUT': 'Log out',
+  'CANCEL': 'Cancel',
+  'ADD_MEMBER': 'Add a new member',
+  'RECEIVED_REQUESTS': 'Received requests',
+  'SEMT_REQUESTS': 'Sent Requests',
 };

@@ -83,5 +83,7 @@
 	  <!-- Permission options for the `photos` group -->
     <key>NSPhotoLibraryUsageDescription</key>
     <string>photos</string>
+	  <key>NSCameraUsageDescription</key>
+    <string>camera</string>
 </dict>
 </plist>

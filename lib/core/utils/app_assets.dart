@@ -365,4 +365,11 @@ class AppAssets {
   static const String shareAppSvg = "${svgImagePath}share.svg";
 
   static const String changePassword = "${svgImagePath}changePassword.svg";
+
+  static const String gallerySvg = "${svgImagePath}gallery.svg";
+
+  static const String incomingRequestsSvg =
+      "${svgImagePath}incoming_requests.svg";
+  static const String addMemberSvg = "${svgImagePath}add_members.svg";
+  static const String myMemberSvg = "${svgImagePath}my_members.svg";
 }

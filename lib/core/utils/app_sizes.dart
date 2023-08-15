@@ -99,8 +99,10 @@ class AppSizes {
   static final double backIconSize = 27.h;
   static final double suffixIconsSizes = 14.h;
   static final double checkIconsSizes = 45.h;
-  static final double backButtonSizes = 35.h;
+  static final double backButtonHight = 20.h;
   static final double tryAgainButtonSize = 120.w;
+  static final double backButtonWidth = 20.w;
+  static final double actionBarButtonsHight = 40.h;
 
   /// Elevated Button Sizes
   static final double largeButtonHeight = 45.h;

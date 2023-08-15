@@ -36,6 +36,8 @@ class HomeProvider extends ChangeNotifier {
 
   ///constructor
   HomeProvider() {
+    userEntity =
+        Provider.of<MainProvider>(Get.context!, listen: false).userCredentials!;
     initializeInitialCameraPosition();
     getAuthenticationResultModel();
   }
@@ -71,8 +73,6 @@ class HomeProvider extends ChangeNotifier {
     await Provider.of<MainProvider>(Get.context!, listen: false)
         .getCachedUserCredentials()
         .then((value) {
-      userEntity = Provider.of<MainProvider>(Get.context!, listen: false)
-          .userCredentials!;
       notifyListeners();
     });
   }

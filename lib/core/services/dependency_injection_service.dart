@@ -22,10 +22,19 @@ import 'package:family_guard/features/authentication/domain/usecases/save_user_c
 import 'package:family_guard/features/authentication/domain/usecases/verify_user_phone_usecase.dart';
 import 'package:family_guard/features/authentication/presentation/controller/login/login_provider.dart';
 import 'package:family_guard/features/authentication/presentation/controller/sign_up_provider.dart';
+import 'package:family_guard/features/family/data/data_source/family_connections_data_source.dart';
+import 'package:family_guard/features/family/data/repository/family_connection_repositoy.dart';
+import 'package:family_guard/features/family/domain/repositories/base_family_connections_repository.dart';
+import 'package:family_guard/features/family/domain/usecases/get_family_connections_usecase.dart';
 import 'package:family_guard/features/home/presentation/controller/home_provider.dart';
 import 'package:family_guard/features/notifications/data/datasource/notifications_datasource.dart';
 import 'package:family_guard/features/notifications/data/repositories/notification_count_repository.dart';
 import 'package:family_guard/features/notifications/domain/repositories/base_notification_repository.dart';
+import 'package:family_guard/features/profile/data/datasource/profile_data_source.dart';
+import 'package:family_guard/features/profile/data/repositories/profile_repository.dart';
+import 'package:family_guard/features/profile/domain/repositories/base_profile_repository.dart';
+import 'package:family_guard/features/profile/domain/usecases/save_profile_image_usecase.dart';
+import 'package:family_guard/features/profile/presentation/controllers/profile_provider.dart';
 import 'package:get_it/get_it.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
 import 'package:family_guard/core/global/theme/data/datasource/theme_datasource.dart';
@@ -94,7 +103,11 @@ class DependencyInjectionServices {
     //home
     intialozeHome();
 
- 
+    //family
+    initializeFamilyConnections();
+
+    //profile
+    initializeProfile();
   }
 
   initializeLocationFetcher() {
@@ -260,9 +273,37 @@ class DependencyInjectionServices {
 
   intialozeHome() {
     //providers
-   // sl.registerLazySingleton(() => HomeControlProvider());
+    // sl.registerLazySingleton(() => HomeControlProvider());
     sl.registerLazySingleton(() => HomeProvider());
   }
 
-  
+  initializeFamilyConnections() {
+    //repository
+    sl.registerLazySingleton<BaseFamilyConnectionsRepository>(
+        () => FamilyConnectionRepositoy(baseFamilyConnectionsDataSource: sl()));
+
+    //usecases
+    sl.registerLazySingleton(() =>
+        GetFamilyConnectionsUsecase(baseFamilyConnectionsRepository: sl()));
+
+    //repository
+    sl.registerLazySingleton<BaseFamilyConnectionsDataSource>(
+        () => FamilyConnectionsDataSource());
+  }
+
+  initializeProfile() {
+    //providers
+
+    sl.registerLazySingleton(() => ProfileProvider());
+    //repositories
+    sl.registerLazySingleton<BaseProfileRepository>(
+        () => ProfileRepository(baseProfileDataSource: sl()));
+
+//usecases
+    sl.registerLazySingleton(
+        () => SaveProfileImageUsecase(baseProfileRepository: sl()));
+
+    //datasources
+    sl.registerLazySingleton<BaseProfileDataSource>(() => ProfileDataSource());
+  }
 }

@@ -1,4 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:family_guard/features/authentication/domain/entities/address_entity.dart';
+import 'package:family_guard/features/family/domain/entities/member_entity.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class UserEntity extends Equatable {
   final int id;
@@ -11,11 +14,13 @@ class UserEntity extends Equatable {
   final String? emailVerifiedAt;
   final String createdAt;
   final String updatedAt;
-  final String apiToken;
+  final String? apiToken;
   final String uid;
-  final String imageUrl;
+   String imageUrl;
+  final AddressEntity? address;
+  final MemberEntity? memberEntity;
 
-  const UserEntity(
+   UserEntity(
       this.id,
       this.firstName,
       this.secondName,
@@ -28,7 +33,9 @@ class UserEntity extends Equatable {
       this.updatedAt,
       this.apiToken,
       this.uid,
-      this.imageUrl);
+      this.imageUrl,
+      this.address,
+      this.memberEntity);
 
   @override
   List<Object?> get props => [
@@ -44,6 +51,12 @@ class UserEntity extends Equatable {
         updatedAt,
         apiToken,
         uid,
-        imageUrl
+        imageUrl,
+        address,
+        memberEntity
       ];
+
+  String get userFullName => '$firstName $secondName $familyName';
+  String get userName => '$firstName $secondName';
+  set setImageUrl(String v) => imageUrl = v;
 }

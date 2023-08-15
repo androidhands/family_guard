@@ -26,6 +26,9 @@ class UsersCredentialsDataSource implements BaseUsersCredentialsDataSource {
       if (cachedData == null) return null;
       Map<String, dynamic> data = json.decode(cachedData);
       return UserModel.fromJson(data);
+    } on FormatException catch (ex) {
+      throw CacheException(
+          message: 'Error caching... ${ex.toString()}', code: 0);
     } catch (ex) {
       throw CacheException(
           message: 'Error caching... ${ex.toString()}', code: 0);

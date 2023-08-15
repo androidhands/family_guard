@@ -10,8 +10,8 @@ class AddressEntity extends Equatable {
   final String subLocality;
   final String street;
   final String postalCode;
-  final String updatedAt;
-  final String createdAt;
+  final String? updatedAt;
+  final String? createdAt;
   final double lat;
   final double lon;
 

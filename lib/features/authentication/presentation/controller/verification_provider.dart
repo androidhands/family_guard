@@ -101,6 +101,8 @@ class VerificationProvider with ChangeNotifier {
               smsCode: otp, verificationId: myVerificationId))
           .onError((error, stackTrace) async {
         log('verifications error');
+        isLoadingSubmitOtp = false;
+        notifyListeners();
         return await DialogWidget.showCustomDialog(
           context: Get.context!,
           title: 'OTP Error',
@@ -158,7 +160,7 @@ class VerificationProvider with ChangeNotifier {
                 signUpParams: signUpParams,
               ));
     } else {
-       log('not verified');
+      log('not verified');
       isLoadingSubmitOtp = false;
       await DialogWidget.showCustomDialog(
           context: context,

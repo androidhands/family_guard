@@ -1,9 +1,8 @@
-
-
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
 import 'package:flutter/widgets.dart';
 
 class CustomGuardShape extends CustomPainter {
+  CustomGuardShape();
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();

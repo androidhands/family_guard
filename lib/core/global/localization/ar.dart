@@ -82,5 +82,9 @@ Map<String, String> coreAr = {
   'PERSONAL': 'Personal',
   'SETTINGS': 'Settings',
   'CHANGE_PASSWORD': 'Change Password',
-  'LOG_OUT': 'Log out'
+  'LOG_OUT': 'Log out',
+  'CANCEL': 'Cancel',
+  'ADD_MEMBER': 'Add a new member',
+  'RECEIVED_REQUESTS': 'Received requests',
+  'SEMT_REQUESTS': 'Sent Requests',
 };

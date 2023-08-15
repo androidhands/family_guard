@@ -26,6 +26,7 @@ class ManualSignUpDataSource implements BaseManualSignUpDataSource {
         'api_password': ApiEndPoint.apiPassword,
         'user': signUpParams.toJson()
       },
+      
       onFailure: (ErrorMessage failureData) {
         failureData.code == "23000"
             ? throw ServerException(

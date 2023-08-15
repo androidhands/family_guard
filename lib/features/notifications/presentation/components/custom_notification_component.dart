@@ -1,3 +1,5 @@
+import 'package:family_guard/core/controllers/main_provider.dart';
+import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
 import 'package:family_guard/core/services/date_parser.dart';
@@ -7,6 +9,7 @@ import 'package:family_guard/core/widget/custom_gradient_text.dart';
 import 'package:family_guard/core/widget/custom_network_image.dart';
 import 'package:family_guard/core/widget/custom_text.dart';
 import 'package:family_guard/features/notifications/domain/entities/notification_entity.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/network/api_caller.dart';
 import '../../../../core/utils/app_fonts.dart';
@@ -20,7 +23,7 @@ class CustomNotificationComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// TODO : MOSTAFA : 2021-09-09
+    UserEntity user = Provider.of<MainProvider>(context).userCredentials!;
     return Container(
       margin: EdgeInsets.only(top: AppSizes.pH3),
       decoration: BoxDecoration(
@@ -53,6 +56,7 @@ class CustomNotificationComponent extends StatelessWidget {
                                 '$attachmentBaseUrl${notificationEntity.imageUrl}',
                             size: AppSizes.notificationIconSize,
                             fit: BoxFit.cover,
+                            token: user.apiToken!,
                           ),
                         ),
                       ),

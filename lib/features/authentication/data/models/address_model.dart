@@ -2,19 +2,19 @@ import 'package:family_guard/features/authentication/domain/entities/address_ent
 
 class AddressModel extends AddressEntity {
   const AddressModel(
-      {required id,
-      required mobile,
-      required country,
-      required adminArea,
-      required subAdminArea,
-      required locality,
-      required subLocality,
-      required street,
-      required postalCode,
-      required updatedAt,
-      required createdAt,
-      required lat,
-      required lon})
+      {required int id,
+      required String mobile,
+      required String country,
+      required String adminArea,
+      required String subAdminArea,
+      required String locality,
+      required String subLocality,
+      required String street,
+      required String postalCode,
+      required String? updatedAt,
+      required String? createdAt,
+      required double lat,
+      required double lon})
       : super(id, mobile, country, adminArea, subAdminArea, locality,
             subLocality, street, postalCode, updatedAt, createdAt, lat, lon);
 

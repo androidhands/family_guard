@@ -12,13 +12,14 @@ class ImageProfileWidget extends StatelessWidget {
   final double? size;
   final bool isExistBorder;
   final bool isExistEdit;
+  final String token;
 
   const ImageProfileWidget(
       {Key? key,
       required this.url,
       this.size,
       this.isExistBorder = false,
-      this.isExistEdit = false})
+      this.isExistEdit = false,required this.token})
       : super(key: key);
 
   @override
@@ -48,6 +49,7 @@ class ImageProfileWidget extends StatelessWidget {
             height: size ?? AppSizes.imageProfileLargeSize,
             fit: BoxFit.fill,
             radius: BorderRadius.circular(AppSizes.brMax),
+            token: token,
           ),
         ),
         if (isExistEdit)

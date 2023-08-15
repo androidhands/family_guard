@@ -329,4 +329,8 @@ class AppConstants {
   static const String mediaLibraryPermissionsRequired = "Media_Permissions_Rquired";
 
   static const String personal = "PERSONAL";
+
+  static const String addMember = "ADD_MEMBER";
+    static const String receivedRequests = "RECEIVED_REQUESTS";
+     static const String sentRequests = "SEMT_REQUESTS";
 }

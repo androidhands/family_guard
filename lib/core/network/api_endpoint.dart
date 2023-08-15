@@ -22,4 +22,12 @@ class ApiEndPoint {
   static const String getUserAddressPath = "/users/GetUserAddress";
   static const String updateUserAddressPath =
       "/users/UpdateUserAddress?api_password=$apiPassword";
+
+  static const String getFamilyConnectionsPath =
+      '/users/GetUserMembers?api_password=$apiPassword';
+  static const String userImagePath = "/GetUserImage/";
+
+  static const String memberImagePath = "api/users/GetMemberProfile";
+
+  static const String saveUserProfileImagePath = "/users/SaveUserImage";
 }

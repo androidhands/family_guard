@@ -1,5 +1,9 @@
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
+import 'package:family_guard/core/services/navigation_service.dart';
+import 'package:family_guard/features/notifications/presentation/screens/notifications_screen.dart';
 import 'package:family_guard/features/profile/presentation/components/profile_item_component.dart';
+import 'package:family_guard/features/profile/presentation/screens/my_address_screen.dart';
+import 'package:family_guard/features/profile/presentation/screens/my_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
 
@@ -10,6 +14,7 @@ import 'package:family_guard/core/widget/custom_text.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../../../core/controllers/main_provider.dart';
 import '../controllers/profile_provider.dart';
 import '../widgets/custom_container_widget.dart';
 import '../widgets/custom_profile_divider.dart';
@@ -34,15 +39,26 @@ class ProfileDetailsComponent extends StatelessWidget {
                     path: AppAssets.person,
                     text: tr(AppConstants.myDetails),
                     onTap: () {
-                      /*  NavigationService.navigateTo(
+                      NavigationService.navigateTo(
                           navigationMethod: NavigationMethod.push,
-                          page: () => const MyDetailsScreen()); */
+                          page: () => const MyDetailsScreen());
                     }),
                 const CustomProfileDivider(),
                 ProfileItemComponent(
-                    path: AppAssets.home, text: tr(AppConstants.addresses)),
+                    onTap: () {
+                      NavigationService.navigateTo(
+                          navigationMethod: NavigationMethod.push,
+                          page: () => const MyAddressScreen());
+                    },
+                    path: AppAssets.home,
+                    text: tr(AppConstants.addresses)),
                 const CustomProfileDivider(),
                 ProfileItemComponent(
+                    onTap: () {
+                      NavigationService.navigateTo(
+                          navigationMethod: NavigationMethod.push,
+                          page: () => const NotificationsScreen());
+                    },
                     path: AppAssets.notificationSvg,
                     text: tr(AppConstants.notifications)),
               ],
@@ -64,6 +80,8 @@ class ProfileDetailsComponent extends StatelessWidget {
                 const CustomProfileDivider(),
                 ProfileItemComponent(
                     onTap: () {
+                      Provider.of<MainProvider>(context, listen: false)
+                          .logoutUser();
                       // provider.logOut(context);
                     },
                     path: AppAssets.logoutSvg,

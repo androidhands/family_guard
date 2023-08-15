@@ -6,15 +6,18 @@
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
-     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!-- Read storage permission for Android 12 and lower -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"   android:maxSdkVersion="28" />
      <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+         <uses-permission android:name="android.permission.CAMERA" />
+        <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+            <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" android:minSdkVersion="30" />
 
     <application
         android:label="Family Guard"
         android:name="${applicationName}"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/launcher_icon"
+        android:requestLegacyExternalStorage="true" >
        
     <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyA_Cl4tTsUE0_H5N5A7OutO4O31B6cc85Q"/>

@@ -1,22 +1,42 @@
+import 'package:family_guard/features/authentication/data/models/address_model.dart';
+import 'package:family_guard/features/authentication/domain/entities/address_entity.dart';
 import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
+import 'package:family_guard/features/family/data/model/member_model.dart';
+import 'package:family_guard/features/family/domain/entities/member_entity.dart';
 
 class UserModel extends UserEntity {
-  const UserModel(
-      {required id,
-      required firstName,
-      required secondName,
-      required familyName,
-      required mobile,
-      required email,
-      required gender,
-      required emailVerifiedAt,
-      required createdAt,
-      required updatedAt,
-      required apiToken,
-      required uid,
-      required imageUrl})
-      : super(id, firstName, secondName, familyName, mobile, email, gender,
-            emailVerifiedAt, createdAt, updatedAt, apiToken, uid,imageUrl);
+   UserModel(
+      {required int id,
+      required String firstName,
+      required String secondName,
+      required String familyName,
+      required String mobile,
+      required String email,
+      required String gender,
+      required String? emailVerifiedAt,
+      required String createdAt,
+      required String updatedAt,
+      required String? apiToken,
+      required String uid,
+      required String imageUrl,
+      required AddressEntity? address,
+      MemberEntity? memberEntity})
+      : super(
+            id,
+            firstName,
+            secondName,
+            familyName,
+            mobile,
+            email,
+            gender,
+            emailVerifiedAt,
+            createdAt,
+            updatedAt,
+            apiToken,
+            uid,
+            imageUrl,
+            address,
+            memberEntity);
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
@@ -32,7 +52,10 @@ class UserModel extends UserEntity {
         updatedAt: json['updated_at'],
         apiToken: json['api_token'],
         uid: json['uid'],
-        imageUrl: json['imageUrl']);
+        imageUrl: json['imageUrl'],
+        address:json['addresses'] ==null?null: AddressModel.fromJson(json['addresses']),
+        memberEntity:
+            json['pivot'] == null ? null : MemberModel.fromJson(json['pivot']));
   }
 
   Map<String, dynamic> toJson() {
@@ -49,7 +72,9 @@ class UserModel extends UserEntity {
       'updated_at': updatedAt,
       'api_token': apiToken,
       'uid': uid,
-      'imageUrl':imageUrl
+      'imageUrl': imageUrl,
+      'addresses': address,
+      'pivot': memberEntity
     };
   }
 }

@@ -15,7 +15,7 @@ class CustomLoadingShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
       highlightColor: Theme.of(context).cardColor.withOpacity(0),
-      baseColor: Theme.of(context).cardColor,
+      baseColor: Theme.of(context).primaryColor,
       child: Container(
         height: height,
         width: width,

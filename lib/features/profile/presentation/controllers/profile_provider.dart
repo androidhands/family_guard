@@ -1,5 +1,113 @@
+import 'package:dartz/dartz.dart';
+import 'package:family_guard/core/controllers/main_provider.dart';
+import 'package:family_guard/core/error/failure.dart';
+import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
+import 'package:family_guard/core/utils/app_constants.dart';
+import 'package:family_guard/core/widget/custom_loading_indicator.dart';
+import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
+import 'package:family_guard/features/authentication/domain/usecases/save_user_credentials_usecase.dart';
+import 'package:family_guard/features/profile/domain/usecases/save_profile_image_usecase.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
-class ProfileProvider extends ChangeNotifier{
+import '../../../../core/global/localization/app_localization.dart';
+import '../../../../core/services/dependency_injection_service.dart';
+import '../../../../core/widget/dialog_service.dart';
 
+class ProfileProvider extends ChangeNotifier {
+  UserEntity user = Provider.of<MainProvider>(Get.context!).userCredentials!;
+
+  bool isUploadingImage = false;
+
+  void setUser(UserEntity u) {
+    user = u;
+    notifyListeners();
+  }
+
+  void changeProfileImage(XFile? image) async {
+    Either<Failure, UserEntity> results = await sl<SaveProfileImageUsecase>()(
+        SaveProfileImageParams(token: user.apiToken!, image: image!));
+    results.fold((l) async {
+      await DialogWidget.showCustomDialog(
+          context: Get.context!,
+          title: l.message,
+          buttonText: tr(AppConstants.ok));
+    }, (r) async {
+      user.setImageUrl = r.imageUrl;
+      setUser(user);
+      await sl<SaveUserCredentialsUsecase>()(user).then((value) =>
+          Provider.of<MainProvider>(Get.context!, listen: false)
+              .getCachedUserCredentials());
+    });
+    isUploadingImage = false;
+    notifyListeners();
+  }
+
+  void openImages() async {
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.camera,
+      Permission.storage,
+      Permission.mediaLibrary,
+      //add more permission to request here.
+    ].request();
+    if (statuses[Permission.camera]!.isGranted) {
+      if (statuses[Permission.storage]!.isGranted) {
+        if (statuses[Permission.mediaLibrary]!.isGranted) {
+          await DialogWidget.showCustomDialog(
+              context: Get.context!,
+              title: 'Select Image',
+              buttonText: tr(AppConstants.ok),
+              actions: [
+                SizedBox(
+                  height: 100,
+                  child: isUploadingImage
+                      ? Center(child: CustomLoadingIndicators.defaultLoading())
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            IconButton(
+                                onPressed: () async {
+                                  isUploadingImage = true;
+                                  await ImagePicker()
+                                      .pickImage(source: ImageSource.gallery)
+                                      .then(
+                                          (value) => changeProfileImage(value));
+
+                                  notifyListeners();
+                                  Get.back();
+                                },
+                                icon: const Icon(
+                                  Icons.image,
+                                  color: ThemeColorLight.pinkColor,
+                                  size: 60,
+                                )),
+                            IconButton(
+                                onPressed: () async {
+                                  isUploadingImage = true;
+
+                                  await ImagePicker()
+                                      .pickImage(source: ImageSource.camera)
+                                      .then(
+                                          (value) => changeProfileImage(value));
+
+                                  notifyListeners();
+                                  Get.back();
+                                },
+                                icon: const Icon(
+                                  Icons.linked_camera,
+                                  size: 60,
+                                  color: ThemeColorLight.pinkColor,
+                                )),
+                          ],
+                        ),
+                ),
+              ]);
+        }
+      }
+    }
+    notifyListeners();
+  }
 }

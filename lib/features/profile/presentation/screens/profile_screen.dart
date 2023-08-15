@@ -11,11 +11,13 @@ import '../../../../core/utils/app_constants.dart';
 import '../../../../core/utils/app_fonts.dart';
 import '../../../../core/utils/app_sizes.dart';
 import '../../../../core/widget/custom_appbar.dart';
+import '../../../../core/widget/custom_network_image.dart';
 import '../../../../core/widget/custom_text.dart';
 import '../../../../core/widget/images/custom_avatar_image.dart';
 import '../../../../core/widget/images/custom_svg_image.dart';
 import '../../../home/presentation/controller/home_control_provider.dart';
 import '../components/profile_details_component.dart';
+import 'package:badges/badges.dart' as badges;
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -27,7 +29,7 @@ class ProfileScreen extends StatelessWidget {
           title: tr(AppConstants.profile),
           withTransparent: false,
           withOutElevation: true,
-          withMenu: true,
+          withMenu: false,
           actions: const [SizedBox()],
           popOnPressed: () {
             NavigationService.goBack();
@@ -44,12 +46,40 @@ class ProfileScreen extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
+                        SizedBox(height: AppSizes.pH8),
+
+                        InkWell(
+                            onTap: () {
+                              provider.openImages();
+                            },
+                            child: SizedBox(
+                              width: AppSizes.profileImageWidth,
+                              height: AppSizes.profileImageHight,
+                              child: Stack(
+                                children: [
+                                  provider.user.imageUrl.isEmpty
+                                      ? CustomSvgImage(
+                                          path: AppAssets.profileMan,
+                                          width: AppSizes.profileImageWidth,
+                                          height: AppSizes.profileImageHight,
+                                        )
+                                      : CustomNetworkImage.circle(
+                                          imageUrl: provider.user.imageUrl,
+                                          size: 50,
+                                          token: provider.user.apiToken!),
+                                  Positioned(
+                                    bottom: -10,
+                                    right: -10,
+                                    child: CustomSvgImage.square(
+                                      path: AppAssets.gallerySvg,
+                                      color: ThemeColorLight.pinkColor,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )),
+
                         /// Profile Image
-                        CustomSvgImage(
-                          path: AppAssets.profileMan,
-                          width: AppSizes.profileImageWidth,
-                          height: AppSizes.profileImageHight,
-                        ),
 
                         /* CustomAvatarImage(
                           "", //refineImage(userData.profileImageUrl),
@@ -60,7 +90,7 @@ class ProfileScreen extends StatelessWidget {
                         SizedBox(height: AppSizes.pH2),
 
                         /// User Name
-                        CustomText.primaryBodyLarge('Full Name',
+                        CustomText.primaryBodyLarge(provider.user.userName,
                             textStyle: Theme.of(context)
                                 .textTheme
                                 .bodyLarge!

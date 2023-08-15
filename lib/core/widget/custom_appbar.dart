@@ -74,12 +74,12 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                                 ? EdgeInsetsDirectional.only(
                                     end:
                                         canPop && (actions.isEmpty || !withMenu)
-                                            ? AppSizes.backButtonSizes +
+                                            ? AppSizes.backButtonHight +
                                                 (AppSizes.pW5)
                                             : 0,
                                     start: !canPop &&
                                             (withMenu || actions.isNotEmpty)
-                                        ? AppSizes.backButtonSizes +
+                                        ? AppSizes.backButtonHight +
                                             (AppSizes.pW5)
                                         : 0)
                                 : EdgeInsets.zero,
@@ -90,7 +90,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                                   .titleMedium!
                                   .copyWith(
                                       color: ThemeColorLight.pinkColor,
-                                      fontSize: AppSizes.h5),
+                                      fontSize: AppSizes.h4),
                               maxLines: 1,
                             ),
                           ))
@@ -107,16 +107,16 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                         ),
                         Container(
                           margin: EdgeInsetsDirectional.only(end: AppSizes.pW5),
-                          height: AppSizes.backButtonSizes,
-                          width: AppSizes.backButtonSizes,
+                          height: AppSizes.backButtonWidth,
+                          width: AppSizes.backButtonHight,
                           child: IconButton(
                             padding: EdgeInsets.zero,
                             constraints: const BoxConstraints(),
                             onPressed: () {},
                             icon: CustomSvgImage(
                               path: AppAssets.menuIcon,
-                              width: AppSizes.backButtonSizes,
-                              height: AppSizes.backButtonSizes,
+                              width: AppSizes.backButtonWidth,
+                              height: AppSizes.backButtonHight,
                               radius: BorderRadius.zero,
                             ),
                           ),
@@ -148,8 +148,8 @@ class CustomBackButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsetsDirectional.only(start: AppSizes.pW5),
-      width: AppSizes.backButtonSizes,
-      height: AppSizes.backButtonSizes,
+      width: AppSizes.backButtonWidth,
+      height: AppSizes.backButtonHight,
       child: IconButton(
         padding: EdgeInsets.zero,
         color: ThemeColorLight.whiteColor,
@@ -165,8 +165,8 @@ class CustomBackButton extends StatelessWidget {
             ? CustomSvgImage(
                 path: AppAssets.backSvg,
                 color: color ?? ThemeColorLight.whiteColor,
-                width: AppSizes.backButtonSizes,
-                height: AppSizes.backButtonSizes,
+                width: AppSizes.backButtonWidth,
+                height: AppSizes.backButtonHight,
                 radius: BorderRadius.zero,
               )
             : Transform.rotate(
@@ -174,8 +174,8 @@ class CustomBackButton extends StatelessWidget {
                 child: CustomSvgImage(
                   path: AppAssets.backSvg,
                   color: color ?? ThemeColorLight.whiteColor,
-                  width: AppSizes.backButtonSizes,
-                  height: AppSizes.backButtonSizes,
+                  width: AppSizes.backButtonWidth,
+                  height: AppSizes.backButtonHight,
                   radius: BorderRadius.zero,
                 )),
       ),
