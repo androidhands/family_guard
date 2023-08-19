@@ -19,15 +19,23 @@ class ApiEndPoint {
   static const String addFCMTokenPath = "/users/AddFCMToken";
 //userAddress
   static const String addUserAddressPath = "/users/AddUserAddress";
-  static const String getUserAddressPath = "/users/GetUserAddress";
+  static const String getUserAddressPath =
+      "/users/GetUserAddress?api_password=$apiPassword";
   static const String updateUserAddressPath =
       "/users/UpdateUserAddress?api_password=$apiPassword";
 
-  static const String getFamilyConnectionsPath =
-      '/users/GetUserMembers?api_password=$apiPassword';
   static const String userImagePath = "/GetUserImage/";
 
-  static const String memberImagePath = "api/users/GetMemberProfile";
-
   static const String saveUserProfileImagePath = "/users/SaveUserImage";
+
+  //membets
+  static const String memberImagePath = "api/members/GetMemberProfile";
+  static const String getFamilyConnectionsPath =
+      '/members/GetUserMembers?api_password=$apiPassword';
+  static const String addNewFamilyConnectionsPath = '/members/AddNewMember';
+
+  static const String getSentMembersRequests =
+      '/members/GetSentMembersRequests?api_password=$apiPassword';
+  static const String getReceivedMembersRequest =
+      '/members/GetReceivedMembersRequest?api_password=$apiPassword';
 }

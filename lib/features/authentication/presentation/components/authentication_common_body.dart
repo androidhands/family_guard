@@ -97,25 +97,7 @@ class _BodyContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: AppSizes.pH8,
-        ),
-        Row(
-          mainAxisAlignment: backOnPress == null
-              ? MainAxisAlignment.center
-              : MainAxisAlignment.spaceBetween,
-          children: [
-            if (backOnPress != null)
-              CustomBackButton(popOnPressed: backOnPress),
-            CustomPngImage.square(
-              path: AppAssets.appLogo,
-            ),
-            if (!isSignIn)
-              SizedBox(
-                width: AppSizes.backIconSize + (AppSizes.pW5 * 2),
-              ),
-          ],
-        ),
+       
         SizedBox(
           height: AppSizes.pH5,
         ),

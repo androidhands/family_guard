@@ -53,6 +53,7 @@ class AppSizes {
 
   /// Border Radius
   static final double br4 = 4.r;
+  static final double br6 = 6.r;
   static final double br8 = 8.r;
   static final double br20 = 20.r;
   static final double br40 = 40.r;
@@ -208,6 +209,7 @@ class AppSizes {
   static final double contentItemCardHeight = 105.h;
   static final double targetAudienceContainerSize = 50.h;
   static final double dotSize = 5.w;
+  static final double requestCardHeight = 180.h;
 
   ///width
   static final double widthPinCode = 50.w;
@@ -272,6 +274,7 @@ class AppSizes {
   static final double chipChoiceHigh = 60.h;
 
   static final double mapAddressHigh = 300.h;
+  static final double mapAddressHight2 = 200.h;
 
   static final double bottomBarIconHigh = 50.h;
   static final double bottomBarIconWidth = 50.w;

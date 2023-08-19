@@ -1,6 +1,7 @@
 import 'package:family_guard/core/global/theme/theme_color/theme_color_dark.dart';
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
 import 'package:family_guard/core/services/navigation_service.dart';
+import 'package:family_guard/core/widget/images/custom_cashed_network_image.dart';
 import 'package:family_guard/features/profile/presentation/controllers/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +30,7 @@ class ProfileScreen extends StatelessWidget {
           title: tr(AppConstants.profile),
           withTransparent: false,
           withOutElevation: true,
-          withMenu: false,
+          withMenu: true,
           actions: const [SizedBox()],
           popOnPressed: () {
             NavigationService.goBack();
@@ -63,7 +64,7 @@ class ProfileScreen extends StatelessWidget {
                                           width: AppSizes.profileImageWidth,
                                           height: AppSizes.profileImageHight,
                                         )
-                                      : CustomNetworkImage.circle(
+                                      : CustomCashedNetworkImage.circle(
                                           imageUrl: provider.user.imageUrl,
                                           size: 50,
                                           token: provider.user.apiToken!),

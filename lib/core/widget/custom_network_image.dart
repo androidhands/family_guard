@@ -18,6 +18,7 @@ class CustomNetworkImage extends StatelessWidget {
     this.fit,
     this.radius,
     required this.token,
+    
   }) : super(key: key);
 
   CustomNetworkImage.circle(

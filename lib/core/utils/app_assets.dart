@@ -372,4 +372,8 @@ class AppAssets {
       "${svgImagePath}incoming_requests.svg";
   static const String addMemberSvg = "${svgImagePath}add_members.svg";
   static const String myMemberSvg = "${svgImagePath}my_members.svg";
+
+  static const String pendingSvg = "${svgImagePath}pending.svg";
+  static const String requestAccepted = "${svgImagePath}request_done.svg";
+  static const String requestCanceled = "${svgImagePath}request_canceled.svg";
 }

@@ -26,6 +26,8 @@ import 'package:family_guard/features/family/data/data_source/family_connections
 import 'package:family_guard/features/family/data/repository/family_connection_repositoy.dart';
 import 'package:family_guard/features/family/domain/repositories/base_family_connections_repository.dart';
 import 'package:family_guard/features/family/domain/usecases/get_family_connections_usecase.dart';
+import 'package:family_guard/features/family/domain/usecases/get_received_connection_requests_usecase.dart';
+import 'package:family_guard/features/family/domain/usecases/get_sent_connections_requests_usecase.dart';
 import 'package:family_guard/features/home/presentation/controller/home_provider.dart';
 import 'package:family_guard/features/notifications/data/datasource/notifications_datasource.dart';
 import 'package:family_guard/features/notifications/data/repositories/notification_count_repository.dart';
@@ -54,9 +56,11 @@ import '../../features/authentication/domain/usecases/manual_sign_in_usecase.dar
 import '../../features/authentication/domain/usecases/reset_password_usecase.dart';
 import '../../features/authentication/domain/usecases/sign_out_user_usecase.dart';
 import '../../features/authentication/presentation/controller/reset_password_provider.dart';
+import '../../features/family/domain/usecases/send_new_member_request_usecase.dart';
 import '../../features/notifications/domain/usecases/refresh_token_usecase.dart';
 import '../../features/notifications/domain/usecases/set_is_read_notification_usecase.dart';
 import '../../features/notifications/presentation/controller/notification_provider.dart';
+import '../../features/profile/domain/usecases/get_user_address_usecase.dart';
 import 'connectivity_services.dart';
 import 'date_parser.dart';
 
@@ -285,6 +289,14 @@ class DependencyInjectionServices {
     //usecases
     sl.registerLazySingleton(() =>
         GetFamilyConnectionsUsecase(baseFamilyConnectionsRepository: sl()));
+    sl.registerLazySingleton(() =>
+        SendNewMemberRequestUsecase(baseFamilyConnectionsRepository: sl()));
+
+    sl.registerLazySingleton(() => GetReceivedConnectionRequestsUsecase(
+        baseFamilyConnectionsRepository: sl()));
+
+    sl.registerLazySingleton(() => GetSentConnectionsRequestsUsecase(
+        baseFamilyConnectionsRepository: sl()));
 
     //repository
     sl.registerLazySingleton<BaseFamilyConnectionsDataSource>(
@@ -302,6 +314,8 @@ class DependencyInjectionServices {
 //usecases
     sl.registerLazySingleton(
         () => SaveProfileImageUsecase(baseProfileRepository: sl()));
+    sl.registerLazySingleton(
+        () => GetUserAddressUsecase(baseProfileRepository: sl()));
 
     //datasources
     sl.registerLazySingleton<BaseProfileDataSource>(() => ProfileDataSource());

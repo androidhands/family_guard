@@ -113,11 +113,9 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                             padding: EdgeInsets.zero,
                             constraints: const BoxConstraints(),
                             onPressed: () {},
-                            icon: CustomSvgImage(
-                              path: AppAssets.menuIcon,
+                            icon: SizedBox(
                               width: AppSizes.backButtonWidth,
                               height: AppSizes.backButtonHight,
-                              radius: BorderRadius.zero,
                             ),
                           ),
                         )

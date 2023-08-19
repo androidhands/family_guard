@@ -8,7 +8,7 @@ class CustomPngImage extends StatelessWidget {
       required this.path,
       this.height,
       this.width,
-      this.radius,
+     required this.radius,
       this.color})
       : super(key: key);
 
@@ -25,7 +25,7 @@ class CustomPngImage extends StatelessWidget {
   final double? height;
   final double? width;
 
-  final BorderRadius? radius;
+  final BorderRadius radius;
   final Color? color;
 
   /// check radius

@@ -216,6 +216,7 @@ class AppConstants {
   static const String passwordProfile = "PASSWORD_Profile";
   static const String firstNameProfile = "FIRST_NAME_Profile";
   static const String lastNameProfile = "LAST_NAME_Profile";
+  static const String familyNameProfile = "FAMILY_NAME_Profile";
   static const String emailProfile = "EMAIL_Profile";
   static const String mobileProfile = "MOBILE_NUMBER_Profile";
 
@@ -303,6 +304,7 @@ class AppConstants {
   static const String familyName = "FAMILY_NAME";
 
   static const String selectGender = "SELECT_GENDER";
+  static const String gender = "GENDER";
 
   static const String female = "FEMALE";
   static const String male = "Male";
@@ -324,13 +326,29 @@ class AppConstants {
 
   static const String welcomeProfile = "WELCOME_PROFILE";
 
-  static const  String storagePermissionsRequired = "Storage_Permissions_Rquired";
+  static const String storagePermissionsRequired =
+      "Storage_Permissions_Rquired";
 
-  static const String mediaLibraryPermissionsRequired = "Media_Permissions_Rquired";
+  static const String mediaLibraryPermissionsRequired =
+      "Media_Permissions_Rquired";
 
   static const String personal = "PERSONAL";
 
   static const String addMember = "ADD_MEMBER";
-    static const String receivedRequests = "RECEIVED_REQUESTS";
-     static const String sentRequests = "SEMT_REQUESTS";
+  static const String receivedRequests = "RECEIVED_REQUESTS";
+  static const String sentRequests = "SEMT_REQUESTS";
+
+  static const String adminArea = "ADMIN_AREA";
+  static const String subAdminArea = "Sub_ADMIN_AREA";
+  static const String locality = "LOCALITY";
+  static const String subLocality = "SUB_LOCALTY";
+  static const String street = "STREET";
+  static const String postalCode = "POSTAL_CODE";
+
+  static const String youAre = "YOU_ARE";
+
+  static const String thisMemberIs = "MEMBER_IS";
+  static const String sendRequest = "SEND_REQUEST";
+  static const String noSentRequestFound = "NO_SENT_REQUEST";
+   static const String noReceivedRequestFound = "NO_RECEIVED_REQUEST";
 }

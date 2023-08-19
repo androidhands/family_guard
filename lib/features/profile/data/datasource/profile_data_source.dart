@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:family_guard/features/authentication/data/models/address_model.dart';
+import 'package:family_guard/features/authentication/domain/entities/address_entity.dart';
 import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
 
 import '../../../../core/error/exceptions.dart';
@@ -15,6 +17,8 @@ import 'package:http_parser/http_parser.dart';
 abstract class BaseProfileDataSource {
   Future<UserEntity> saveUserProfileImage(
       SaveProfileImageParams saveProfileImageParams);
+
+  Future<AddressEntity> getUserAddress(String apiToken);
 }
 
 class ProfileDataSource implements BaseProfileDataSource {
@@ -30,6 +34,21 @@ class ProfileDataSource implements BaseProfileDataSource {
             contentType: MediaType('image', 'jpeg')),
       },
       token: saveProfileImageParams.token,
+      onFailure: (ErrorMessage failureData) {
+        throw ServerException(
+          message: failureData.message,
+          code: failureData.code,
+        );
+      },
+    );
+  }
+
+  @override
+  Future<AddressEntity> getUserAddress(String apiToken) async {
+    return await sl<ApiCaller>().requestPost(
+      ApiEndPoint.getUserAddressPath,
+      (data) => AddressModel.fromJson(data),
+      token: apiToken,
       onFailure: (ErrorMessage failureData) {
         throw ServerException(
           message: failureData.message,

@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:family_guard/core/error/exceptions.dart';
 import 'package:family_guard/core/error/failure.dart';
+import 'package:family_guard/features/authentication/domain/entities/address_entity.dart';
 import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
 import 'package:family_guard/features/profile/data/datasource/profile_data_source.dart';
 import 'package:family_guard/features/profile/domain/repositories/base_profile_repository.dart';
@@ -17,6 +18,15 @@ class ProfileRepository implements BaseProfileRepository {
     try {
       return Right(await baseProfileDataSource
           .saveUserProfileImage(saveProfileImageParams));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message, code: e.code));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AddressEntity>> getUserAddress(String apiToken) async {
+    try {
+      return Right(await baseProfileDataSource.getUserAddress(apiToken));
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message, code: e.code));
     }

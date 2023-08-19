@@ -43,8 +43,8 @@ class CustomFamilyMemberWidget extends StatelessWidget {
           Align(
             alignment: Alignment.center,
             child: CustomPaint(
-              size: Size(170.w,
-                  180.h), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+              size: Size(180.w,
+                  200.h), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
               painter: CustomGuardShape(),
             ),
           ),
@@ -70,7 +70,7 @@ class CustomFamilyMemberWidget extends StatelessWidget {
               SizedBox(
                 width: 140.w,
                 child: CustomText(
-                  memberEntity.userFullName,
+                  memberEntity.userName,
                   textStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
                       color: ThemeColorLight.whiteColor, fontSize: AppSizes.h6),
                   maxLines: 2,

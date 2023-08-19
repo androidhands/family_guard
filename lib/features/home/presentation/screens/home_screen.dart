@@ -43,11 +43,12 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         Padding(
                           padding: EdgeInsets.all(AppSizes.pW6),
-                          child: provider.isLoadingLocation?CustomLoadingIndicators.defaultLoading():
-                          CustomFloatingActionButton(
-                            iconSVGPath: AppAssets.gpsSvg,
-                            onTap: () => provider.goToMyLocation(),
-                          ),
+                          child: provider.isLoadingLocation
+                              ? CustomLoadingIndicators.defaultLoading()
+                              : CustomFloatingActionButton(
+                                  iconSVGPath: AppAssets.gpsSvg,
+                                  onTap: () => provider.goToMyLocation(),
+                                ),
                         ),
                       ],
                     ),
@@ -70,12 +71,11 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   Center(
-                     
                       child: CustomSvgImage(
-                        path: AppAssets.pinLocation,
-                        width: AppSizes.locationIndicatorWidth,
-                        height: AppSizes.locationIndicatorHight,
-                      )),
+                    path: AppAssets.pinLocation,
+                    width: AppSizes.locationIndicatorWidth,
+                    height: AppSizes.locationIndicatorHight,
+                  )),
                   const Positioned(
                     top: 0,
                     left: 0,

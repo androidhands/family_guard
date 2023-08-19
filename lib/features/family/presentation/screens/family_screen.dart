@@ -29,7 +29,7 @@ class FamilyScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Expanded(
-                    flex: 2,
+                    flex: 3,
                     child: Container(
                       margin: EdgeInsets.all(AppSizes.pH1),
                       child: Column(
@@ -71,7 +71,10 @@ class FamilyScreen extends StatelessWidget {
                                             (e) => CustomFamilyMemberWidget(
                                               memberEntity: e,
                                               userEnt: provider.user,
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                provider
+                                                    .navigateToMemberDetailsScreen();
+                                              },
                                             ),
                                           )
                                           .toList(),
@@ -87,11 +90,13 @@ class FamilyScreen extends StatelessWidget {
                       padding: EdgeInsets.all(AppSizes.pH5),
                       decoration: BoxDecoration(
                           color: ThemeColorLight.pinkColor,
-                          borderRadius: BorderRadius.circular(6),
+                          borderRadius: BorderRadius.circular(AppSizes.br6),
                           border: Border.all(
                               width: 1, color: ThemeColorLight.pinkColor)),
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          provider.navigateToAddMemberScreen();
+                        },
                         child: Row(
                           children: [
                             Expanded(
@@ -120,15 +125,17 @@ class FamilyScreen extends StatelessWidget {
                   Expanded(
                     flex: 1,
                     child: Container(
-                      margin: EdgeInsets.all(5),
+                      margin: EdgeInsets.all(AppSizes.pW1),
                       padding: EdgeInsets.all(AppSizes.pH5),
                       decoration: BoxDecoration(
                           color: ThemeColorLight.pinkColor,
-                          borderRadius: BorderRadius.circular(6),
+                          borderRadius: BorderRadius.circular(AppSizes.br6),
                           border: Border.all(
                               width: 1, color: ThemeColorLight.pinkColor)),
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          provider.navigateToReceivedRequestsScreen();
+                        },
                         child: Row(
                           children: [
                             Expanded(
@@ -158,15 +165,17 @@ class FamilyScreen extends StatelessWidget {
                   Expanded(
                     flex: 1,
                     child: Container(
-                      margin: EdgeInsets.all(5),
+                      margin: EdgeInsets.all(AppSizes.pW1),
                       padding: EdgeInsets.all(AppSizes.pH5),
                       decoration: BoxDecoration(
                           color: ThemeColorLight.pinkColor,
-                          borderRadius: BorderRadius.circular(6),
+                          borderRadius: BorderRadius.circular(AppSizes.br6),
                           border: Border.all(
                               width: 1, color: ThemeColorLight.pinkColor)),
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          provider.navigateToSentRequestsScreen();
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

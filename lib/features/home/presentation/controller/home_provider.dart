@@ -36,13 +36,12 @@ class HomeProvider extends ChangeNotifier {
 
   ///constructor
   HomeProvider() {
-    userEntity =
-        Provider.of<MainProvider>(Get.context!, listen: false).userCredentials!;
     initializeInitialCameraPosition();
     getAuthenticationResultModel();
   }
 
-  UserEntity? userEntity;
+  UserEntity? userEntity =
+      Provider.of<MainProvider>(Get.context!, listen: false).userCredentials;
 
   bool isLoadingLocation = true;
   bool isCountryInRegion = false;

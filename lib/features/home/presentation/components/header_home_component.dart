@@ -1,5 +1,6 @@
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
 import 'package:family_guard/core/widget/custom_network_image.dart';
+import 'package:family_guard/core/widget/images/custom_cashed_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:family_guard/core/utils/app_assets.dart';
@@ -42,13 +43,13 @@ class HeaderHomeComponent extends StatelessWidget {
                   },
                   child: Padding(
                       padding: EdgeInsets.all(5),
-                      child: provider.userEntity!.imageUrl.isEmpty
+                      child: provider.userEntity?.imageUrl == null
                           ? CustomSvgImage(
                               path: AppAssets.profileMan,
                               width: AppSizes.profileImageWidth,
                               height: AppSizes.profileImageHight,
                             )
-                          : CustomNetworkImage.circle(
+                          : CustomCashedNetworkImage.circle(
                               imageUrl: provider.userEntity!.imageUrl,
                               size: 50,
                               token: provider.userEntity!.apiToken!)),

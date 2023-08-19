@@ -16,6 +16,7 @@ class CustomChipChoiceWidget extends StatefulWidget {
   final String? suffixPath;
   final String? prefixPath;
   Function(bool) onSelected;
+  final String token;
 
   CustomChipChoiceWidget(
       {Key? key,
@@ -25,6 +26,7 @@ class CustomChipChoiceWidget extends StatefulWidget {
       this.suffixPath,
       this.prefixPath,
       this.isCloseIcon = false,
+      required this.token,
       required this.onSelected})
       : super(key: key);
 
@@ -75,7 +77,7 @@ class _CustomChipChoiceWidgetState extends State<CustomChipChoiceWidget> {
             : getChipPrefixWidget(
                 prefixPath: widget.prefixPath,
                 imageUrl: widget.imageUrl,
-              ),
+                token: widget.token),
         padding: EdgeInsets.symmetric(
             horizontal: AppSizes.pW2, vertical: AppSizes.pH2),
       ),
@@ -84,13 +86,17 @@ class _CustomChipChoiceWidgetState extends State<CustomChipChoiceWidget> {
 }
 
 Widget? getChipPrefixWidget(
-    {String? prefixPath, String? imageUrl, bool? isSelected}) {
+    {String? prefixPath,
+    String? imageUrl,
+    bool? isSelected,
+    required String token}) {
   assert(!(prefixPath != null && imageUrl != null));
   return imageUrl != null
       ? CustomCashedNetworkImage(
           imageUrl: imageUrl,
           height: AppSizes.pW8,
           width: AppSizes.pW8,
+          token: token,
           radius: BorderRadius.circular(AppSizes.br20),
         )
       : prefixPath != null

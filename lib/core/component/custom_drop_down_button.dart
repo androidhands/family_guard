@@ -1,9 +1,10 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:family_guard/core/utils/app_assets.dart';
-import 'package:family_guard/core/utils/app_sizes.dart';
-import 'package:family_guard/core/widget/custom_text.dart';
-import 'package:family_guard/core/widget/images/custom_svg_image.dart';
+
+import '../utils/app_assets.dart';
+import '../utils/app_sizes.dart';
+import '../widget/custom_text.dart';
+import '../widget/images/custom_svg_image.dart';
 
 class CustomDropDownButton extends StatelessWidget {
   final void Function()? onClick;
@@ -29,7 +30,6 @@ class CustomDropDownButton extends StatelessWidget {
       child: Container(
         height: height,
         width: double.infinity,
-
         alignment: AlignmentDirectional.centerStart,
         padding: EdgeInsets.symmetric(
           horizontal: AppSizes.pW5,
@@ -40,7 +40,6 @@ class CustomDropDownButton extends StatelessWidget {
             color:
                 Theme.of(context).inputDecorationTheme.border!.borderSide.color,
             width: AppSizes.bs1_0,
-
           ),
           borderRadius: BorderRadius.circular(AppSizes.br4),
         ),
@@ -57,6 +56,8 @@ class CustomDropDownButton extends StatelessWidget {
               child: CustomSvgImage(
                 path: AppAssets.backSvg,
                 color: Theme.of(context).inputDecorationTheme.labelStyle!.color,
+                width: AppSizes.pW5,
+                height: AppSizes.pH5,
               ),
             ),
           ],
