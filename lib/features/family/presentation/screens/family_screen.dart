@@ -64,21 +64,32 @@ class FamilyScreen extends StatelessWidget {
                                       child: CustomLoadingIndicators
                                           .defaultLoading(),
                                     )
-                                  : ListView(
-                                      scrollDirection: Axis.horizontal,
-                                      children: provider.familyMembersList
-                                          .map(
-                                            (e) => CustomFamilyMemberWidget(
-                                              memberEntity: e,
-                                              userEnt: provider.user,
-                                              onPressed: () {
-                                                provider
-                                                    .navigateToMemberDetailsScreen();
-                                              },
-                                            ),
-                                          )
-                                          .toList(),
-                                    ),
+                                  : provider.familyMembersList.isEmpty
+                                      ? Center(
+                                          child: CustomText(
+                                              tr(AppConstants.noMemberAdded),
+                                              textStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .displayMedium!
+                                                  .copyWith(
+                                                      color: ThemeColorLight
+                                                          .pinkColor)),
+                                        )
+                                      : ListView(
+                                          scrollDirection: Axis.horizontal,
+                                          children: provider.familyMembersList
+                                              .map(
+                                                (e) => CustomFamilyMemberWidget(
+                                                  memberEntity: e,
+                                                  userEnt: provider.user,
+                                                  onPressed: () {
+                                                    provider
+                                                        .navigateToMemberDetailsScreen();
+                                                  },
+                                                ),
+                                              )
+                                              .toList(),
+                                        ),
                             )
                           ]),
                     ),

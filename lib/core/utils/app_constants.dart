@@ -351,4 +351,6 @@ class AppConstants {
   static const String sendRequest = "SEND_REQUEST";
   static const String noSentRequestFound = "NO_SENT_REQUEST";
    static const String noReceivedRequestFound = "NO_RECEIVED_REQUEST";
+
+  static const String noMemberAdded = "NO_MEMBERS_ADDED";
 }

@@ -105,5 +105,6 @@ Map<String, String> coreEn = {
   'MEMBER_IS': 'The member is:',
   'SEND_REQUEST': 'Send Request',
   'NO_SENT_REQUEST': 'You have not any sent requests',
-  'NO_RECEIVED_REQUEST': 'You have not any received requests'
+  'NO_RECEIVED_REQUEST': 'You have not any received requests',
+  'NO_MEMBERS_ADDED': 'No Members Added Yet',
 };
