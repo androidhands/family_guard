@@ -1,8 +1,12 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:dartz/dartz.dart';
 import 'package:family_guard/core/controllers/main_provider.dart';
+import 'package:family_guard/core/error/failure.dart';
+import 'package:family_guard/core/services/dependency_injection_service.dart';
 import 'package:family_guard/core/services/navigation_service.dart';
+import 'package:family_guard/features/notifications/domain/usecases/get_notification_count_usecase.dart';
 import 'package:family_guard/features/notifications/presentation/screens/notifications_screen.dart';
 import 'package:family_guard/features/profile/presentation/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +23,7 @@ import '../../../authentication/domain/entities/user_entity.dart';
 
 class HomeProvider extends ChangeNotifier {
   bool _disposed = false;
+  int notificationCount = 0;
   @override
   void dispose() async {
     log('home provider disposes');
@@ -38,6 +43,7 @@ class HomeProvider extends ChangeNotifier {
   HomeProvider() {
     initializeInitialCameraPosition();
     getAuthenticationResultModel();
+    getUnReadNotificationCount();
   }
 
   UserEntity? userEntity =
@@ -184,5 +190,14 @@ class HomeProvider extends ChangeNotifier {
     NavigationService.navigateTo(
         navigationMethod: NavigationMethod.push,
         page: () => const ProfileScreen());
+  }
+
+  void getUnReadNotificationCount() async {
+    Either<Failure, int> result =
+        await sl<GetNotificationCountUseCase>()(userEntity!.apiToken!);
+    result.fold((l) {
+      log('notification count error${l.message}');
+    }, (r) => notificationCount = r);
+    notifyListeners();
   }
 }

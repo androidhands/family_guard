@@ -13,7 +13,8 @@ class ApiEndPoint {
       '/users/login?api_password=$apiPassword';
   static const String logoutPath = '/users/logout?api_password=$apiPassword';
 
-  static const String getAllNotifications = "";
+  static const String getAllNotifications = "/users/GetUserNotifications";
+  static const String getNotificationsUnReadCount = "/users/GetUserUnreadCount";
 
   //notifications
   static const String addFCMTokenPath = "/users/AddFCMToken";
@@ -38,4 +39,8 @@ class ApiEndPoint {
       '/members/GetSentMembersRequests?api_password=$apiPassword';
   static const String getReceivedMembersRequest =
       '/members/GetReceivedMembersRequest?api_password=$apiPassword';
+  static const String acceptConnectionRequest =
+      '/members/AcceptMemberConnection';
+  static const String cancelConnectionRequest =
+      '/members/CancelMemberConnection';
 }

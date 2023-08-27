@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../../core/services/navigation_service.dart';
 import '../../../../core/utils/utils.dart';
 enum RequestType{Sent,Received}
+enum MemberPermissions{Emergency,Tracking}
 enum Relationships {
   Select_Relation,
   Fahter,

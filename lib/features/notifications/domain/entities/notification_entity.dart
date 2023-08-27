@@ -1,30 +1,39 @@
 import 'package:equatable/equatable.dart';
-
-import '../../../general/data/models/name_model.dart';
-import '../../../general/domain/entities/name.dart';
+import 'package:family_guard/features/notifications/domain/entities/notification_data_entity.dart';
 
 class NotificationEntity extends Equatable {
   final int id;
+  final String type;
+  final String notifiableType;
+  final int notifiableId;
+  final NotificationDataEntity data;
+  final String? readAt;
+  final String createdAt;
+  final String updatedAt;
+  final int seen;
 
-  final Map<String, dynamic> title;
-  final Map<String, dynamic> body;
-  final String imageUrl;
-  final bool isReaded;
-  final int userId;
-  final String creationTime;
 
-  const NotificationEntity(this.id, this.title, this.body, this.imageUrl,
-      this.isReaded, this.userId, this.creationTime);
+  const NotificationEntity(
+      this.id,
+      this.type,
+      this.notifiableType,
+      this.notifiableId,
+      this.data,
+      this.readAt,
+      this.createdAt,
+      this.updatedAt,
+      this.seen);
 
   @override
-  List<Object?> get props =>
-      [id, title, body, imageUrl, isReaded, userId, creationTime];
-
-  Name get titleStr => NameModel.fromMap(title);
-
-  Name get bodyStr => NameModel.fromMap(body);
-
-  Map<String, dynamic> toMap() {
-    return {'id': id};
-  }
+  List<Object?> get props => [
+        id,
+        type,
+        notifiableType,
+        notifiableId,
+        data,
+        readAt,
+        createdAt,
+        updatedAt,
+        seen
+      ];
 }

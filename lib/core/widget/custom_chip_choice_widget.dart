@@ -17,6 +17,7 @@ class CustomChipChoiceWidget extends StatefulWidget {
   final String? prefixPath;
   Function(bool) onSelected;
   final String token;
+  final bool isEnabled;
 
   CustomChipChoiceWidget(
       {Key? key,
@@ -27,7 +28,8 @@ class CustomChipChoiceWidget extends StatefulWidget {
       this.prefixPath,
       this.isCloseIcon = false,
       required this.token,
-      required this.onSelected})
+      required this.onSelected,
+     required this.isEnabled })
       : super(key: key);
 
   @override
@@ -66,7 +68,9 @@ class _CustomChipChoiceWidgetState extends State<CustomChipChoiceWidget> {
         selected: widget.isSelected,
         onSelected: (bool selected) {
           setState(() {
-            widget.isSelected = selected;
+            if (widget.isEnabled) {
+              widget.isSelected = selected;
+            }
           });
           widget.onSelected(selected);
         },

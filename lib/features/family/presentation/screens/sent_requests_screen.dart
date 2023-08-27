@@ -73,6 +73,7 @@ class SentRequestsScreen extends StatelessWidget {
                                       userEntity: e,
                                       requestType: provider.requestType,
                                       authToken: provider.user.apiToken!,
+                                      onPressed: (user) {},
                                     ))
                                 .toList(),
                           ));

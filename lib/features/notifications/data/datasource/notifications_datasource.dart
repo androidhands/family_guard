@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:family_guard/features/notifications/data/models/notification_model.dart';
 import 'package:family_guard/features/notifications/data/models/notification_response_model.dart';
+import 'package:family_guard/features/notifications/domain/entities/notification_entity.dart';
 import 'package:family_guard/features/notifications/domain/entities/notification_response_entity.dart';
 import 'package:family_guard/features/notifications/domain/usecases/get_all_notifications_usecase.dart';
 import 'package:get/get.dart';
@@ -17,9 +19,9 @@ import '../../../authentication/domain/entities/user_entity.dart';
 import '../../domain/usecases/set_is_read_notification_usecase.dart';
 
 abstract class BaseNotificationDataSource {
-  Future<int> getNotificationCount();
+  Future<int> getNotificationCount(String accessToken);
 
-  Future<NotificationResponseEntity> getAllNotifications(
+  Future<List<NotificationEntity>> getAllNotifications(
       GetAllNotificationParams params);
 
   Future<bool> setIsReadNotification(SetReadNotificationsParam parameters);
@@ -28,14 +30,14 @@ abstract class BaseNotificationDataSource {
 
 class NotificationDataSource extends BaseNotificationDataSource {
   @override
-  Future<NotificationResponseEntity> getAllNotifications(
+  Future<List<NotificationEntity>> getAllNotifications(
       GetAllNotificationParams params) async {
-    return await sl<ApiCaller>().requestGet(
-      '${ApiEndPoint.getAllNotifications}?Paging.PageNumber=${params.pageNumber}&Paging.PageSize=${params.pageSize}',
-      builder: (data) {
-        return NotificationResponseModel.fromJson(data);
+    return await sl<ApiCaller>().requestPost(
+      '${ApiEndPoint.getAllNotifications}?api_password=${ApiEndPoint.apiPassword}&page=${params.pageNumber}',
+      (data) {
+        return List<NotificationEntity>.from(
+            data['data'].map((e) => NotificationModel.fromJson(e))).toList();
       },
-      tenantId: defaultAppTenant,
       token: params.accessToken,
       onFailure: (ErrorMessage failureData) {
         throw ServerException(
@@ -69,25 +71,20 @@ class NotificationDataSource extends BaseNotificationDataSource {
   }
 
   @override
-  Future<int> getNotificationCount() async {
-    /*   var res = await Provider.of<MainProvider>(Get.context!, listen: false)
-        .getAuthenticationResultModel();
-    return await sl<ApiCaller>().requestGet(
-      ApiEndPoint.getUnreadCount,
-      builder: (data) {
+  Future<int> getNotificationCount(String accessToken) async {
+    return await sl<ApiCaller>().requestPost(
+      '${ApiEndPoint.getNotificationsUnReadCount}?api_password=${ApiEndPoint.apiPassword}',
+      (data) {
         return data;
       },
-      token: res?.accessToken,
-      tenantId: defaultAppTenant,
+      token:  accessToken,
       onFailure: (ErrorMessage failureData) {
         throw ServerException(
           message: failureData.message,
           code: failureData.code,
         );
       },
-    ); */
-
-    return 0;
+    );
   }
 
   @override

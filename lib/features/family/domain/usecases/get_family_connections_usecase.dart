@@ -5,13 +5,13 @@ import 'package:family_guard/features/authentication/domain/entities/user_entity
 import 'package:family_guard/features/family/domain/repositories/base_family_connections_repository.dart';
 
 class GetFamilyConnectionsUsecase
-    extends BaseUseCasesNoParams<List<UserEntity>> {
+    extends BaseUseCases<Stream<List<UserEntity>>, String> {
   final BaseFamilyConnectionsRepository baseFamilyConnectionsRepository;
 
   GetFamilyConnectionsUsecase({required this.baseFamilyConnectionsRepository});
 
   @override
-  Future<Either<Failure, List<UserEntity>>> call() {
-    return baseFamilyConnectionsRepository.getFamilyConnections();
+  Future<Either<Failure, Stream<List<UserEntity>>>> call(String params) {
+    return baseFamilyConnectionsRepository.getFamilyConnections(params);
   }
 }

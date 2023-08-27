@@ -104,8 +104,23 @@ class DateParser {
     }
     DateTime? parsedDate;
     parsedDate = (dateTime is String) ? DateTime.tryParse(dateTime) : dateTime;
+
     if (parsedDate == null) throw "Date isn't in a valid format to be parsed";
     return DateFormat('hh:mm a', sl<BaseAppLocalizations>().getLanguageCode())
+        .format(parsedDate.toLocal());
+  }
+
+  String dateFormatterOnlyDateTime(dynamic dateTime) {
+    if ((dateTime is! String) &&
+        (dateTime is! DateTime) &&
+        !(dateTime == null)) {
+      throw "Only String and DateTime accepted";
+    }
+    DateTime? parsedDate;
+    parsedDate = (dateTime is String) ? DateTime.tryParse(dateTime) : dateTime;
+    if (parsedDate == null) throw "Date isn't in a valid format to be parsed";
+    return DateFormat(
+            'yyyy-MM-dd hh:mm a', sl<BaseAppLocalizations>().getLanguageCode())
         .format(parsedDate);
   }
 }

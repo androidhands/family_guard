@@ -14,17 +14,19 @@ class CustomSentRequestWidget extends StatelessWidget {
   final UserEntity userEntity;
   final RequestType requestType;
   final String authToken;
+  final Function(UserEntity) onPressed;
   const CustomSentRequestWidget(
       {Key? key,
       required this.userEntity,
       required this.requestType,
-      required this.authToken})
+      required this.authToken,
+      required this.onPressed})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(AppSizes.pW1),
+      margin: EdgeInsets.all(AppSizes.pW2),
       padding: EdgeInsets.only(left: AppSizes.pW2, right: AppSizes.pW2),
       height: AppSizes.requestCardHeight,
       decoration: BoxDecoration(
@@ -33,7 +35,7 @@ class CustomSentRequestWidget extends StatelessWidget {
           border: Border.all(width: 0.5, color: ThemeColorLight.pinkColor)),
       child: Row(
         children: [
-          userEntity.imageUrl.isEmpty
+          userEntity.imageUrl.isEmpty || userEntity.imageUrl == "No Data"
               ? CustomSvgImage(
                   path: AppAssets.profileMan,
                   width: AppSizes.profileImageWidth,
@@ -60,7 +62,10 @@ class CustomSentRequestWidget extends StatelessWidget {
                     CustomChipChoiceWidget(
                       title: userEntity.memberEntity!.requestAccepted,
                       token: authToken,
-                      onSelected: (v) {},
+                      isEnabled: false,
+                      onSelected: (v) {
+                        onPressed.call(userEntity);
+                      },
                       prefixPath: userEntity.memberEntity!.accepted == 0
                           ? AppAssets.pendingSvg
                           : userEntity.memberEntity!.accepted == 1
@@ -70,7 +75,9 @@ class CustomSentRequestWidget extends StatelessWidget {
                   ],
                 ),
                 CustomText(
-                    'My ${requestType == RequestType.Sent ? userEntity.memberEntity!.memberRelation : userEntity.memberEntity!.userRelation}',
+                    requestType == RequestType.Sent
+                        ? 'My ${userEntity.memberEntity!.memberRelation}'
+                        : 'Adding you as his ${userEntity.memberEntity!.memberRelation}',
                     textStyle: Theme.of(context)
                         .textTheme
                         .labelMedium!
@@ -93,7 +100,7 @@ class CustomSentRequestWidget extends StatelessWidget {
                             fontSize: AppSizes.h6)),
                 if (userEntity.memberEntity!.createdAt != null)
                   CustomText(
-                      'Date ${DateParser().convertUTCStringToLocalTime(userEntity.memberEntity!.createdAt)}',
+                      'Requested at : ${DateParser().dateFormatterOnlyDateTime(userEntity.memberEntity!.createdAt!).toString()}',
                       textStyle: Theme.of(context)
                           .textTheme
                           .labelMedium!

@@ -27,6 +27,7 @@ class AppSizes {
   static final double pH8 = 32.0.h;
   static final double pH9 = 75.0.h;
   static final double pH10 = 120.0.h;
+  static final double pH100 = 100.0.h;
 
   /// Padding Size Width
   static final double pW1 = 6.0.w;
@@ -162,6 +163,7 @@ class AppSizes {
 
   ///payment History
   static double paymentHistoryBottomSheetModalHeight = 350.h;
+  static double memberRequestBottomSheetModalHeight = 500.h;
   static double confirmPaymentBottomSheetModalHeight = 300.h;
   static double editTotalBottomSheetModalHeight = 275.h;
   static double workBottomSheetModalHeight = 300.h;

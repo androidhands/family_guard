@@ -1,15 +1,21 @@
+import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
 import 'package:flutter/material.dart';
 import 'package:family_guard/core/utils/app_sizes.dart';
 import '../../global/theme/theme_color/theme_color_dark.dart';
 import '../images/custom_svg_image.dart';
 
 class CustomSwitch extends StatefulWidget {
-  final bool value;
+  bool value;
   final ValueChanged<bool> onChanged;
   final String? iconAsset;
+  final bool isEnabled;
 
-  const CustomSwitch(
-      {Key? key, required this.value, required this.onChanged, this.iconAsset})
+  CustomSwitch(
+      {Key? key,
+      required this.value,
+      required this.onChanged,
+      this.iconAsset,
+      this.isEnabled = true})
       : super(key: key);
 
   @override
@@ -24,8 +30,8 @@ class CustomSwitchState extends State<CustomSwitch>
   @override
   void initState() {
     super.initState();
-    _animationController =
-        AnimationController(vsync: this, duration: const  Duration(milliseconds: 60));
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 60));
     _circleAnimation = AlignmentTween(
             begin: widget.value ? Alignment.centerRight : Alignment.centerLeft,
             end: widget.value ? Alignment.centerLeft : Alignment.centerRight)
@@ -40,14 +46,18 @@ class CustomSwitchState extends State<CustomSwitch>
       builder: (context, child) {
         return GestureDetector(
           onTap: () {
-            if (_animationController.isCompleted) {
-              _animationController.reverse();
-            } else {
-              _animationController.forward();
+            if (widget.isEnabled) {
+              if (_animationController.isCompleted) {
+                _animationController.reverse();
+              } else {
+                _animationController.forward();
+              }
+              setState(() {
+                widget.value == false
+                    ? widget.onChanged(true)
+                    : widget.onChanged(false);
+              });
             }
-            widget.value == false
-                ? widget.onChanged(true)
-                : widget.onChanged(false);
           },
           child: SizedBox(
             width: AppSizes.pW8,
@@ -68,12 +78,12 @@ class CustomSwitchState extends State<CustomSwitch>
                         // You can set your own colors in here!
                         colors: widget.value
                             ? [
-                                Theme.of(context).colorScheme.primary,
-                                Theme.of(context).colorScheme.secondary,
+                                ThemeColorLight.pinkColor,
+                                ThemeColorLight.pinkWhiteColor,
                               ]
                             : [
-                                ThemeColorDark.secondaryColor,
-                                ThemeColorDark.secondaryColor
+                                ThemeColorLight.gray,
+                                ThemeColorLight.gray,
                               ],
                       ),
                       border: widget.value
@@ -123,8 +133,7 @@ class CustomSwitchState extends State<CustomSwitch>
                               : ThemeColorDark.grayScale),
                       child: widget.iconAsset == null
                           ? null
-                          :
-                          CustomSvgImage.icons(
+                          : CustomSvgImage.icons(
                               path: widget.iconAsset!,
                               color: Theme.of(context).iconTheme.color),
                     ),

@@ -12,7 +12,7 @@ class SendNewMemberRequestUsecase
   SendNewMemberRequestUsecase({required this.baseFamilyConnectionsRepository});
 
   @override
-  Future<Either<Failure,String>> call(AddNewMemberParams params) {
+  Future<Either<Failure, String>> call(AddNewMemberParams params) {
     return baseFamilyConnectionsRepository.addNewFamilyConnections(params);
   }
 }
@@ -21,9 +21,10 @@ class AddNewMemberParams extends Equatable {
   final String mobile;
   final String sender;
   final String member;
+  final String accessToken;
 
   const AddNewMemberParams(
-      {required this.mobile, required this.sender, required this.member});
+      {required this.mobile, required this.sender, required this.member,required this.accessToken});
 
   @override
   List<Object?> get props => [mobile, sender, member];

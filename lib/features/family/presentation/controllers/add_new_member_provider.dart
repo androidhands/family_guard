@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
+import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/error/failure.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
 import 'package:family_guard/core/services/navigation_service.dart';
@@ -15,6 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/phone_number.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/services/dependency_injection_service.dart';
 import '../../../authentication/presentation/utils/utils.dart';
@@ -33,6 +35,7 @@ class AddNewMemberController extends ChangeNotifier {
   PhoneNumber? phoneNumber;
   Relationships selectedSnderRelation = Relationships.Select_Relation;
   Relationships selectedReceiverRelation = Relationships.Select_Relation;
+  UserEntity user = Provider.of<MainProvider>(Get.context!).userCredentials!;
 
   bool isSendingRequest = false;
 
@@ -93,11 +96,13 @@ class AddNewMemberController extends ChangeNotifier {
 
   sendRequest() async {
     isSendingRequest = true;
+    notifyListeners();
     Either<Failure, String> results = await sl<SendNewMemberRequestUsecase>()(
         AddNewMemberParams(
             mobile: phoneNumber!.completeNumber,
             sender: selectedSnderRelation.name,
-            member: selectedReceiverRelation.name));
+            member: selectedReceiverRelation.name,
+            accessToken: user.apiToken!));
     results.fold((l) async {
       await DialogWidget.showCustomDialog(
           context: Get.context!,

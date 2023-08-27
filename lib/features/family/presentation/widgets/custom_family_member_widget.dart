@@ -33,8 +33,8 @@ class CustomFamilyMemberWidget extends StatelessWidget {
         onPressed.call();
       },
       child: Container(
-        height: 200.h,
-        width: 220.w,
+        height: 210.h,
+        width: 180.w,
         margin: EdgeInsets.all(3.h),
         /*   decoration:
             BoxDecoration(border: Border.all(width: 2, color: Colors.red)), */
@@ -68,12 +68,15 @@ class CustomFamilyMemberWidget extends StatelessWidget {
                       token: userEnt.apiToken!,
                     ),
               SizedBox(
-                width: 140.w,
+                height: AppSizes.pH3,
+              ),
+              Flexible(
                 child: CustomText(
-                  memberEntity.userName,
+                  '${memberEntity.firstName}\n${memberEntity.secondName}',
                   textStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
-                      color: ThemeColorLight.whiteColor, fontSize: AppSizes.h6),
-                  maxLines: 2,
+                        color: ThemeColorLight.whiteColor,
+                        fontSize: AppSizes.h6,
+                      ),
                   textAlign: TextAlign.center,
                 ),
               )

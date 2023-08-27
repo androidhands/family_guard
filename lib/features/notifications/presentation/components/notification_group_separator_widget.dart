@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:family_guard/core/utils/app_sizes.dart';
 import 'package:family_guard/core/widget/custom_text.dart';
 
-
-
 class NotificationGroupSeparatorWidget extends StatelessWidget {
   final String text;
 
@@ -13,12 +11,12 @@ class NotificationGroupSeparatorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: AppSizes.pH7),
+      padding: EdgeInsets.only(top: AppSizes.pH7, left: AppSizes.pH8),
       child: CustomText.secondaryDisplaySmall(
         text,
         textStyle: Theme.of(context).textTheme.displaySmall!.copyWith(
-              fontSize: AppSizes.h7,
-              fontWeight: AppFonts.regular,
+              fontSize: AppSizes.h4,
+              fontWeight: AppFonts.bold,
             ),
         textAlign: TextAlign.start,
       ),

@@ -3,6 +3,10 @@ import 'dart:io';
 
 import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/screen/main_screen.dart';
+import 'package:family_guard/features/family/presentation/controllers/family_members_provider.dart';
+import 'package:family_guard/features/family/presentation/controllers/received_requests_provider.dart';
+import 'package:family_guard/features/family/presentation/screens/received_requests_screen.dart';
+import 'package:family_guard/features/family/presentation/screens/sent_requests_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -43,14 +47,17 @@ class MyApp extends StatelessWidget {
           return MultiProvider(
             providers: [
               ChangeNotifierProvider<MainProvider>(
-                create: (context) =>
-                    sl(),
+                create: (context) => sl(),
               ),
               ChangeNotifierProvider<ThemeProvider>(
                   create: (context) => ThemeProvider(
                       appTheme: ServiceInitializer.savedAppTheme,
                       themeData:
                           appThemeData[ServiceInitializer.savedAppTheme]!)),
+              ChangeNotifierProvider(
+                  create: (context) => FamilyMembersProvider()),
+              ChangeNotifierProvider(
+                  create: (context) => ReceivedRequestsProvider())
             ],
             child: Consumer<ThemeProvider>(
               builder: (BuildContext context, provider, _) {
@@ -66,6 +73,14 @@ class MyApp extends StatelessWidget {
                     GlobalMaterialLocalizations.delegate,
                     GlobalCupertinoLocalizations.delegate,
                     GlobalWidgetsLocalizations.delegate,
+                  ],
+                  getPages: [
+                    GetPage(
+                        name: '/SentRequestsScreen',
+                        page: () => const SentRequestsScreen()),
+                         GetPage(
+                        name: '/ReceivedRequestsScreen',
+                        page: () => const ReceivedRequestsScreen()),
                   ],
                   supportedLocales: const [Locale('en'), Locale('ar')],
                   fallbackLocale: ServiceInitializer.locale,

@@ -8,8 +8,10 @@ import 'package:family_guard/core/widget/custom_appbar.dart';
 import 'package:family_guard/core/widget/custom_loading_indicator.dart';
 import 'package:family_guard/core/widget/custom_text.dart';
 import 'package:family_guard/features/family/presentation/controllers/received_requests_provider.dart';
+import 'package:family_guard/features/family/presentation/widgets/accept_request_bottom_modal_dialog.dart';
 import 'package:family_guard/features/family/presentation/widgets/custom_sent_request_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
 class ReceivedRequestsScreen extends StatelessWidget {
@@ -38,7 +40,7 @@ class ReceivedRequestsScreen extends StatelessWidget {
                   ? Center(
                       child: CustomLoadingIndicators.defaultLoading(),
                     )
-                  : provider.sentRequest!.isEmpty
+                  : provider.receivedRequest!.isEmpty
                       ? Center(
                           child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -56,7 +58,8 @@ class ReceivedRequestsScreen extends StatelessWidget {
                               height: AppSizes.pH2,
                             ),
                             Padding(
-                              padding:  EdgeInsets.only(left: AppSizes.pW10,right: AppSizes.pW10),
+                              padding: EdgeInsets.only(
+                                  left: AppSizes.pW10, right: AppSizes.pW10),
                               child: CustomElevatedButton(
                                 onPressed: () =>
                                     provider.navigateToAddNewMemberRequest(),
@@ -67,11 +70,30 @@ class ReceivedRequestsScreen extends StatelessWidget {
                           ],
                         ))
                       : ListView(
-                          children: provider.sentRequest!
+                          children: provider.receivedRequest!
                               .map((e) => CustomSentRequestWidget(
                                     userEntity: e,
                                     requestType: provider.requestType,
                                     authToken: provider.user.apiToken!,
+                                    onPressed: (user) {
+                                      showBarModalBottomSheet(
+                                          context: context,
+                                          builder: (context) {
+                                            return AcceptRequestBottomModalDialog(
+                                              userEntity: user,
+                                              onAcceptRequest: (user) {
+                                                provider
+                                                    .acceptConnectionRequest(
+                                                        user);
+                                              },
+                                              onCancelRequest: (user) {
+                                                provider
+                                                    .cancelConnectionRequest(
+                                                        user);
+                                              },
+                                            );
+                                          });
+                                    },
                                   ))
                               .toList(),
                         ),

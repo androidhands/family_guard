@@ -43,7 +43,8 @@ class HeaderHomeComponent extends StatelessWidget {
                   },
                   child: Padding(
                       padding: EdgeInsets.all(5),
-                      child: provider.userEntity?.imageUrl == null
+                      child: provider.userEntity?.imageUrl == "No Data" ||
+                              provider.userEntity?.imageUrl == null
                           ? CustomSvgImage(
                               path: AppAssets.profileMan,
                               width: AppSizes.profileImageWidth,
@@ -80,8 +81,8 @@ class HeaderHomeComponent extends StatelessWidget {
                         provider.navigateToNotificationScreen();
                       },
                       child: badges.Badge(
-                          badgeContent: const CustomText(
-                            '0',
+                          badgeContent: CustomText(
+                            provider.notificationCount.toString(),
                             textStyle: TextStyle(color: Colors.white),
                           ),
                           position: badges.BadgePosition.topEnd(),

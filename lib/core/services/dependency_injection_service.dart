@@ -25,6 +25,8 @@ import 'package:family_guard/features/authentication/presentation/controller/sig
 import 'package:family_guard/features/family/data/data_source/family_connections_data_source.dart';
 import 'package:family_guard/features/family/data/repository/family_connection_repositoy.dart';
 import 'package:family_guard/features/family/domain/repositories/base_family_connections_repository.dart';
+import 'package:family_guard/features/family/domain/usecases/accept_member_connection_usecase.dart';
+import 'package:family_guard/features/family/domain/usecases/cancel_member_connection_usecase.dart';
 import 'package:family_guard/features/family/domain/usecases/get_family_connections_usecase.dart';
 import 'package:family_guard/features/family/domain/usecases/get_received_connection_requests_usecase.dart';
 import 'package:family_guard/features/family/domain/usecases/get_sent_connections_requests_usecase.dart';
@@ -32,6 +34,8 @@ import 'package:family_guard/features/home/presentation/controller/home_provider
 import 'package:family_guard/features/notifications/data/datasource/notifications_datasource.dart';
 import 'package:family_guard/features/notifications/data/repositories/notification_count_repository.dart';
 import 'package:family_guard/features/notifications/domain/repositories/base_notification_repository.dart';
+import 'package:family_guard/features/notifications/domain/usecases/get_all_notifications_usecase.dart';
+import 'package:family_guard/features/notifications/domain/usecases/get_notification_count_usecase.dart';
 import 'package:family_guard/features/profile/data/datasource/profile_data_source.dart';
 import 'package:family_guard/features/profile/data/repositories/profile_repository.dart';
 import 'package:family_guard/features/profile/domain/repositories/base_profile_repository.dart';
@@ -265,10 +269,15 @@ class DependencyInjectionServices {
         () => NotificationCountRepository(baseNotificationDataSource: sl()));
 
     //usecases
+
+    sl.registerLazySingleton(
+        () => GetAllNotificationsUsecase(baseNotificationRepository: sl()));
     sl.registerLazySingleton(
         () => RefreshTokenUsecase(baseNotificationRepository: sl()));
     sl.registerLazySingleton(
         () => SetIsReadNotificationUseCase(baseNotificationRepository: sl()));
+    sl.registerLazySingleton(() =>
+        GetNotificationCountUseCase(baseNotificationCountRepository: sl()));
 
     //datasources
     sl.registerLazySingleton<BaseNotificationDataSource>(
@@ -297,6 +306,12 @@ class DependencyInjectionServices {
 
     sl.registerLazySingleton(() => GetSentConnectionsRequestsUsecase(
         baseFamilyConnectionsRepository: sl()));
+
+    sl.registerLazySingleton(() =>
+        AcceptMemberConnectionUsecase(baseFamilyConnectionsRepository: sl()));
+
+    sl.registerLazySingleton(() =>
+        CancelMemberConnectionUsecase(baseFamilyConnectionsRepository: sl()));
 
     //repository
     sl.registerLazySingleton<BaseFamilyConnectionsDataSource>(

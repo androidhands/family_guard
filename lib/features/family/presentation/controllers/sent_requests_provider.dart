@@ -27,7 +27,7 @@ class SentRequestsProvider extends ChangeNotifier {
 
   void getSentRequest() async {
     Either<Failure, List<UserEntity>> results =
-        await sl<GetSentConnectionsRequestsUsecase>()();
+        await sl<GetSentConnectionsRequestsUsecase>()(user.apiToken!);
     results.fold((l) async {
       await DialogWidget.showCustomDialog(
           context: Get.context!,

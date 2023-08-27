@@ -32,47 +32,51 @@ class NotificationsScreen extends StatelessWidget {
               appBar: CustomAppbar(
                 title: tr(AppConstants.notifications),
                 withMenu: false,
-               
                 popOnPressed: () => NavigationService.goBack(),
                 popIconsColor: ThemeColorLight.pinkColor,
               ),
-              body: Stack(
-                children: [
-                  GroupedListView<NotificationEntity, String>(
-                    controller: provider.scrollController,
-                    elements: provider.notificationsList,
-                    groupBy: (element) => singleDayValueFormat
-                        .format(dateFormat.parse(element.creationTime)),
-                    groupSeparatorBuilder: (String groupByValue) =>
-                        NotificationGroupSeparatorWidget(
-                      text: singleDayValueFormat.format(DateTime.now()) ==
-                              groupByValue
-                          ? 'Today'
-                          : singleDayValueFormat.format(DateTime.now()
-                                      .subtract(const Duration(days: 1))) ==
-                                  groupByValue
-                              ? 'Yesterday'
-                              : groupByValue,
-                    ),
-                    itemBuilder: (context, element) =>
-                        CustomNotificationComponent(
-                      notificationEntity: element,
-                    ),
-                    /*  itemComparator: (item1, item2) => item1['name'].compareTo(item2['name']), */
-                    // optional
-                    useStickyGroupSeparators: false,
-                    // optional
-                    floatingHeader: false,
-                    // optional
-                    order: GroupedListOrder.DESC, // optional
-                  ),
-                  if (provider.isLoadingNotification)
-                    Align(
+              body: provider.isLoadingNotification
+                  ? Align(
                       alignment: Alignment.center,
                       child: CustomLoadingIndicators.defaultLoading(),
+                    )
+                  : Stack(
+                      children: [
+                        GroupedListView<NotificationEntity, String>(
+                          controller: provider.scrollController,
+                          elements: provider.notificationsList,
+                          groupBy: (element) => singleDayValueFormat
+                              .format(dateFormat.parse(element.createdAt)),
+                          groupSeparatorBuilder: (String groupByValue) =>
+                              NotificationGroupSeparatorWidget(
+                            text: singleDayValueFormat.format(DateTime.now()) ==
+                                    groupByValue
+                                ? 'Today'
+                                : singleDayValueFormat.format(DateTime.now()
+                                            .subtract(
+                                                const Duration(days: 1))) ==
+                                        groupByValue
+                                    ? 'Yesterday'
+                                    : groupByValue,
+                          ),
+                          itemBuilder: (context, element) =>
+                              CustomNotificationComponent(
+                            notificationEntity: element,
+                            onPressed: () {
+                              provider.markeNotificationsAsReed(element);
+                            },
+                          ),
+                          /*  itemComparator: (item1, item2) => item1['name'].compareTo(item2['name']), */
+                          // optional
+                          useStickyGroupSeparators: false,
+                          // optional
+                          floatingHeader: false,
+                          // optional
+                          order: GroupedListOrder.DESC,
+                          // optional
+                        ),
+                      ],
                     ),
-                ],
-              ),
             );
           },
         );

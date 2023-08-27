@@ -1,17 +1,19 @@
 import 'package:equatable/equatable.dart';
 
 class MemberEntity extends Equatable {
+  final int id;
   final int userId;
   final int memberId;
   final String userRelation;
   final String memberRelation;
-  final int? accepted;
-  final int? tracked;
-  final int? emergency;
+  final int accepted;
+  int tracked;
+  int emergency;
   final String? createdAt;
   final String? updatedAt;
 
-  const MemberEntity(
+  MemberEntity(
+      this.id,
       this.userId,
       this.memberId,
       this.userRelation,
@@ -24,6 +26,7 @@ class MemberEntity extends Equatable {
 
   @override
   List<Object?> get props => [
+        id,
         userId,
         memberId,
         userRelation,
@@ -36,7 +39,7 @@ class MemberEntity extends Equatable {
       ];
 
   String get requestAccepted {
-    switch (accepted!) {
+    switch (accepted) {
       case 0:
         {
           return 'Pending';
@@ -45,10 +48,15 @@ class MemberEntity extends Equatable {
         {
           return 'Accepted';
         }
-      case 3:
+      case 2:
         {
           return 'Canceled';
         }
+      case 3:
+        {
+          return 'Blocked';
+        }
+
       default:
         {
           return 'Pending';
@@ -59,4 +67,7 @@ class MemberEntity extends Equatable {
   String get isLocationTracked =>
       tracked == 0 ? 'Location tracked: No' : 'Location tracked: Yes';
   String get isEmergency => tracked == 0 ? 'Emergency: No' : 'Emergency: Yes';
+
+  set setEmergency(int v) => emergency = v;
+  set setTracking(int v) => tracked = v;
 }

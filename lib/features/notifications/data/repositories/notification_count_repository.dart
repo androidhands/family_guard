@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:family_guard/core/error/exceptions.dart';
 import 'package:family_guard/core/error/failure.dart';
 import 'package:family_guard/features/notifications/data/datasource/notifications_datasource.dart';
+import 'package:family_guard/features/notifications/domain/entities/notification_entity.dart';
 import 'package:family_guard/features/notifications/domain/entities/notification_response_entity.dart';
 import 'package:family_guard/features/notifications/domain/repositories/base_notification_repository.dart';
 
@@ -17,7 +18,7 @@ class NotificationCountRepository implements BaseNotificationRepository {
   NotificationCountRepository({required this.baseNotificationDataSource});
 
   @override
-  Future<Either<Failure, NotificationResponseEntity>> getAllNotifications(
+  Future<Either<Failure, List<NotificationEntity>>> getAllNotifications(
       GetAllNotificationParams params) async {
     try {
       return Right(
@@ -28,10 +29,10 @@ class NotificationCountRepository implements BaseNotificationRepository {
   }
 
   @override
-  Future<Either<Failure, int>> getNotificationCount() async {
+  Future<Either<Failure, int>> getNotificationCount(String accessToken) async {
     try {
       return Right(
-          await baseNotificationDataSource.getNotificationCount());
+          await baseNotificationDataSource.getNotificationCount(accessToken));
     } on ServerException catch (ex) {
       return Left(ServerFailure(code: ex.code, message: ex.message));
     }

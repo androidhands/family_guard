@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/error/failure.dart';
@@ -11,6 +15,7 @@ import 'package:family_guard/features/family/presentation/screens/show_member_sc
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../../../../core/services/dependency_injection_service.dart';
 import '../../../../core/utils/app_constants.dart';
@@ -25,20 +30,23 @@ class FamilyMembersProvider extends ChangeNotifier {
       Provider.of<MainProvider>(Get.context!, listen: false).userCredentials!;
 
   bool isLoadingFamilyMembers = false;
-  List<UserEntity> familyMembersList = [];
+
+  List<UserEntity> members = [];
 
   void getFamilyMembers() async {
     isLoadingFamilyMembers = true;
     notifyListeners();
-    Either<Failure, List<UserEntity>> results =
-        await sl<GetFamilyConnectionsUsecase>()();
+    Either<Failure, Stream<List<UserEntity>>> results =
+        await sl<GetFamilyConnectionsUsecase>()(user.apiToken!);
     results.fold((l) async {
       await DialogWidget.showCustomDialog(
           context: Get.context!,
           title: l.message,
           buttonText: tr(AppConstants.ok));
-    }, (r) {
-      familyMembersList = r;
+    }, (r) async {
+      r.listen((event) {
+        members = event;
+      });
     });
     isLoadingFamilyMembers = false;
     notifyListeners();
@@ -47,24 +55,29 @@ class FamilyMembersProvider extends ChangeNotifier {
   void navigateToMemberDetailsScreen() {
     NavigationService.navigateTo(
         navigationMethod: NavigationMethod.push,
-        page:()=> const ShowMemberScreen());
+        page: () => const ShowMemberScreen());
   }
 
   void navigateToAddMemberScreen() {
     NavigationService.navigateTo(
         navigationMethod: NavigationMethod.push,
-        page:()=>  const AddFamilyMemberScreen());
+        page: () => const AddFamilyMemberScreen());
   }
 
   void navigateToReceivedRequestsScreen() {
     NavigationService.navigateTo(
         navigationMethod: NavigationMethod.push,
-        page:()=>  const ReceivedRequestsScreen());
+        page: () => const ReceivedRequestsScreen());
   }
 
   void navigateToSentRequestsScreen() {
     NavigationService.navigateTo(
         navigationMethod: NavigationMethod.push,
-        page:()=>  const SentRequestsScreen());
+        page: () => const SentRequestsScreen());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }
