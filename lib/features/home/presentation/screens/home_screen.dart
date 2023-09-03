@@ -1,4 +1,8 @@
+import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
+import 'package:family_guard/core/widget/buttons/custom_elevated_button.dart';
+import 'package:family_guard/core/widget/buttons/custom_text_button.dart';
 import 'package:family_guard/core/widget/custom_loading_indicator.dart';
+import 'package:family_guard/core/widget/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +37,7 @@ class HomeScreen extends StatelessWidget {
                         provider.onMapCreated(googleMapController),
                     myLocationButtonEnabled: false,
                     myLocationEnabled: true,
+                    markers: provider.membersMarkers,
                   ),
                   Positioned(
                     bottom: 0,
@@ -62,14 +67,51 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         Padding(
                           padding: EdgeInsets.all(AppSizes.pW6),
-                          child: CustomFloatingActionButton(
-                            iconSVGPath: AppAssets.familySvg,
-                            onTap: () => provider.goToMyLocation(),
-                          ),
+                          child: provider.isTrackingMembers
+                              ? CustomLoadingIndicators.defaultLoading()
+                              : CustomFloatingActionButton(
+                                  iconSVGPath:provider.firstClick? AppAssets.requestCanceled:AppAssets.familySvg,
+                                  onTap: () {
+                                    provider.setFirstClick();
+                                    provider.trackMyMembers();
+                                  },
+                                ),
                         ),
                       ],
                     ),
                   ),
+                  if (provider.timerIsRunning)
+                    Positioned(
+                      bottom: 200,
+                      left: 0,
+                      right: 0,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Padding(
+                              padding: EdgeInsets.all(AppSizes.pW6),
+                              child: InkWell(
+                                child: Container(
+                                  padding: EdgeInsets.all(AppSizes.pW1),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                        width: 2,
+                                        color: ThemeColorLight.pinkColor),
+                                  ),
+                                  child: CustomText(
+                                      provider.currentSeconds.toString(),
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall!
+                                          .copyWith(
+                                              color: ThemeColorLight.pinkColor,
+                                              fontSize: AppSizes.h8)),
+                                ),
+                              )),
+                        ],
+                      ),
+                    ),
                   Center(
                       child: CustomSvgImage(
                     path: AppAssets.pinLocation,

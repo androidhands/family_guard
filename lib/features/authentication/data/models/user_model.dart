@@ -3,9 +3,11 @@ import 'package:family_guard/features/authentication/domain/entities/address_ent
 import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
 import 'package:family_guard/features/family/data/model/member_model.dart';
 import 'package:family_guard/features/family/domain/entities/member_entity.dart';
+import 'package:family_guard/features/home/data/models/tracking_model.dart';
+import 'package:family_guard/features/home/domain/entity/tracking_entity.dart';
 
 class UserModel extends UserEntity {
-   UserModel(
+  UserModel(
       {required int id,
       required String firstName,
       required String secondName,
@@ -20,7 +22,8 @@ class UserModel extends UserEntity {
       required String uid,
       required String imageUrl,
       required AddressEntity? address,
-      MemberEntity? memberEntity})
+      MemberEntity? memberEntity,
+      TrackingEntity? trackingEntity})
       : super(
             id,
             firstName,
@@ -36,7 +39,8 @@ class UserModel extends UserEntity {
             uid,
             imageUrl,
             address,
-            memberEntity);
+            memberEntity,
+            trackingEntity);
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
@@ -53,9 +57,17 @@ class UserModel extends UserEntity {
         apiToken: json['api_token'],
         uid: json['uid'],
         imageUrl: json['imageUrl'],
-        address:json['addresses'] ==null?null: AddressModel.fromJson(json['addresses']),
-        memberEntity:
-            json['pivot'] == null ? null : MemberModel.fromJson(json['pivot']));
+        address: json['addresses'] == null
+            ? null
+            : AddressModel.fromJson(json['addresses']),
+        memberEntity: json['pivot'] == null
+            ? null
+            : MemberModel.fromJson(
+                json['pivot'],
+              ),
+        trackingEntity: json['tracking'] == null
+            ? null
+            : TrackingModel.fromJson(json['tracking']));
   }
 
   Map<String, dynamic> toJson() {
@@ -74,7 +86,8 @@ class UserModel extends UserEntity {
       'uid': uid,
       'imageUrl': imageUrl,
       'addresses': address,
-      'pivot': memberEntity
+      'pivot': memberEntity,
+      'tracking': trackingEntity
     };
   }
 }

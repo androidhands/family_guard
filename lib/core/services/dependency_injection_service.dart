@@ -30,6 +30,11 @@ import 'package:family_guard/features/family/domain/usecases/cancel_member_conne
 import 'package:family_guard/features/family/domain/usecases/get_family_connections_usecase.dart';
 import 'package:family_guard/features/family/domain/usecases/get_received_connection_requests_usecase.dart';
 import 'package:family_guard/features/family/domain/usecases/get_sent_connections_requests_usecase.dart';
+import 'package:family_guard/features/home/data/datasource/tracking_data_source.dart';
+import 'package:family_guard/features/home/data/repository/tracking_repository.dart';
+import 'package:family_guard/features/home/domain/repository/base_tracking_repository.dart';
+import 'package:family_guard/features/home/domain/usecases/add_new_user_location_usecase.dart';
+import 'package:family_guard/features/home/domain/usecases/track_my_members_usecase.dart';
 import 'package:family_guard/features/home/presentation/controller/home_provider.dart';
 import 'package:family_guard/features/notifications/data/datasource/notifications_datasource.dart';
 import 'package:family_guard/features/notifications/data/repositories/notification_count_repository.dart';
@@ -72,6 +77,9 @@ final sl = GetIt.instance;
 
 class DependencyInjectionServices {
   init() async {
+    //tracking
+    initializeTracking();
+
     ///internet Connection Checker initialize
     internetConnectionCheckerInit();
 
@@ -334,5 +342,21 @@ class DependencyInjectionServices {
 
     //datasources
     sl.registerLazySingleton<BaseProfileDataSource>(() => ProfileDataSource());
+  }
+
+  initializeTracking() {
+    //repository
+    sl.registerLazySingleton<BaseTrackingRepository>(
+        () => TrackingRepository(baseTrackingDataSource: sl()));
+
+    //usecases
+    sl.registerLazySingleton(
+        () => AddNewUserLocationUsecase(baseTrackingRepository: sl()));
+    sl.registerLazySingleton(
+        () => TrackMyMembersUsecase(baseTrackingRepository: sl()));
+
+    //datasources
+    sl.registerLazySingleton<BaseTrackingDataSource>(
+        () => TrackingDataSource());
   }
 }

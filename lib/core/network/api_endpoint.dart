@@ -43,4 +43,11 @@ class ApiEndPoint {
       '/members/AcceptMemberConnection';
   static const String cancelConnectionRequest =
       '/members/CancelMemberConnection';
+
+  //tracking
+
+  static const String addnewUserLocationPath =
+      '/tracking/AddCurrentUserLocation';
+  static const String trackMyMembersPath =
+      '/tracking/TrackMyMembers?api_password=$apiPassword';
 }

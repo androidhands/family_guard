@@ -8,8 +8,10 @@ import 'package:family_guard/core/widget/custom_appbar.dart';
 import 'package:family_guard/core/widget/custom_loading_indicator.dart';
 import 'package:family_guard/core/widget/custom_text.dart';
 import 'package:family_guard/features/family/presentation/controllers/sent_requests_provider.dart';
+import 'package:family_guard/features/family/presentation/widgets/accept_request_bottom_modal_dialog.dart';
 import 'package:family_guard/features/family/presentation/widgets/custom_sent_request_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
 class SentRequestsScreen extends StatelessWidget {
@@ -73,7 +75,20 @@ class SentRequestsScreen extends StatelessWidget {
                                       userEntity: e,
                                       requestType: provider.requestType,
                                       authToken: provider.user.apiToken!,
-                                      onPressed: (user) {},
+                                      onPressed: (user) {
+                                        showBarModalBottomSheet(
+                                            context: context,
+                                            builder: (context) {
+                                              return AcceptRequestBottomModalDialog(
+                                                userEntity: user,
+                                                onCancelRequest: (user) {
+                                                  /*  provider
+                                                    .cancelConnectionRequest(
+                                                        user); */
+                                                },
+                                              );
+                                            });
+                                      },
                                     ))
                                 .toList(),
                           ));

@@ -2,8 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 import 'package:share_plus/share_plus.dart';
 import 'package:family_guard/core/utils/app_assets.dart';
 
@@ -61,8 +64,6 @@ final singleDayValueFormat = DateFormat("dd, MMMM yyyy");
 final dateFormat = DateFormat("yyyy-MM-dd");
 final timeFormat = DateFormat("h:mm a");
 
-
-
 void showCustromDropDwonDialog(
     List<String> items, Function(String) onSelected, String title) {
   Get.defaultDialog(
@@ -87,6 +88,7 @@ void showCustromDropDwonDialog(
         } */
   );
 }
+
 class CustomTitleCard extends StatelessWidget {
   final String? title;
   const CustomTitleCard({super.key, required this.title});
@@ -107,4 +109,25 @@ class CustomTitleCard extends StatelessWidget {
       ],
     );
   }
+}
+
+Future<bool> handleLocationPermission() async {
+  LocationPermission permission;
+
+  permission = await Geolocator.checkPermission();
+
+  if (permission == LocationPermission.whileInUse) {
+    ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+      content: const Text(
+          'Family Guard app works correctly if the location enabled allways in use, Select Permission->Location->Allow all the time'),
+      action: SnackBarAction(
+        label: 'Open App Settings',
+        onPressed: () async {
+          await openAppSettings();
+        },
+      ),
+    ));
+    return false;
+  }
+  return true;
 }

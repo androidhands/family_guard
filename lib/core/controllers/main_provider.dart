@@ -4,7 +4,9 @@ import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
 import 'package:family_guard/core/error/failure.dart';
+import 'package:family_guard/core/services/background_location_service.dart';
 import 'package:family_guard/core/services/firebase_messaging_services.dart';
+import 'package:family_guard/core/services/location_fetcher.dart';
 import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
 import 'package:family_guard/features/authentication/domain/usecases/check_user_credentials_usecase.dart';
 import 'package:family_guard/features/notifications/domain/usecases/refresh_token_usecase.dart';
@@ -26,8 +28,11 @@ import '../widget/dialog_service.dart';
 class MainProvider extends ChangeNotifier {
   final GetCachedUserCredentialsUsecase getCachedUserCredentialsUsecase;
   MainProvider({required this.getCachedUserCredentialsUsecase}) {
+   
     initializeConnectivityChecker();
   }
+
+
 
   UserEntity? userCredentials;
 
@@ -37,7 +42,7 @@ class MainProvider extends ChangeNotifier {
 
     results.fold((l) {
       log('No cached user');
-      userCredentials = null;
+    //  userCredentials = null;
     }, (r) {
       log('cached user ${r?.mobile}');
       userCredentials = r;
@@ -68,7 +73,7 @@ class MainProvider extends ChangeNotifier {
         connectivityResult == ConnectivityResult.mobile);
     await checkUserLoggedIn().then((isCached) async {
       log('initialized cached is cached $isCached');
-      if (isConnected) {
+    
         if (isCached) {
           NavigationService.navigateTo(
               navigationMethod: NavigationMethod.pushReplacement,
@@ -82,11 +87,7 @@ class MainProvider extends ChangeNotifier {
               navigationMethod: NavigationMethod.pushReplacement,
               page: () => const LoginScreen());
         }
-      } else {
-        /*   NavigationService.navigateTo(
-            navigationMethod: NavigationMethod.pushReplacement,
-            page: () => const HomeControlScreen()); */
-      }
+      
     });
   }
 

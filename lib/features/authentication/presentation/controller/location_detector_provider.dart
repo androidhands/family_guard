@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 import 'package:family_guard/core/error/failure.dart';
+import 'package:family_guard/core/utils/utils.dart';
 import 'package:family_guard/features/authentication/domain/entities/sign_up_params.dart';
 import 'package:family_guard/features/home/presentation/screens/home_control_screen.dart';
 
@@ -151,6 +152,7 @@ class LocationDetectorProvider with ChangeNotifier {
   goToMyLocation() async {
     isLoadingLocation = true;
     notifyListeners();
+   
     if (!(await requestLocationPermission())) {
       isLoadingLocation = false;
       notifyListeners();

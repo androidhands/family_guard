@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/screen/main_screen.dart';
+import 'package:family_guard/core/services/background_location_service.dart';
 import 'package:family_guard/features/family/presentation/controllers/family_members_provider.dart';
 import 'package:family_guard/features/family/presentation/controllers/received_requests_provider.dart';
 import 'package:family_guard/features/family/presentation/screens/received_requests_screen.dart';
@@ -25,6 +26,7 @@ import 'core/services/service_initializer.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ServiceInitializer().initializeSettings();
+ 
   runApp(const MyApp());
 }
 
@@ -78,7 +80,7 @@ class MyApp extends StatelessWidget {
                     GetPage(
                         name: '/SentRequestsScreen',
                         page: () => const SentRequestsScreen()),
-                         GetPage(
+                    GetPage(
                         name: '/ReceivedRequestsScreen',
                         page: () => const ReceivedRequestsScreen()),
                   ],

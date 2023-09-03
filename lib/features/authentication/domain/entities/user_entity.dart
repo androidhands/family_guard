@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:family_guard/features/authentication/domain/entities/address_entity.dart';
 import 'package:family_guard/features/family/domain/entities/member_entity.dart';
+import 'package:family_guard/features/home/domain/entity/tracking_entity.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class UserEntity extends Equatable {
@@ -16,11 +17,12 @@ class UserEntity extends Equatable {
   final String updatedAt;
   final String? apiToken;
   final String uid;
-   String imageUrl;
+  String imageUrl;
   final AddressEntity? address;
   final MemberEntity? memberEntity;
+  final TrackingEntity? trackingEntity;
 
-   UserEntity(
+  UserEntity(
       this.id,
       this.firstName,
       this.secondName,
@@ -35,7 +37,8 @@ class UserEntity extends Equatable {
       this.uid,
       this.imageUrl,
       this.address,
-      this.memberEntity);
+      this.memberEntity,
+      this.trackingEntity);
 
   @override
   List<Object?> get props => [
@@ -53,7 +56,8 @@ class UserEntity extends Equatable {
         uid,
         imageUrl,
         address,
-        memberEntity
+        memberEntity,
+        trackingEntity
       ];
 
   String get userFullName => '$firstName $secondName $familyName';

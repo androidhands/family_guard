@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:family_guard/core/services/background_location_service.dart';
 import 'package:family_guard/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -28,13 +29,16 @@ class ServiceInitializer {
       getSavedLocale(),
       getSavedAppTheme(),
       initializeFirebase(),
-     // initializeNotifications()
+
+      // initializeNotifications()
     ];
     await Future.wait<dynamic>([...futures]);
   }
 
+
   initializeDependencyInjection() async {
     await DependencyInjectionServices().init();
+   
   }
 
   initializeStatusBarColor() async {
@@ -57,11 +61,13 @@ class ServiceInitializer {
         .then(
             (value) => value == null ? AppTheme.light : AppTheme.values[value]);
   }
+
   Future initializeFirebase() async {
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
     await initializeNotifications();
   }
-  
+
   Future initializeNotifications() async {
     await sl<FirebaseMessagingServices>().initializeNotifications();
   }
