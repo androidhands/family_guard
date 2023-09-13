@@ -96,11 +96,26 @@ Future<bool> onIosBackground(ServiceInstance service) async {
   DartPluginRegistrant.ensureInitialized();
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
+
+  await BackgroundDependencyInjection().init();
   Timer.periodic(Duration(minutes: 1), (timer) async {
+    gl.Position? _curentPosition;
+    bool serviceEnabled = await gl.Geolocator.isLocationServiceEnabled();
+    await gl.Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high,
+            forceAndroidLocationManager: true)
+        .then((Position position) {
+      _curentPosition = position;
+      uploadPosition(position, serviceEnabled);
+      print("bg location ${position.latitude}");
+    }).catchError((e) {
+      Fluttertoast.showToast(msg: e.toString());
+    });
+
     flutterLocalNotificationsPlugin.show(
       888,
-      'Family Guard',
-      "Family Guard is updating your location  lat:  lon: ",
+      'COOL SERVICE',
+      'Awesome ${DateTime.now()}',
       const NotificationDetails(
         android: AndroidNotificationDetails(
           'my_foreground',
