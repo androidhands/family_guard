@@ -18,6 +18,7 @@ class UserEntity extends Equatable {
   final String? apiToken;
   final String uid;
   String imageUrl;
+  final String country;
   final AddressEntity? address;
   final MemberEntity? memberEntity;
   final TrackingEntity? trackingEntity;
@@ -36,6 +37,7 @@ class UserEntity extends Equatable {
       this.apiToken,
       this.uid,
       this.imageUrl,
+      this.country,
       this.address,
       this.memberEntity,
       this.trackingEntity);
@@ -55,6 +57,7 @@ class UserEntity extends Equatable {
         apiToken,
         uid,
         imageUrl,
+        country,
         address,
         memberEntity,
         trackingEntity

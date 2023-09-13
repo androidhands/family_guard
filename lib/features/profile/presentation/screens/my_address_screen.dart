@@ -63,8 +63,8 @@ class MyAddressScreen extends StatelessWidget {
                                       },
                                       initialCameraPosition: CameraPosition(
                                           target: LatLng(
-                                              provider.addressEntity.lat,
-                                              provider.addressEntity.lon))),
+                                              provider.addressEntity?.lat??0.0,
+                                              provider.addressEntity?.lon??0.0))),
                                   Center(
                                       child: CustomSvgImage(
                                     path: AppAssets.pinLocation,
@@ -79,37 +79,37 @@ class MyAddressScreen extends StatelessWidget {
 
                               ///TODO Abdelhamid : use default value for parameter instead or repeating the check
                               ///Done
-                              subTitle: provider.addressEntity.country,
+                              subTitle: provider.addressEntity!.country,
                               hasDevider: true,
                             ),
                             CustomMyDetailsWidget(
                               title: tr(AppConstants.adminArea),
-                              subTitle: provider.addressEntity.adminArea,
+                              subTitle: provider.addressEntity!.adminArea,
                               hasDevider: true,
                             ),
                             CustomMyDetailsWidget(
                               title: tr(AppConstants.subAdminArea),
-                              subTitle: provider.addressEntity.subAdminArea,
+                              subTitle: provider.addressEntity!.subAdminArea,
                               hasDevider: true,
                             ),
                             CustomMyDetailsWidget(
                               title: tr(AppConstants.locality),
-                              subTitle: provider.addressEntity.locality,
+                              subTitle: provider.addressEntity!.locality,
                               hasDevider: true,
                             ),
                             CustomMyDetailsWidget(
                               title: tr(AppConstants.subLocality),
-                              subTitle: provider.addressEntity.subLocality,
+                              subTitle: provider.addressEntity!.subLocality,
                               hasDevider: false,
                             ),
                             CustomMyDetailsWidget(
                               title: tr(AppConstants.street),
-                              subTitle: provider.addressEntity.street,
+                              subTitle: provider.addressEntity!.street,
                               hasDevider: false,
                             ),
                             CustomMyDetailsWidget(
                               title: tr(AppConstants.postalCode),
-                              subTitle: provider.addressEntity.postalCode,
+                              subTitle: provider.addressEntity!.postalCode,
                               hasDevider: false,
                             ),
                           ],

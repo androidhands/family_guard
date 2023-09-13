@@ -12,6 +12,7 @@ class SignUpParams extends Equatable {
   final String token;
   final String platform;
   final String imageUrl;
+  final String userCountry;
   String country;
   String adminArea;
   String subAdminArea;
@@ -19,7 +20,7 @@ class SignUpParams extends Equatable {
   String subLocality;
   String street;
   String postalCode;
-  
+
   double lat;
   double lon;
 
@@ -35,6 +36,7 @@ class SignUpParams extends Equatable {
       required this.token,
       required this.platform,
       required this.imageUrl,
+      required this.userCountry,
       required this.country,
       required this.adminArea,
       required this.subAdminArea,
@@ -42,7 +44,6 @@ class SignUpParams extends Equatable {
       required this.subLocality,
       required this.street,
       required this.postalCode,
-  
       required this.lat,
       required this.lon});
 
@@ -59,6 +60,7 @@ class SignUpParams extends Equatable {
         token,
         platform,
         imageUrl,
+        userCountry,
         country,
         adminArea,
         subAdminArea,
@@ -66,7 +68,6 @@ class SignUpParams extends Equatable {
         subLocality,
         street,
         postalCode,
-       
         lat,
         lon
       ];
@@ -82,6 +83,7 @@ class SignUpParams extends Equatable {
       'gender': gender,
       'uid': uid,
       'imageUrl': imageUrl,
+      'iso': userCountry,
       'token': token,
       'platform': platform,
       'country': country,

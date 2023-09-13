@@ -1,5 +1,8 @@
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
+import 'package:family_guard/core/utils/app_assets.dart';
 import 'package:family_guard/core/widget/custom_loading_indicator.dart';
+import 'package:family_guard/core/widget/images/custom_png_image.dart';
+import 'package:family_guard/core/widget/images/custom_svg_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:family_guard/core/widget/custom_check_box.dart';
@@ -42,6 +45,18 @@ class LoginScreen extends StatelessWidget {
                     
 
                   ), */
+                  SizedBox(
+                    height: AppSizes.pH1,
+                  ),
+                  CustomPngImage(
+                    path: AppAssets.appLogo,
+                    width: AppSizes.logoImageWidth,
+                    height: AppSizes.branchGenderWidgetWidth,
+                    radius: BorderRadius.zero,
+                  ),
+                  SizedBox(
+                    height: AppSizes.pH1,
+                  ),
                   CustomText.primaryBodyLarge(
                     tr(AppConstants.signIn),
                     textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(

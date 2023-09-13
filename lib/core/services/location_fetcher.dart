@@ -2,18 +2,14 @@ import 'dart:developer';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
-import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/error/failure.dart';
 import 'package:family_guard/core/services/connectivity_services.dart';
-import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
 import 'package:family_guard/features/home/data/datasource/tracking_data_source.dart';
 import 'package:family_guard/features/home/data/models/tracking_model.dart';
 import 'package:family_guard/features/home/data/repository/tracking_repository.dart';
 import 'package:family_guard/features/home/domain/entity/tracking_entity.dart';
 import 'package:family_guard/features/home/domain/usecases/add_new_user_location_usecase.dart';
-import 'package:get/get.dart';
 import 'package:location/location.dart';
-import 'package:provider/provider.dart';
 import 'package:geocoding/geocoding.dart' as gc;
 
 import 'dependency_injection_service.dart';

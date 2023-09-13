@@ -1,5 +1,8 @@
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
 import 'package:family_guard/core/services/navigation_service.dart';
+import 'package:family_guard/core/widget/buttons/custom_elevated_button.dart';
+import 'package:family_guard/core/widget/buttons/custom_outlined_button.dart';
+import 'package:family_guard/features/emergency/presentation/screens/calls_log_screen.dart';
 import 'package:family_guard/features/notifications/presentation/screens/notifications_screen.dart';
 import 'package:family_guard/features/profile/presentation/components/profile_item_component.dart';
 import 'package:family_guard/features/profile/presentation/screens/my_address_screen.dart';
@@ -11,6 +14,7 @@ import 'package:family_guard/core/utils/app_assets.dart';
 import 'package:family_guard/core/utils/app_constants.dart';
 import 'package:family_guard/core/utils/app_sizes.dart';
 import 'package:family_guard/core/widget/custom_text.dart';
+import 'package:get/get.dart';
 
 import 'package:provider/provider.dart';
 
@@ -64,6 +68,23 @@ class ProfileDetailsComponent extends StatelessWidget {
               ],
             ),
 
+            /// Emergency
+            CustomText.primaryBodyLarge(tr(AppConstants.emergencyCalls),
+                textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    fontSize: AppSizes.h7, color: ThemeColorLight.pinkColor)),
+            CustomContainerWidget(
+              children: [
+                ProfileItemComponent(
+                    path: AppAssets.emergencyCallSvg,
+                    text: tr(AppConstants.callsLog),
+                    onTap: () {
+                      NavigationService.navigateTo(
+                          navigationMethod: NavigationMethod.push,
+                          page: () => const CallsLogScreen());
+                    }),
+              ],
+            ),
+
             /// SETTINGS
             CustomText.primaryBodyLarge(tr(AppConstants.settings),
                 textStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
@@ -80,8 +101,44 @@ class ProfileDetailsComponent extends StatelessWidget {
                 const CustomProfileDivider(),
                 ProfileItemComponent(
                     onTap: () {
-                      Provider.of<MainProvider>(context, listen: false)
-                          .logoutUser();
+                      Get.defaultDialog(
+                          title: tr(AppConstants.logOut),
+                          content: Container(
+                            height: AppSizes.pH100,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.circular(AppSizes.br40),
+                            ),
+                            child: Center(
+                              child: CustomText('Are you shur to logout?',
+                                  textStyle: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .copyWith(
+                                          color: ThemeColorLight.pinkColor,
+                                          fontSize: AppSizes.h6)),
+                            ),
+                          ),
+                          confirm: CustomElevatedButton(
+                            onPressed: () {
+                              provider.logoutUser(context);
+                            },
+                            text: tr(AppConstants.logOut),
+                            isLoading: provider.isLogOut,
+                          ),
+                          cancel: CustomOutlinedButton(
+                            onPressed: () {
+                              NavigationService.goBack();
+                            },
+                            text: tr(AppConstants.cancel),
+                          ),
+                          titleStyle: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(
+                                  color: ThemeColorLight.pinkColor,
+                                  fontSize: AppSizes.h4));
+
                       // provider.logOut(context);
                     },
                     path: AppAssets.logoutSvg,

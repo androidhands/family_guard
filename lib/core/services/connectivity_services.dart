@@ -26,26 +26,21 @@ class ConnectivityService {
           (status == ConnectivityResult.wifi));
       canGoBack = Get.previousRoute != '/';
       if (isConnected) {
-       await getScreenToNavigate().then((isCached) {
- if (canGoBack) {
-          NavigationService.goBack();
-        } else {
-          // NavigationService.navigateTo(
-          //     navigationMethod: NavigationMethod.pushReplacement,
-          //     preventDuplicates: false,
-          //     page: () => const HomeControlScreen());
-          isCached
-              ? NavigationService.navigateTo(
-                  navigationMethod: NavigationMethod.pushReplacement,
-                  preventDuplicates: false,
-                  page: () => const HomeControlScreen())
-              : NavigationService.navigateTo(
-                  navigationMethod: NavigationMethod.pushReplacement,
-                  preventDuplicates: false,
-                  page: () => const LoginScreen());
-        }
+        await getScreenToNavigate().then((isCached) {
+          if (canGoBack) {
+            NavigationService.goBack();
+          } else {
+          
+            isCached
+                ? NavigationService.navigateTo(
+                    navigationMethod: NavigationMethod.pushReplacement,
+                    preventDuplicates: false,
+                    page: () => const HomeControlScreen())
+                : NavigationService.navigateTo(
+                    navigationMethod: NavigationMethod.pushReplacement,
+                    page: () => const LoginScreen());
+          }
         });
-       
       } else {
         /*  NavigationService.navigateTo(
             navigationMethod: NavigationMethod.push,

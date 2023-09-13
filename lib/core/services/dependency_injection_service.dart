@@ -22,6 +22,12 @@ import 'package:family_guard/features/authentication/domain/usecases/save_user_c
 import 'package:family_guard/features/authentication/domain/usecases/verify_user_phone_usecase.dart';
 import 'package:family_guard/features/authentication/presentation/controller/login/login_provider.dart';
 import 'package:family_guard/features/authentication/presentation/controller/sign_up_provider.dart';
+import 'package:family_guard/features/emergency/domain/repositories/base_emergency_calls_repository.dart';
+import 'package:family_guard/features/emergency/domain/usecases/add_new_caller_id_usecase.dart';
+import 'package:family_guard/features/emergency/domain/usecases/check_verified_caller_id_usecase.dart';
+import 'package:family_guard/features/emergency/domain/usecases/get_call_log_by_sid_usecase.dart';
+import 'package:family_guard/features/emergency/domain/usecases/get_calls_log_usecase.dart';
+import 'package:family_guard/features/emergency/domain/usecases/make_emergency_call_usecase.dart';
 import 'package:family_guard/features/family/data/data_source/family_connections_data_source.dart';
 import 'package:family_guard/features/family/data/repository/family_connection_repositoy.dart';
 import 'package:family_guard/features/family/domain/repositories/base_family_connections_repository.dart';
@@ -30,11 +36,13 @@ import 'package:family_guard/features/family/domain/usecases/cancel_member_conne
 import 'package:family_guard/features/family/domain/usecases/get_family_connections_usecase.dart';
 import 'package:family_guard/features/family/domain/usecases/get_received_connection_requests_usecase.dart';
 import 'package:family_guard/features/family/domain/usecases/get_sent_connections_requests_usecase.dart';
+import 'package:family_guard/features/emergency/data/data_source/emergency_calls_datasource.dart';
+import 'package:family_guard/features/emergency/data/repositories/emergency_calls_repository.dart';
 import 'package:family_guard/features/home/data/datasource/tracking_data_source.dart';
 import 'package:family_guard/features/home/data/repository/tracking_repository.dart';
 import 'package:family_guard/features/home/domain/repository/base_tracking_repository.dart';
-import 'package:family_guard/features/home/domain/usecases/add_new_user_location_usecase.dart';
 import 'package:family_guard/features/home/domain/usecases/track_my_members_usecase.dart';
+
 import 'package:family_guard/features/home/presentation/controller/home_provider.dart';
 import 'package:family_guard/features/notifications/data/datasource/notifications_datasource.dart';
 import 'package:family_guard/features/notifications/data/repositories/notification_count_repository.dart';
@@ -77,9 +85,6 @@ final sl = GetIt.instance;
 
 class DependencyInjectionServices {
   init() async {
-    //tracking
-    initializeTracking();
-
     ///internet Connection Checker initialize
     internetConnectionCheckerInit();
 
@@ -119,11 +124,17 @@ class DependencyInjectionServices {
     //home
     intialozeHome();
 
+    //tracking
+    initializeTrackMyMember();
+
     //family
     initializeFamilyConnections();
 
     //profile
     initializeProfile();
+
+    //emergency calls
+    initializeEmergemcyCall();
   }
 
   initializeLocationFetcher() {
@@ -298,6 +309,15 @@ class DependencyInjectionServices {
     sl.registerLazySingleton(() => HomeProvider());
   }
 
+  initializeTrackMyMember() {
+    sl.registerLazySingleton<BaseTrackingRepository>(
+        () => TrackingRepository(baseTrackingDataSource: sl()));
+    sl.registerLazySingleton(
+        () => TrackMyMembersUsecase(baseTrackingRepository: sl()));
+    sl.registerLazySingleton<BaseTrackingDataSource>(
+        () => TrackingDataSource());
+  }
+
   initializeFamilyConnections() {
     //repository
     sl.registerLazySingleton<BaseFamilyConnectionsRepository>(
@@ -344,19 +364,27 @@ class DependencyInjectionServices {
     sl.registerLazySingleton<BaseProfileDataSource>(() => ProfileDataSource());
   }
 
-  initializeTracking() {
-    //repository
-    sl.registerLazySingleton<BaseTrackingRepository>(
-        () => TrackingRepository(baseTrackingDataSource: sl()));
+  initializeEmergemcyCall() {
+    //repositories
+    sl.registerLazySingleton<BaseEmergencyCallsRepository>(
+        () => EmergencyCallsRepository(baseEmergencyCallsDatasource: sl()));
 
     //usecases
     sl.registerLazySingleton(
-        () => AddNewUserLocationUsecase(baseTrackingRepository: sl()));
+        () => CheckVerifiedCallerIdUsecase(baseEmergencyCallsRepository: sl()));
     sl.registerLazySingleton(
-        () => TrackMyMembersUsecase(baseTrackingRepository: sl()));
+        () => AddNewCallerIdUsecase(baseEmergencyCallsRepository: sl()));
+    sl.registerLazySingleton(
+        () => MakeEmergencyCallUsecase(baseEmergencyCallsRepository: sl()));
 
-    //datasources
-    sl.registerLazySingleton<BaseTrackingDataSource>(
-        () => TrackingDataSource());
+    sl.registerLazySingleton(
+        () => GetCallLogBySidUsecase(baseEmergencyCallsRepository: sl()));
+
+    sl.registerLazySingleton(
+        () => GetCallsLogUsecase(baseEmergencyCallsRepository: sl()));
+
+    //datasource
+    sl.registerLazySingleton<BaseEmergencyCallsDatasource>(
+        () => EmergencyCallsDatasource());
   }
 }

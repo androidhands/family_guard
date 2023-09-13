@@ -207,7 +207,7 @@ class ApiCaller {
     if (data.success) {
       return data.data;
     } else {
-      log('Failure occurred : ${data.message}');
+      
       // showServerErrorDialog(data.message!.message);
       if (onFailure != null) onFailure(data.message);
     }

@@ -21,6 +21,7 @@ class UserModel extends UserEntity {
       required String? apiToken,
       required String uid,
       required String imageUrl,
+      required String country,
       required AddressEntity? address,
       MemberEntity? memberEntity,
       TrackingEntity? trackingEntity})
@@ -38,6 +39,7 @@ class UserModel extends UserEntity {
             apiToken,
             uid,
             imageUrl,
+            country,
             address,
             memberEntity,
             trackingEntity);
@@ -57,6 +59,7 @@ class UserModel extends UserEntity {
         apiToken: json['api_token'],
         uid: json['uid'],
         imageUrl: json['imageUrl'],
+        country: json['iso'],
         address: json['addresses'] == null
             ? null
             : AddressModel.fromJson(json['addresses']),
@@ -85,6 +88,7 @@ class UserModel extends UserEntity {
       'api_token': apiToken,
       'uid': uid,
       'imageUrl': imageUrl,
+      'iso': country,
       'addresses': address,
       'pivot': memberEntity,
       'tracking': trackingEntity

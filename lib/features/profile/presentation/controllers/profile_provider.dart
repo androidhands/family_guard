@@ -32,7 +32,8 @@ class ProfileProvider extends ChangeNotifier {
 
   bool isUploadingImage = false;
   bool isLoadingUserAddree = false;
-  late AddressEntity addressEntity;
+  bool isLogOut = false;
+  AddressEntity? addressEntity;
   Completer<GoogleMapController> completer = Completer<GoogleMapController>();
   late GoogleMapController mapController;
   lc.Location location = lc.Location();
@@ -41,8 +42,11 @@ class ProfileProvider extends ChangeNotifier {
   late CameraPosition initialCameraPosition;
 
   initializeInitialCameraPosition() async {
+    if (addressEntity == null) {
+      return;
+    }
     initialCameraPosition = CameraPosition(
-      target: LatLng(addressEntity.lat, addressEntity.lon),
+      target: LatLng(addressEntity!.lat, addressEntity!.lon),
       zoom: 14.4746,
     );
     await goToMyLocation();
@@ -64,11 +68,14 @@ class ProfileProvider extends ChangeNotifier {
       notifyListeners();
       return;
     }
+    if (addressEntity == null) {
+      return;
+    }
     // isCountryInRegion = false;
     // notifyListeners();
     mapController = await completer.future;
     mapController.animateCamera(CameraUpdate.newLatLngZoom(
-        LatLng(addressEntity.lat, addressEntity.lon), 16));
+        LatLng(addressEntity!.lat, addressEntity!.lon), 16));
   }
 
   Future<bool> requestLocationPermission() async {
@@ -85,6 +92,7 @@ class ProfileProvider extends ChangeNotifier {
   ProfileProvider() {
     log('Get address${user.apiToken!}');
     initializeInitialCameraPosition();
+
     getUserAddress();
   }
 
@@ -192,5 +200,16 @@ class ProfileProvider extends ChangeNotifier {
     });
     isLoadingUserAddree = false;
     notifyListeners();
+  }
+
+  void logoutUser(BuildContext context) async {
+    isLogOut = true;
+    notifyListeners();
+    Provider.of<MainProvider>(context, listen: false)
+        .logoutUser()
+        .then((value) {
+      isLogOut = false;
+      notifyListeners();
+    });
   }
 }

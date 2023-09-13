@@ -10,6 +10,7 @@ import 'package:family_guard/core/services/location_fetcher.dart';
 import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
 import 'package:family_guard/features/authentication/domain/usecases/check_user_credentials_usecase.dart';
 import 'package:family_guard/features/notifications/domain/usecases/refresh_token_usecase.dart';
+import 'package:family_guard/features/on_boarding/on_boarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -85,13 +86,14 @@ class MainProvider extends ChangeNotifier {
         } else {
           NavigationService.navigateTo(
               navigationMethod: NavigationMethod.pushReplacement,
-              page: () => const LoginScreen());
+              page: () => const OnBoardingScreen());
+
         }
       
     });
   }
 
-  logoutUser() async {
+ Future logoutUser() async {
     var res = await sl<SignOutUserUsecase>()();
     res.fold((l) async {
       await DialogWidget.showCustomDialog(

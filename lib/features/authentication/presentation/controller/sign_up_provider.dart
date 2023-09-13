@@ -422,6 +422,7 @@ class SignUpProvider extends ChangeNotifier {
             token: (await sl<FirebaseMessagingServices>().deviceToken())!,
             platform: Platform.operatingSystem,
             imageUrl: "No Data",
+            userCountry: phoneNumber!.countryISOCode,
             country: "",
             adminArea: "",
             subAdminArea: "",
@@ -475,6 +476,8 @@ class SignUpProvider extends ChangeNotifier {
   void setPhoneNumber(PhoneNumber phone) {
     phoneNumber = phone;
     log(isValidNumber(phoneNumber!).toString());
+    log(phone.countryISOCode);
+
     checkFormReadiness();
   }
 }

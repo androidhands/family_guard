@@ -50,4 +50,14 @@ class ApiEndPoint {
       '/tracking/AddCurrentUserLocation';
   static const String trackMyMembersPath =
       '/tracking/TrackMyMembers?api_password=$apiPassword';
+
+  // emergency calls
+  static const String checkVerifiedCallerIdPath =
+      '/CheckVeriviedCallerId?api_password=$apiPassword';
+  static const String addnewCallerIdPath =
+      '/AddNewCallerId?api_password=$apiPassword';
+  static const String makeEmergencyCallPath = '/MakeCall';
+  static const String getCallsLogPath =
+      '/GetCallsLogByUser?api_password=$apiPassword';
+  static const String getCallLogBySidPath = '/GetCallLogBySid';
 }

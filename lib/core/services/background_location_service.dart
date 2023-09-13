@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
@@ -7,9 +8,13 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
 import 'package:disable_battery_optimization/disable_battery_optimization.dart';
 import 'package:family_guard/core/error/failure.dart';
+import 'package:family_guard/core/local_data/shared_preferences_services.dart';
+import 'package:family_guard/core/services/background_dependency_injection.dart';
 import 'package:family_guard/core/services/connectivity_services.dart';
-import 'package:family_guard/core/services/dependency_injection_service.dart';
-import 'package:family_guard/core/services/location_fetcher.dart';
+import 'package:family_guard/core/utils/app_constants.dart';
+import 'package:family_guard/features/authentication/data/models/user_model.dart';
+import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
+
 import 'package:family_guard/features/home/data/datasource/tracking_data_source.dart';
 import 'package:family_guard/features/home/data/models/tracking_model.dart';
 import 'package:family_guard/features/home/data/repository/tracking_repository.dart';
@@ -19,9 +24,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
-
-import 'package:location/location.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart' as gl;
+import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart' as gc;
+import 'package:get/get.dart';
 
 Future<void> initializeBackroundService() async {
   final service = FlutterBackgroundService();
@@ -90,11 +97,10 @@ Future<bool> onIosBackground(ServiceInstance service) async {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   Timer.periodic(Duration(minutes: 1), (timer) async {
-    LocationData locationData = await LocationFetcher.instance.getLocation();
     flutterLocalNotificationsPlugin.show(
       888,
       'Family Guard',
-      "Family Guard is updating your location  lat: ${locationData.latitude} lon: ${locationData.longitude}",
+      "Family Guard is updating your location  lat:  lon: ",
       const NotificationDetails(
         android: AndroidNotificationDetails(
           'my_foreground',
@@ -129,10 +135,23 @@ Future<void> onStart(ServiceInstance service) async {
   service.on('stopService').listen((event) {
     service.stopSelf();
   });
-
-  Timer.periodic(const Duration(seconds: 3), (timer) async {
+  await BackgroundDependencyInjection().init();
+  Timer.periodic(const Duration(seconds: 60), (timer) async {
     if (service is AndroidServiceInstance) {
       if (await service.isForegroundService()) {
+        gl.Position? _curentPosition;
+        bool serviceEnabled = await gl.Geolocator.isLocationServiceEnabled();
+        await gl.Geolocator.getCurrentPosition(
+                desiredAccuracy: LocationAccuracy.high,
+                forceAndroidLocationManager: true)
+            .then((Position position) {
+          _curentPosition = position;
+          uploadPosition(position, serviceEnabled);
+          print("bg location ${position.latitude}");
+        }).catchError((e) {
+          Fluttertoast.showToast(msg: e.toString());
+        });
+
         flutterLocalNotificationsPlugin.show(
           888,
           'COOL SERVICE',
@@ -149,12 +168,102 @@ Future<void> onStart(ServiceInstance service) async {
 
         service.setForegroundNotificationInfo(
           title: "Family Guard",
-          content:
-              "Family Guard is updating your location  lat: ${locationData.latitude} lon: ${locationData.longitude}",
+          content: "Family Guard is updating your location",
         );
       }
     }
   });
 }
 
+/* isolateUploadLocation(Position position, bool serviceEnabled) async {
+   WidgetsFlutterBinding.ensureInitialized();
+  final ReceivePort receivePort = ReceivePort();
+  RootIsolateToken rootIsolateToken = RootIsolateToken.instance!;
+  try {
+    await Isolate.spawn(uploadPosition,
+        [receivePort.sendPort, position, serviceEnabled, rootIsolateToken]);
+  } catch (e) {
+    log(e.toString());
+    receivePort.close();
+  }
+  final res = await receivePort.first;
+  print('location upload $res');
+}
+ */
+Future<String> uploadPosition(Position position, bool serviceEnabled) async {
+  // BackgroundIsolateBinaryMessenger.ensureInitialized(args[3]);
 
+  ConnectivityResult connectivityResult =
+      await ConnectivityService().isConnected();
+  bool isConnected = (connectivityResult == ConnectivityResult.wifi ||
+      connectivityResult == ConnectivityResult.mobile);
+
+  gc.Placemark placemark =
+      (await gc.placemarkFromCoordinates(position.latitude, position.longitude))
+          .first;
+  TrackingEntity trackingEntity = TrackingModel(
+    id: 0,
+    mobile: '',
+    country: placemark.country == null || placemark.country!.isEmpty
+        ? "No Country"
+        : placemark.country!.tr,
+    adminArea: placemark.administrativeArea == null ||
+            placemark.administrativeArea!.isEmpty
+        ? "No Admin Area"
+        : placemark.administrativeArea!.tr,
+    subAdminArea: placemark.subAdministrativeArea == null ||
+            placemark.subAdministrativeArea!.isEmpty
+        ? "No Sub Admin Area"
+        : placemark.subAdministrativeArea!.tr,
+    locality: placemark.locality == null || placemark.locality!.isEmpty
+        ? "No Locality"
+        : placemark.locality!.tr,
+    subLocality: placemark.subLocality == null || placemark.subLocality!.isEmpty
+        ? "No Sub Locality"
+        : placemark.subLocality!.tr,
+    street: placemark.street == null || placemark.street!.isEmpty
+        ? "No Street Name"
+        : placemark.street!.tr,
+    postalCode: placemark.postalCode == null || placemark.postalCode!.isEmpty
+        ? "No Postal Code"
+        : placemark.postalCode!,
+    lat: position.latitude,
+    lon: position.longitude,
+    speed: position.speed,
+  );
+  /*  location.changeNotificationOptions(
+            title: 'Family Guard',
+            subtitle: 'Geolocation detection ${currentLocation.latitude}',
+            iconName: 'ic_bg_service_small'); */
+  String response = "";
+  try {
+    if (isConnected == true && serviceEnabled == true) {
+      var cachedData = await sl<SharedPreferencesServices>().getData(
+        key: AppConstants.authCredential,
+        dataType: DataType.string,
+      );
+      Map<String, dynamic> data = json.decode(cachedData);
+      UserEntity? userEntity = UserModel.fromJson(data);
+      log('Serice locations error ${jsonEncode(userEntity)}');
+      Either<Failure, String> results = await AddNewUserLocationUsecase(
+          baseTrackingRepository: TrackingRepository(
+              baseTrackingDataSource: TrackingDataSource()))(TrackingParams(
+          accessToken: userEntity.apiToken!, trackingEntity: trackingEntity));
+      results.fold((l) {
+        log('Serice locations error ${l.message}');
+        response = l.message;
+        print('location upload ${l.message}');
+      }, (r) {
+        log('Serice locations $r');
+        response = r;
+        print('location upload $r');
+      });
+    }
+  } catch (e) {
+    log('Location Fetcher error ${e.toString()}');
+    response = e.toString();
+  }
+
+  return response;
+  //Isolate.exit(args[0], response);
+}

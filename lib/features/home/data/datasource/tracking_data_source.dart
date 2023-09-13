@@ -18,12 +18,11 @@ abstract class BaseTrackingDataSource {
 class TrackingDataSource implements BaseTrackingDataSource {
   @override
   Future<String> addNewUserLocation(TrackingParams params) async {
-     UserEntity? userEntity =
-              Provider.of<MainProvider>(Get.context!,listen: false).userCredentials;
+    
     return await sl<ApiCaller>().requestPost(
       ApiEndPoint.addnewUserLocationPath,
       (data) => data,
-      token: userEntity!.apiToken!,
+      token: params.accessToken,
       body: <String, dynamic>{
         'api_password': ApiEndPoint.apiPassword,
         'location': params.trackingEntity.toMap()

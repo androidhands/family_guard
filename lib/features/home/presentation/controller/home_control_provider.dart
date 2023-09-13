@@ -1,5 +1,16 @@
 import 'dart:developer';
 
+import 'package:dartz/dartz.dart';
+import 'package:family_guard/core/controllers/main_provider.dart';
+import 'package:family_guard/core/error/failure.dart';
+import 'package:family_guard/core/global/localization/app_localization.dart';
+import 'package:family_guard/core/utils/app_constants.dart';
+import 'package:family_guard/core/widget/dialog_service.dart';
+import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
+import 'package:family_guard/features/emergency/domain/usecases/check_verified_caller_id_usecase.dart';
+import 'package:family_guard/features/emergency/presentation/screens/emergency_call_screen.dart';
+import 'package:family_guard/features/emergency/presentation/screens/verify_caller_id_intro_screen.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,12 +19,18 @@ import 'package:family_guard/features/home/presentation/screens/home_screen.dart
 
 import 'package:family_guard/features/notifications/domain/entities/notification_entity.dart';
 import 'package:family_guard/features/notifications/presentation/screens/notifications_screen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
-
+import '../../../../core/services/background_dependency_injection.dart';
 import '../../../../core/services/navigation_service.dart';
 import '../../../authentication/presentation/screens/login_screen.dart';
 import '../../../family/presentation/screens/family_screen.dart';
+import 'package:geolocator/geolocator.dart' as gl;
+
+import 'package:geocoding/geocoding.dart' as gc;
 
 class HomeControlProvider with ChangeNotifier {
   bool isMounted = true;
@@ -26,6 +43,8 @@ class HomeControlProvider with ChangeNotifier {
   }
 
   ///var
+  UserEntity? userEntity =
+      Provider.of<MainProvider>(Get.context!, listen: false).userCredentials;
 
   List<NotificationEntity>? notificationsList;
   int unReadNotificationsCount = 0;
@@ -52,9 +71,9 @@ class HomeControlProvider with ChangeNotifier {
   ///initialize Data Shared In SubScreen in bottom nav bar
   initializeDataSharedInSubScreen() async {
     animationController = AnimationController(
-        vsync: singleTickerProviderStateMixin,
-        duration: const Duration(seconds: 5),
-        );
+      vsync: singleTickerProviderStateMixin,
+      duration: const Duration(seconds: 5),
+    );
     //    handlAppPermissions();
     //  await getMoreProfileData();
     // await getProfileDetails();
@@ -166,5 +185,70 @@ class HomeControlProvider with ChangeNotifier {
 
       notifyListeners();
     }
+  }
+
+  checkUserCountry() async {
+    log(userEntity!.country);
+
+    if (userEntity!.country == "US") {
+      await checkUserIsInUS();
+    } else {
+      await DialogWidget.showCustomDialog(
+          context: Get.context!,
+          title:
+              "The emergency calls working only in the United States, and you should located in the United Stated",
+          buttonText: tr(AppConstants.ok));
+    }
+  }
+
+  Future checkUserIsInUS() async {
+    await gl.Geolocator.getCurrentPosition(
+            desiredAccuracy: gl.LocationAccuracy.high,
+            forceAndroidLocationManager: true)
+        .then((gl.Position position) async {
+      gc.Placemark placemark = (await gc.placemarkFromCoordinates(
+              position.latitude, position.longitude))
+          .first;
+      log('Map location ${placemark.isoCountryCode}');
+
+      if (placemark.isoCountryCode == "US") {
+        await checkVeriviedCallerId();
+      } else {
+        await DialogWidget.showCustomDialog(
+            context: Get.context!,
+            title:
+                "The emergency calls working only in the United States, and you should located in the United Stated",
+            buttonText: tr(AppConstants.ok));
+      }
+    }).catchError((e) {
+      Fluttertoast.showToast(msg: e.toString());
+    });
+  }
+
+  Future checkVeriviedCallerId() async {
+    startAnimation();
+    Either<Failure, bool> isCallerIdVerfied =
+        await sl<CheckVerifiedCallerIdUsecase>()(userEntity!.apiToken!);
+    isCallerIdVerfied.fold((l) async {
+      await DialogWidget.showCustomDialog(
+          context: Get.context!,
+          title: l.message,
+          buttonText: tr(AppConstants.ok));
+    }, (r) {
+      /*  log(r.toString());
+      NavigationService.navigateTo(
+          navigationMethod: NavigationMethod.push,
+          page: () => const VerifyCallerIdIntroScreen()); */
+      if (r) {
+        NavigationService.navigateTo(
+            navigationMethod: NavigationMethod.push,
+            page: () => const EmergencyCallScreen());
+      } else {
+        NavigationService.navigateTo(
+            navigationMethod: NavigationMethod.push,
+            page: () => const VerifyCallerIdIntroScreen());
+      }
+    });
+    startAnimation();
   }
 }

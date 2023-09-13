@@ -35,7 +35,7 @@ class AppAssets {
   static const String familyPng = "${imagePath}family.svg";
 
   /// SvgImages
-
+  static const String appLogoSvg = "${svgImagePath}logo_no_background_svg.svg";
   static const String testSvg = "${svgImagePath}reset.svg";
   static const String closeSvg = "${svgImagePath}close.svg";
   static const String lockSvg = "${svgImagePath}lock.svg";
@@ -376,4 +376,6 @@ class AppAssets {
   static const String pendingSvg = "${svgImagePath}pending.svg";
   static const String requestAccepted = "${svgImagePath}request_done.svg";
   static const String requestCanceled = "${svgImagePath}request_canceled.svg";
+  static const String incominCall = "${svgImagePath}incoming_call.svg";
+   static const String emergencyCallSvg = "${svgImagePath}call_emergency.svg";
 }

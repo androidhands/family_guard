@@ -48,7 +48,10 @@ Map<String, String> coreAr = {
       'A verification code has been sent to your mobile number',
   //verification  screen
   'VERIFICATION': 'Verification',
+  'EMERGENCY_VERIFICATION': 'Emergency Verification',
   'VERIFYING_YOUR_ACCOUNT': 'Verify your account',
+  'EMERGENCY_INTRO':
+      'Family guard app protects yoy and your family members.\nYou can send an emergency calls for you and also your family members.\n A 24/7 emergency dispatcher will be ready to send police to your locaton.\nThe emergency call will be made by your phone number but you will not pay for the call\nTo be able to send emergecies calls you need to verify the caller ID for your number.\n We will send your data to the dispatcher like your full name, home address, mobile number, your current and last location the time your location updated and the type of the emergency you selected from the app.\nYou should to turn on the location service on your device to be able to make an emergency call.\nTo verivy your phone number we will send you a 6 digits code and you will receive a call from +141577234000  , add the 6 digits  ',
   'WE_HAVE_SENT_YOU_A_CODE_TO': 'We have sent to you a code to verify',
 
   'SUBMIT': 'Submit',
@@ -106,4 +109,20 @@ Map<String, String> coreAr = {
   'NO_SENT_REQUEST': 'You have not any sent members connections',
   'NO_RECEIVED_REQUEST': 'You have not any received members connections',
   'NO_MEMBERS_ADDED': 'No Members Connections Added Yet',
+  'INCOMINGCALLMESSAGE':
+      'You are receiving a phone call from\n+14157234000\nPlease enter the 6 digits validation code during the call',
+  'EMERGENCY_CALLS': 'Emergency Calls',
+  'Theif': 'Theif',
+  'Accident': 'Accident',
+  'Fire': 'Fire',
+  'Medical_Emergency': 'Medical Emergency',
+  'Walking_Alone': 'Walking Alone',
+  'Present_In_Active_Shooting': 'Present In Active Shooting',
+  'CALLS_LOG': 'Calls Log',
+  'EMERGENCY_CASE': 'Emergency Case',
+  'CITY': 'City',
+  'STATE': 'State',
+  'CALL_STATUS': 'Call Status',
+  'DATE': 'Call Date',
+  'Duration': 'Call Duration'
 };

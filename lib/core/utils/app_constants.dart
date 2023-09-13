@@ -72,6 +72,9 @@ class AppConstants {
 
   ///verification  screen
   static const String verification = "VERIFICATION";
+  static const String emergencyVerification = "EMERGENCY_VERIFICATION";
+  static const String emergencyIntro = "EMERGENCY_INTRO";
+
   static const String verifyingYourAccount = "VERIFYING_YOUR_ACCOUNT";
   static const String weHaveSentYouACodeTo = "WE_HAVE_SENT_YOU_A_CODE_TO";
   static const String verify = "VERIFY";
@@ -350,7 +353,22 @@ class AppConstants {
   static const String thisMemberIs = "MEMBER_IS";
   static const String sendRequest = "SEND_REQUEST";
   static const String noSentRequestFound = "NO_SENT_REQUEST";
-   static const String noReceivedRequestFound = "NO_RECEIVED_REQUEST";
+  static const String noReceivedRequestFound = "NO_RECEIVED_REQUEST";
 
   static const String noMemberAdded = "NO_MEMBERS_ADDED";
+    static const String incomingCallMessage = 'INCOMINGCALLMESSAGE';
+
+  static const String emergencyCalls = "EMERGENCY_CALLS";
+
+  static const String callsLog = "CALLS_LOG";
+
+  static const String emergencyCase  = "EMERGENCY_CASE";
+
+  static const String city  = "CITY";
+
+  static const String state = "STATE";
+
+  static const String callStatus = "CALL_STATUS";
+
+  static const String date = "DATE";
 }

@@ -46,7 +46,8 @@ class _HomeControlScreenState extends State<HomeControlScreen>
                 ),
                 child: FloatingActionButtonHomeWidget(
                   onPressed: () {
-                    provider.startAnimation();
+                    //provider.startAnimation();
+                    provider.checkUserCountry();
                   },
                 ),
               ),
