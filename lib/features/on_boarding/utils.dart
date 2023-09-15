@@ -2,20 +2,20 @@ import 'package:flutter_onboard/flutter_onboard.dart';
 
 final List<OnBoardModel> onBoardData = [
   const OnBoardModel(
-    title: "Set your own goals and get better",
-    description: "Goal support your motivation and inspire you to work harder",
+    title: "Family guard app protects yoy and your family members",
+    description: "Keep your family safe",
     imgUrl: "assets/images/png/onboard_family.png",
   ),
   const OnBoardModel(
-    title: "Track your progress with statistics",
+    title: "Track your members",
     description:
-        "Analyse personal result with detailed chart and numerical values",
+        "With family guard, you can track your family members locations from any where of the world",
     imgUrl: "assets/images/png/onboard_track.png",
   ),
   const OnBoardModel(
-    title: "Create photo comparisons and share your results",
+    title: "24/7 Emergancy",
     description:
-        "Take before and after photos to visualize progress and get the shape that you dream about",
+        "A 24/7 emergency dispatcher will be ready to send police to your locaton.",
     imgUrl: "assets/images/png/onboard_emergency.png",
   ),
 ];
