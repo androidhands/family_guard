@@ -10,6 +10,7 @@ import 'package:family_guard/features/family/presentation/screens/received_reque
 import 'package:family_guard/features/family/presentation/screens/sent_requests_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -26,6 +27,7 @@ import 'core/services/service_initializer.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeBackroundService();
+  
   await ServiceInitializer().initializeSettings();
 
   runApp(const MyApp());

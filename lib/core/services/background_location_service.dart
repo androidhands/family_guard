@@ -22,6 +22,7 @@ import 'package:family_guard/features/home/domain/entity/tracking_entity.dart';
 import 'package:family_guard/features/home/domain/usecases/add_new_user_location_usecase.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:flutter_background_service_ios/flutter_background_service_ios.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -117,6 +118,11 @@ Future<bool> onIosBackground(ServiceInstance service) async {
       'COOL SERVICE',
       'Awesome ${DateTime.now()}',
       const NotificationDetails(
+        iOS: DarwinNotificationDetails(
+            subtitle: 'Family Guard SERVICE',
+            presentBadge: true,
+            threadIdentifier: 'your.uturnsoftware.notification_identifier',
+            categoryIdentifier: 'your.uturnsoftware.notification_identifier'),
         android: AndroidNotificationDetails(
           'my_foreground',
           'Family Guard SERVICE',
@@ -147,6 +153,7 @@ Future<void> onStart(ServiceInstance service) async {
       service.setAsBackgroundService();
     });
   }
+
   service.on('stopService').listen((event) {
     service.stopSelf();
   });
@@ -172,6 +179,12 @@ Future<void> onStart(ServiceInstance service) async {
           'COOL SERVICE',
           'Awesome ${DateTime.now()}',
           const NotificationDetails(
+            iOS: DarwinNotificationDetails(
+                subtitle: 'Family Guard SERVICE',
+                presentBadge: true,
+                threadIdentifier: 'your.uturnsoftware.notification_identifier',
+                categoryIdentifier:
+                    'your.uturnsoftware.notification_identifier'),
             android: AndroidNotificationDetails(
               'my_foreground',
               'Family Guard SERVICE',

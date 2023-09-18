@@ -58,7 +58,7 @@ class HomeProvider extends ChangeNotifier {
     // LocationFetcher.instance.getLocation();
     initializeInitialCameraPosition();
     getAuthenticationResultModel();
-    getUnReadNotificationCount();
+    Future.delayed(const Duration(seconds: 2), getUnReadNotificationCount);
   }
 
   initializeBackgroundService() async {
@@ -118,10 +118,7 @@ class HomeProvider extends ChangeNotifier {
       notifyListeners();
       return;
     }
-    if (!await handleLocationPermission()) {
-      isLoadingLocation = false;
-      notifyListeners();
-    }
+
     // isCountryInRegion = false;
     // notifyListeners();
     mapController = await completer.future;
