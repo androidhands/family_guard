@@ -98,40 +98,24 @@ Future<bool> onIosBackground(ServiceInstance service) async {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  await BackgroundDependencyInjection().init();
-  Timer.periodic(Duration(minutes: 1), (timer) async {
-    gl.Position? _curentPosition;
-    bool serviceEnabled = await gl.Geolocator.isLocationServiceEnabled();
-    await gl.Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high,
-            forceAndroidLocationManager: true)
-        .then((Position position) {
-      _curentPosition = position;
-      uploadPosition(position, serviceEnabled);
-      print("bg location ${position.latitude}");
-    }).catchError((e) {
-      Fluttertoast.showToast(msg: e.toString());
-    });
-
-    flutterLocalNotificationsPlugin.show(
-      888,
-      'COOL SERVICE',
-      'Awesome ${DateTime.now()}',
-      const NotificationDetails(
-        iOS: DarwinNotificationDetails(
-            subtitle: 'Family Guard SERVICE',
-            presentBadge: true,
-            threadIdentifier: 'your.uturnsoftware.notification_identifier',
-            categoryIdentifier: 'your.uturnsoftware.notification_identifier'),
-        android: AndroidNotificationDetails(
-          'my_foreground',
-          'Family Guard SERVICE',
-          icon: 'ic_bg_service_small',
-          ongoing: true,
-        ),
+  flutterLocalNotificationsPlugin.show(
+    888,
+    'COOL SERVICE',
+    'Awesome ${DateTime.now()}',
+    const NotificationDetails(
+      iOS: DarwinNotificationDetails(
+          subtitle: 'Family Guard SERVICE',
+          presentBadge: true,
+          threadIdentifier: 'your.uturnsoftware.notification_identifier',
+          categoryIdentifier: 'your.uturnsoftware.notification_identifier'),
+      android: AndroidNotificationDetails(
+        'my_foreground',
+        'Family Guard SERVICE',
+        icon: 'ic_bg_service_small',
+        ongoing: true,
       ),
-    );
-  });
+    ),
+  );
 
   return true;
 }
@@ -158,7 +142,8 @@ Future<void> onStart(ServiceInstance service) async {
     service.stopSelf();
   });
   await BackgroundDependencyInjection().init();
-  Timer.periodic(const Duration(seconds: 60), (timer) async {
+
+  Timer.periodic(const Duration(seconds: 20), (timer) async {
     if (service is AndroidServiceInstance) {
       if (await service.isForegroundService()) {
         gl.Position? _curentPosition;
@@ -196,7 +181,8 @@ Future<void> onStart(ServiceInstance service) async {
 
         service.setForegroundNotificationInfo(
           title: "Family Guard",
-          content: "Family Guard is updating your location",
+          content:
+              "Family Guard is updating your location lat : ${_curentPosition?.latitude}",
         );
       }
     }
@@ -218,7 +204,8 @@ Future<void> onStart(ServiceInstance service) async {
   print('location upload $res');
 }
  */
-Future<String> uploadPosition(Position position, bool serviceEnabled) async {
+Future<String> uploadPosition(
+    Position position, bool serviceEnabled) async {
   // BackgroundIsolateBinaryMessenger.ensureInitialized(args[3]);
 
   ConnectivityResult connectivityResult =
@@ -257,16 +244,17 @@ Future<String> uploadPosition(Position position, bool serviceEnabled) async {
         : placemark.postalCode!,
     lat: position.latitude,
     lon: position.longitude,
-    speed: position.speed,
+    speed: position.speed == 0.0 ? 0.0001 : position.speed,
   );
   /*  location.changeNotificationOptions(
             title: 'Family Guard',
             subtitle: 'Geolocation detection ${currentLocation.latitude}',
             iconName: 'ic_bg_service_small'); */
   String response = "";
+
   try {
     if (isConnected == true && serviceEnabled == true) {
-      var cachedData = await sl<SharedPreferencesServices>().getData(
+      String cachedData = await sl<SharedPreferencesServices>().getData(
         key: AppConstants.authCredential,
         dataType: DataType.string,
       );
@@ -278,11 +266,11 @@ Future<String> uploadPosition(Position position, bool serviceEnabled) async {
               baseTrackingDataSource: TrackingDataSource()))(TrackingParams(
           accessToken: userEntity.apiToken!, trackingEntity: trackingEntity));
       results.fold((l) {
-        log('Serice locations error ${l.message}');
+        log('Service locations error ${l.message}');
         response = l.message;
         print('location upload ${l.message}');
       }, (r) {
-        log('Serice locations $r');
+        log('Service locations $r');
         response = r;
         print('location upload $r');
       });

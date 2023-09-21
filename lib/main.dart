@@ -26,8 +26,7 @@ import 'core/services/service_initializer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initializeBackroundService();
-  
+ 
   await ServiceInitializer().initializeSettings();
 
   runApp(const MyApp());

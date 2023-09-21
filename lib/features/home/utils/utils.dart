@@ -116,10 +116,9 @@ Future<BitmapDescriptor> getMarkerIcon(
 
 Future<ui.Image> getImageFromPath(String imagePath, String accessToken) async {
   Uint8List profileIcons =
-       await getBytesFromAsset('assets/images/png/profile.png', 150);
+      await getBytesFromAsset('assets/images/png/profile.png', 150);
   var headers = {
-    'auth-token':
-        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2RldmVsb3BtZW50LnV0dXJuc29mdHdhcmUuY29tL2FwaS91c2Vycy9sb2dpbiIsImlhdCI6MTY5MTIyNTQ2NywiZXhwIjo1MjkxMjI1NDY3LCJuYmYiOjE2OTEyMjU0NjcsImp0aSI6InkzejJ1b1lNdzRGenFGbGQiLCJzdWIiOiI4IiwicHJ2IjoiZjY0ZDQ4YTZjZWM3YmRmYTdmYmY4OTk0NTRiNDg4YjNlNDYyNTIwYSJ9.-Xu58ocIFN6_nJoqxE4hB7pD8uvgghfxH3IFLc_l-3I',
+    'auth-token': accessToken,
     'Authorization':
         'Basic YWJkZWxoYW1pZC5haG1lZC5hYmRvQGdtYWlsLmNvbTpBYmRvQEJvb2R5QDI1MjkwMA=='
   };
@@ -138,7 +137,6 @@ Future<ui.Image> getImageFromPath(String imagePath, String accessToken) async {
       (ui.Image img) {
     return completer.complete(img);
   });
-
 
   return completer.future;
 }

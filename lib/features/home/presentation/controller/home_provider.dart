@@ -24,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -38,6 +39,7 @@ import '../../../authentication/domain/entities/user_entity.dart';
 class HomeProvider extends ChangeNotifier {
   bool _disposed = false;
   int notificationCount = 0;
+  bool isServiceEnabled = false;
   @override
   void dispose() async {
     log('home provider disposes');
@@ -56,13 +58,10 @@ class HomeProvider extends ChangeNotifier {
   ///constructor
   HomeProvider() {
     // LocationFetcher.instance.getLocation();
+
     initializeInitialCameraPosition();
     getAuthenticationResultModel();
     Future.delayed(const Duration(seconds: 2), getUnReadNotificationCount);
-  }
-
-  initializeBackgroundService() async {
-    await initializeBackroundService();
   }
 
   UserEntity? userEntity =
@@ -86,11 +85,13 @@ class HomeProvider extends ChangeNotifier {
   late LocationData locationData;
 
   initializeInitialCameraPosition() async {
+    await gl.Geolocator.isLocationServiceEnabled();
     initialCameraPosition = const CameraPosition(
       target: LatLng(37.42796133580664, -122.085749655962),
       zoom: 14.4746,
     );
     await goToMyLocation();
+   
   }
 
   Future<void> getAuthenticationResultModel() async {
@@ -99,6 +100,7 @@ class HomeProvider extends ChangeNotifier {
         .then((value) {
       notifyListeners();
     });
+     await initializeBackroundService();
   }
 
   onMapCreated(GoogleMapController googleMapController) {
@@ -119,14 +121,21 @@ class HomeProvider extends ChangeNotifier {
       return;
     }
 
+    if (!await handleLocationPermission()) {
+      isLoadingLocation = false;
+      notifyListeners();
+      return;
+    }
+
     // isCountryInRegion = false;
     // notifyListeners();
     mapController = await completer.future;
 
     gl.Geolocator.getCurrentPosition(desiredAccuracy: gl.LocationAccuracy.best)
-        .then((currentLocation) {
+        .then((currentLocation) async {
       mapController.animateCamera(CameraUpdate.newLatLngZoom(
           LatLng(currentLocation.latitude, currentLocation.longitude), 16));
+
       isLoadingLocation = false;
       notifyListeners();
     }).catchError((error) {

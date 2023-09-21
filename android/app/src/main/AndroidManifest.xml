@@ -19,6 +19,7 @@
         android:label="Family Guard"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
+        android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true" >
        
     <meta-data android:name="com.google.android.geo.API_KEY"

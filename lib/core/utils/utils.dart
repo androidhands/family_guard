@@ -116,7 +116,7 @@ Future<bool> handleLocationPermission() async {
 
   permission = await Geolocator.checkPermission();
 
-  if (permission == LocationPermission.whileInUse) {
+  if (permission != LocationPermission.always) {
     ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
       content: const Text(
           'Family Guard app works correctly if the location enabled allways in use, Select Permission->Location->Allow all the time'),
