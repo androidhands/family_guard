@@ -5,6 +5,7 @@
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>dev.flutter.background.refresh</string>
+		<string>com.uturnsoftware.location_identifier</string>
 	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
@@ -47,10 +48,14 @@
 	<string>Music!</string>
 	<key>NSCameraUsageDescription</key>
 	<string>camera</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string></string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	  <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Need location when in use</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Always and when in use!</string>
+    <key>NSLocationUsageDescription</key>
+    <string>Older devices need location.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Can I haz location always?</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>photos</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

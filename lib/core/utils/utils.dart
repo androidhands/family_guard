@@ -115,7 +115,8 @@ Future<bool> handleLocationPermission() async {
   LocationPermission permission;
 
   permission = await Geolocator.checkPermission();
-
+  if (permission == LocationPermission.always ||
+      permission == LocationPermission.whileInUse) {}
   if (permission != LocationPermission.always) {
     ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
       content: const Text(

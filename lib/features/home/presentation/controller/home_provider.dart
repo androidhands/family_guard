@@ -3,10 +3,12 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:background_fetch/background_fetch.dart';
 import 'package:dartz/dartz.dart';
 import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/error/failure.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
+import 'package:family_guard/core/services/background_fetch.dart';
 import 'package:family_guard/core/services/background_location_service.dart';
 import 'package:family_guard/core/services/dependency_injection_service.dart';
 import 'package:family_guard/core/services/location_fetcher.dart';
@@ -100,7 +102,8 @@ class HomeProvider extends ChangeNotifier {
         .then((value) {
       notifyListeners();
     });
-     await initializeBackroundService();
+   //  await initializeBackroundService();
+    BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
   }
 
   onMapCreated(GoogleMapController googleMapController) {

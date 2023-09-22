@@ -138,7 +138,7 @@ class DependencyInjectionServices {
   }
 
   initializeLocationFetcher() {
-    sl.registerLazySingleton<LocationFetcher>(() => LocationFetcher.instance);
+   // sl.registerLazySingleton<LocationFetcher>(() => LocationFetcher.instance);
     //sl.registerLazySingleton(() => LocationDetectorProvider());
   }
 

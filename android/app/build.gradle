@@ -29,6 +29,8 @@ apply plugin: 'com.google.gms.google-services'
 android {
     namespace "com.familyguard.family_guard"
     compileSdkVersion 34
+    targetSdkVersion    = 31                // or latest
+       appCompatVersion    = "1.4.2"      
     ndkVersion flutter.ndkVersion
 
     compileOptions {

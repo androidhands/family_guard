@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/screen/main_screen.dart';
+import 'package:family_guard/core/services/background_fetch.dart';
 import 'package:family_guard/core/services/background_location_service.dart';
 import 'package:family_guard/features/family/presentation/controllers/family_members_provider.dart';
 import 'package:family_guard/features/family/presentation/controllers/received_requests_provider.dart';
@@ -30,6 +31,7 @@ void main() async {
   await ServiceInitializer().initializeSettings();
 
   runApp(const MyApp());
+  await initPlatformState();
 }
 
 class MyApp extends StatelessWidget {
