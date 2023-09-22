@@ -1,4 +1,3 @@
-import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/error/exceptions.dart';
 import 'package:family_guard/core/network/api_caller.dart';
 import 'package:family_guard/core/network/api_endpoint.dart';
@@ -7,8 +6,6 @@ import 'package:family_guard/core/services/dependency_injection_service.dart';
 import 'package:family_guard/features/authentication/data/models/user_model.dart';
 import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
 import 'package:family_guard/features/home/domain/usecases/add_new_user_location_usecase.dart';
-import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 
 abstract class BaseTrackingDataSource {
   Future<String> addNewUserLocation(TrackingParams params);

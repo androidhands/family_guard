@@ -20,8 +20,6 @@ import 'package:location/location.dart' as lc;
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:provider/provider.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geolocator/geolocator.dart' as gl;
 
 import '../../../../core/global/localization/app_localization.dart';
 import '../../../../core/services/dependency_injection_service.dart';

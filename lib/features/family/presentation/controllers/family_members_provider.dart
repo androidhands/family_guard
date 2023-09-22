@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:family_guard/core/controllers/main_provider.dart';
@@ -15,7 +13,6 @@ import 'package:family_guard/features/family/presentation/screens/show_member_sc
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:rxdart/rxdart.dart';
 
 import '../../../../core/services/dependency_injection_service.dart';
 import '../../../../core/utils/app_constants.dart';
@@ -76,8 +73,4 @@ class FamilyMembersProvider extends ChangeNotifier {
         page: () => const SentRequestsScreen());
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
 }

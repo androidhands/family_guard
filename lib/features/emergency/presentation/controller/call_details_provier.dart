@@ -18,7 +18,6 @@ import 'package:provider/provider.dart';
 import 'package:location/location.dart' as lc;
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:geolocator/geolocator.dart' as gl;
 import '../../../../core/services/background_dependency_injection.dart';
 
 class CallDetailsProvier extends ChangeNotifier {

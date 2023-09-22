@@ -1,7 +1,5 @@
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
 import 'package:family_guard/core/utils/app_sizes.dart';
-import 'package:family_guard/core/widget/buttons/custom_elevated_button.dart';
-import 'package:family_guard/core/widget/buttons/custom_outlined_button.dart';
 import 'package:family_guard/core/widget/custom_switch/custom_switch_button.dart';
 import 'package:family_guard/core/widget/custom_text.dart';
 import 'package:family_guard/features/family/presentation/utils/members_utils.dart';

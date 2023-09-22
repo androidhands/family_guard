@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
@@ -32,15 +31,15 @@ Future<BitmapDescriptor> getMarkerIcon(
   final Radius radius = Radius.circular(size.width / 2);
 
   final Paint tagPaint = Paint()..color = ThemeColorLight.pinkColor;
-  final double tagWidth = 40.0;
+  const double tagWidth = 40.0;
 
   final Paint shadowPaint = Paint()..color = ThemeColorLight.pinkWhiteColor;
-  final double shadowWidth = 15.0;
+  const double shadowWidth = 15.0;
 
   final Paint borderPaint = Paint()..color = Colors.white;
-  final double borderWidth = 3.0;
+  const double borderWidth = 3.0;
 
-  final double imageOffset = shadowWidth + borderWidth;
+  const double imageOffset = shadowWidth + borderWidth;
 
   // Add shadow circle
   canvas.drawRRect(
@@ -80,14 +79,14 @@ Future<BitmapDescriptor> getMarkerIcon(
   TextPainter textPainter = TextPainter(textDirection: TextDirection.ltr);
   textPainter.text = TextSpan(
     text: name,
-    style: TextStyle(
+    style: const TextStyle(
         fontSize: 30.0,
         color: Colors.white,
         backgroundColor: ThemeColorLight.pinkColor),
   );
 
   textPainter.layout();
-  textPainter.paint(canvas, Offset(-2.0, -6.0));
+  textPainter.paint(canvas, const Offset(-2.0, -6.0));
 
   // Oval for the image
   Rect oval = Rect.fromLTWH(imageOffset, imageOffset,

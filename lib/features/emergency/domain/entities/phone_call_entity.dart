@@ -1,12 +1,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:family_guard/features/emergency/domain/entities/sub_resource_uris_entity.dart';
-import 'package:family_guard/features/emergency/domain/entities/time_zone_entity.dart';
 
 class PhoneCallEntity extends Equatable {
   int? id;
   String? sid;
   dynamic dateCreated;
-  dynamic? dateUpdated;
+  dynamic dateUpdated;
   String? parentCallSid;
   String? accountSid;
   String? to;

@@ -1,14 +1,11 @@
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
 import 'package:flutter/material.dart';
 
-import 'package:family_guard/core/utils/app_assets.dart';
 import 'package:family_guard/core/utils/app_constants.dart';
 import 'package:family_guard/core/utils/app_sizes.dart';
-import 'package:family_guard/core/widget/custom_appbar.dart';
 
 import '../../../../core/global/localization/app_localization.dart';
 import '../../../../core/widget/custom_text.dart';
-import '../../../../core/widget/images/custom_png_image.dart';
 
 class AuthenticationCommonBody extends StatelessWidget {
   final String title;

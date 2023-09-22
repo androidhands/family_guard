@@ -1,6 +1,4 @@
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
-import 'package:family_guard/core/widget/buttons/custom_elevated_button.dart';
-import 'package:family_guard/core/widget/buttons/custom_text_button.dart';
 import 'package:family_guard/core/widget/custom_loading_indicator.dart';
 import 'package:family_guard/core/widget/custom_text.dart';
 import 'package:flutter/material.dart';

@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:family_guard/core/services/background_location_service.dart';
 import 'package:family_guard/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

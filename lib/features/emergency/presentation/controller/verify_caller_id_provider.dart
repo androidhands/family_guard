@@ -14,14 +14,12 @@ import 'package:family_guard/features/emergency/domain/usecases/add_new_caller_i
 import 'package:family_guard/features/emergency/domain/usecases/check_verified_caller_id_usecase.dart';
 import 'package:family_guard/features/emergency/presentation/screens/add_new_caller_id_screen.dart';
 import 'package:family_guard/features/emergency/presentation/screens/emergency_call_screen.dart';
-import 'package:family_guard/features/home/domain/usecases/add_new_user_location_usecase.dart';
-import 'package:family_guard/features/profile/presentation/screens/my_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class VerifyCallerIdProvider extends ChangeNotifier {
-  VerifyCallerIdProvider({required this.verificationCode}) {}
+  VerifyCallerIdProvider({required this.verificationCode});
   String verificationCode;
   late AddNewCallerIdEntity addNewCallerIdEntity;
   bool isloading = false;
@@ -53,7 +51,7 @@ class VerifyCallerIdProvider extends ChangeNotifier {
     isloading = true;
     notifyListeners();
     Either<Failure, bool> isCallerIdVerfied =
-        await sl<CheckVerifiedCallerIdUsecase>()(userEntity!.apiToken!);
+        await sl<CheckVerifiedCallerIdUsecase>()(userEntity.apiToken!);
     isCallerIdVerfied.fold((l) async {
       await DialogWidget.showCustomDialog(
           context: Get.context!,

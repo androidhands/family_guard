@@ -1,9 +1,7 @@
 import 'dart:io';
 
 import 'package:family_guard/features/notifications/data/models/notification_model.dart';
-import 'package:family_guard/features/notifications/data/models/notification_response_model.dart';
 import 'package:family_guard/features/notifications/domain/entities/notification_entity.dart';
-import 'package:family_guard/features/notifications/domain/entities/notification_response_entity.dart';
 import 'package:family_guard/features/notifications/domain/usecases/get_all_notifications_usecase.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';

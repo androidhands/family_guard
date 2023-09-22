@@ -3,15 +3,13 @@ import 'dart:io';
 
 import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/screen/main_screen.dart';
-import 'package:family_guard/core/services/background_fetch.dart';
-import 'package:family_guard/core/services/background_location_service.dart';
+
 import 'package:family_guard/features/family/presentation/controllers/family_members_provider.dart';
 import 'package:family_guard/features/family/presentation/controllers/received_requests_provider.dart';
 import 'package:family_guard/features/family/presentation/screens/received_requests_screen.dart';
 import 'package:family_guard/features/family/presentation/screens/sent_requests_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -27,11 +25,11 @@ import 'core/services/service_initializer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
- 
+  //  await initializeBackroundService();
   await ServiceInitializer().initializeSettings();
 
   runApp(const MyApp());
-  await initPlatformState();
+ 
 }
 
 class MyApp extends StatelessWidget {

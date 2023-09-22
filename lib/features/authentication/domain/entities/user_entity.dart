@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:family_guard/features/authentication/domain/entities/address_entity.dart';
 import 'package:family_guard/features/family/domain/entities/member_entity.dart';
 import 'package:family_guard/features/home/domain/entity/tracking_entity.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class UserEntity extends Equatable {
   final int id;

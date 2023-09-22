@@ -6,7 +6,6 @@ import 'package:family_guard/core/utils/app_sizes.dart';
 import 'package:family_guard/core/widget/custom_loading_indicator.dart';
 import 'package:family_guard/core/widget/custom_text.dart';
 import 'package:family_guard/core/widget/images/custom_svg_image.dart';
-import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
 import 'package:family_guard/features/family/presentation/controllers/family_members_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -92,7 +91,7 @@ class FamilyScreen extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Container(
-                margin: EdgeInsets.all(5),
+                margin: const EdgeInsets.all(5),
                 padding: EdgeInsets.all(AppSizes.pH5),
                 decoration: BoxDecoration(
                     color: ThemeColorLight.pinkColor,

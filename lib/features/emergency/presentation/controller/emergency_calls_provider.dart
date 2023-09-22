@@ -10,7 +10,6 @@ import 'package:family_guard/features/emergency/domain/entities/phone_call_entit
 import 'package:family_guard/features/emergency/domain/usecases/make_emergency_call_usecase.dart';
 import 'package:family_guard/features/emergency/presentation/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart' as gl;

@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:family_guard/core/error/failure.dart';
 import 'package:family_guard/core/usecases/usecases.dart';
 import 'package:family_guard/features/notifications/domain/entities/notification_entity.dart';
-import 'package:family_guard/features/notifications/domain/entities/notification_response_entity.dart';
 import 'package:family_guard/features/notifications/domain/repositories/base_notification_repository.dart';
 
 class GetAllNotificationsUsecase

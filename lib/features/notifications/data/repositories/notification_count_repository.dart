@@ -3,7 +3,6 @@ import 'package:family_guard/core/error/exceptions.dart';
 import 'package:family_guard/core/error/failure.dart';
 import 'package:family_guard/features/notifications/data/datasource/notifications_datasource.dart';
 import 'package:family_guard/features/notifications/domain/entities/notification_entity.dart';
-import 'package:family_guard/features/notifications/domain/entities/notification_response_entity.dart';
 import 'package:family_guard/features/notifications/domain/repositories/base_notification_repository.dart';
 
 import 'package:family_guard/features/notifications/domain/usecases/get_all_notifications_usecase.dart';

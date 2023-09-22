@@ -63,7 +63,6 @@ import 'package:family_guard/core/global/theme/domain/usecases/save_theme_usecas
 import 'package:family_guard/core/local_data/shared_preferences_services.dart';
 import 'package:family_guard/core/network/api_caller.dart';
 import 'package:family_guard/core/services/firebase_messaging_services.dart';
-import 'package:family_guard/core/services/location_fetcher.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -21,10 +21,7 @@ allprojects {
          force "com.google.android.gms:play-services-location:21.0.1"
       }
  }
-  maven {
-           // [required] background_fetch
-           url "${project(':background_fetch').projectDir}/libs"
-       }
+
     }
 }
 

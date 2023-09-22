@@ -1,5 +1,4 @@
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
-import 'package:family_guard/core/widget/custom_network_image.dart';
 import 'package:family_guard/core/widget/images/custom_cashed_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -42,7 +41,7 @@ class HeaderHomeComponent extends StatelessWidget {
                     provider.navigateToProfileScreen();
                   },
                   child: Padding(
-                      padding: EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
                       child: provider.userEntity?.imageUrl == "No Data" ||
                               provider.userEntity?.imageUrl == null
                           ? CustomSvgImage(
@@ -83,7 +82,7 @@ class HeaderHomeComponent extends StatelessWidget {
                       child: badges.Badge(
                           badgeContent: CustomText(
                             provider.notificationCount.toString(),
-                            textStyle: TextStyle(color: Colors.white),
+                            textStyle: const TextStyle(color: Colors.white),
                           ),
                           position: badges.BadgePosition.topEnd(),
                           child: CustomBorderIcon(

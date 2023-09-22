@@ -52,7 +52,7 @@ class MyAddressScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
+                            SizedBox(
                               height: AppSizes.mapAddressHight2,
                               width: AppSizes.widthFullScreen,
                               child: Stack(

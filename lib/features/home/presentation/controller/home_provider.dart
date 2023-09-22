@@ -3,15 +3,13 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:background_fetch/background_fetch.dart';
 import 'package:dartz/dartz.dart';
 import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/error/failure.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
-import 'package:family_guard/core/services/background_fetch.dart';
+
 import 'package:family_guard/core/services/background_location_service.dart';
 import 'package:family_guard/core/services/dependency_injection_service.dart';
-import 'package:family_guard/core/services/location_fetcher.dart';
 import 'package:family_guard/core/services/navigation_service.dart';
 import 'package:family_guard/core/utils/app_constants.dart';
 import 'package:family_guard/core/utils/map_utils.dart';
@@ -23,10 +21,7 @@ import 'package:family_guard/features/notifications/domain/usecases/get_notifica
 import 'package:family_guard/features/notifications/presentation/screens/notifications_screen.dart';
 import 'package:family_guard/features/profile/presentation/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -87,13 +82,12 @@ class HomeProvider extends ChangeNotifier {
   late LocationData locationData;
 
   initializeInitialCameraPosition() async {
-    await gl.Geolocator.isLocationServiceEnabled();
     initialCameraPosition = const CameraPosition(
       target: LatLng(37.42796133580664, -122.085749655962),
       zoom: 14.4746,
     );
+    await gl.Geolocator.isLocationServiceEnabled();
     await goToMyLocation();
-   
   }
 
   Future<void> getAuthenticationResultModel() async {
@@ -102,8 +96,7 @@ class HomeProvider extends ChangeNotifier {
         .then((value) {
       notifyListeners();
     });
-   //  await initializeBackroundService();
-    BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
+    await initializeBackroundService();
   }
 
   onMapCreated(GoogleMapController googleMapController) {

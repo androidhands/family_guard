@@ -18,7 +18,6 @@ import 'package:get/get.dart';
 
 import 'package:provider/provider.dart';
 
-import '../../../../core/controllers/main_provider.dart';
 import '../controllers/profile_provider.dart';
 import '../widgets/custom_container_widget.dart';
 import '../widgets/custom_profile_divider.dart';

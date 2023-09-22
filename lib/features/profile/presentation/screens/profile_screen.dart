@@ -1,4 +1,3 @@
-import 'package:family_guard/core/global/theme/theme_color/theme_color_dark.dart';
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
 import 'package:family_guard/core/services/navigation_service.dart';
 import 'package:family_guard/core/widget/images/custom_cashed_network_image.dart';
@@ -12,13 +11,9 @@ import '../../../../core/utils/app_constants.dart';
 import '../../../../core/utils/app_fonts.dart';
 import '../../../../core/utils/app_sizes.dart';
 import '../../../../core/widget/custom_appbar.dart';
-import '../../../../core/widget/custom_network_image.dart';
 import '../../../../core/widget/custom_text.dart';
-import '../../../../core/widget/images/custom_avatar_image.dart';
 import '../../../../core/widget/images/custom_svg_image.dart';
-import '../../../home/presentation/controller/home_control_provider.dart';
 import '../components/profile_details_component.dart';
-import 'package:badges/badges.dart' as badges;
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);

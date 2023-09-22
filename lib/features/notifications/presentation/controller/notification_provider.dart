@@ -10,7 +10,6 @@ import 'package:family_guard/core/utils/app_constants.dart';
 import 'package:family_guard/core/widget/dialog_service.dart';
 import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
 import 'package:family_guard/features/family/presentation/screens/received_requests_screen.dart';
-import 'package:family_guard/features/family/presentation/screens/sent_requests_screen.dart';
 import 'package:family_guard/features/notifications/domain/usecases/get_all_notifications_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:family_guard/features/notifications/domain/entities/notification_entity.dart';

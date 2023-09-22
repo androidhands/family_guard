@@ -4,7 +4,6 @@ import 'package:family_guard/features/emergency/data/models/sub_resource_model.d
 import 'package:family_guard/features/emergency/data/models/time_zone_model.dart';
 import 'package:family_guard/features/emergency/domain/entities/phone_call_entity.dart';
 import 'package:family_guard/features/emergency/domain/entities/sub_resource_uris_entity.dart';
-import 'package:family_guard/features/emergency/domain/entities/time_zone_entity.dart';
 
 class PhoneCallModel extends PhoneCallEntity {
   PhoneCallModel(

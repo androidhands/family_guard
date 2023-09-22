@@ -22,7 +22,6 @@ import 'package:family_guard/features/home/domain/entity/tracking_entity.dart';
 import 'package:family_guard/features/home/domain/usecases/add_new_user_location_usecase.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
-import 'package:flutter_background_service_ios/flutter_background_service_ios.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -93,29 +92,71 @@ Future<void> initializeBackroundService() async {
 
 @pragma('vm:entry-point')
 FutureOr<bool> onIosBackground(ServiceInstance service) async {
+  // Only available for flutter 3.0.0 and later
   WidgetsFlutterBinding.ensureInitialized();
   DartPluginRegistrant.ensureInitialized();
+
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  flutterLocalNotificationsPlugin.show(
-    888,
-    'COOL SERVICE',
-    'Awesome ${DateTime.now()}',
-    const NotificationDetails(
-      iOS: DarwinNotificationDetails(
-          subtitle: 'Family Guard SERVICE',
-          presentBadge: true,
-          threadIdentifier: 'your.uturnsoftware.notification_identifier',
-          categoryIdentifier: 'your.uturnsoftware.notification_identifier'),
-      android: AndroidNotificationDetails(
-        'my_foreground',
-        'Family Guard SERVICE',
-        icon: 'ic_bg_service_small',
-        ongoing: true,
-      ),
-    ),
-  );
+  if (service is AndroidServiceInstance) {
+    service.on('setAsForeground').listen((event) {
+      service.setAsForegroundService();
+    });
+    service.on('setAsBackground').listen((event) {
+      service.setAsBackgroundService();
+    });
+  }
+
+  service.on('stopService').listen((event) {
+    service.stopSelf();
+  });
+  await BackgroundDependencyInjection().init();
+
+  Timer.periodic(const Duration(seconds: 20), (timer) async {
+    if (service is AndroidServiceInstance) {
+      if (await service.isForegroundService()) {
+        gl.Position? curentPosition;
+        bool serviceEnabled = await gl.Geolocator.isLocationServiceEnabled();
+        await gl.Geolocator.getCurrentPosition(
+                desiredAccuracy: LocationAccuracy.high,
+                forceAndroidLocationManager: true)
+            .then((Position position) {
+          curentPosition = position;
+          uploadPosition(position, serviceEnabled);
+          print("bg location ${position.latitude}");
+        }).catchError((e) {
+          Fluttertoast.showToast(msg: e.toString());
+        });
+
+        flutterLocalNotificationsPlugin.show(
+          888,
+          'COOL SERVICE',
+          'Awesome ${DateTime.now()}',
+          const NotificationDetails(
+            iOS: DarwinNotificationDetails(
+                subtitle: 'Family Guard SERVICE',
+                presentBadge: true,
+                threadIdentifier: 'your.uturnsoftware.notification_identifier',
+                categoryIdentifier:
+                    'your.uturnsoftware.notification_identifier'),
+            android: AndroidNotificationDetails(
+              'my_foreground',
+              'Family Guard SERVICE',
+              icon: 'ic_bg_service_small',
+              ongoing: true,
+            ),
+          ),
+        );
+
+        service.setForegroundNotificationInfo(
+          title: "Family Guard",
+          content:
+              "Family Guard is updating your location",
+        );
+      }
+    }
+  });
 
   return true;
 }
@@ -146,13 +187,13 @@ Future<void> onStart(ServiceInstance service) async {
   Timer.periodic(const Duration(seconds: 20), (timer) async {
     if (service is AndroidServiceInstance) {
       if (await service.isForegroundService()) {
-        gl.Position? _curentPosition;
+        gl.Position? curentPosition;
         bool serviceEnabled = await gl.Geolocator.isLocationServiceEnabled();
         await gl.Geolocator.getCurrentPosition(
                 desiredAccuracy: LocationAccuracy.high,
                 forceAndroidLocationManager: true)
             .then((Position position) {
-          _curentPosition = position;
+          curentPosition = position;
           uploadPosition(position, serviceEnabled);
           print("bg location ${position.latitude}");
         }).catchError((e) {
@@ -182,7 +223,7 @@ Future<void> onStart(ServiceInstance service) async {
         service.setForegroundNotificationInfo(
           title: "Family Guard",
           content:
-              "Family Guard is updating your location lat : ${_curentPosition?.latitude}",
+              "Family Guard is updating your location",
         );
       }
     }

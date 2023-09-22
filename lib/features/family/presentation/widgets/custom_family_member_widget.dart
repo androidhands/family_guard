@@ -1,14 +1,10 @@
 import 'package:family_guard/core/utils/app_sizes.dart';
-import 'package:family_guard/core/widget/custom_memory_image.dart';
 import 'package:family_guard/core/widget/custom_network_image.dart';
-import 'package:family_guard/core/widget/images/custom_avatar_image.dart';
 import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/global/theme/theme_color/theme_color_light.dart';
-import '../../../../core/network/api_caller.dart';
-import '../../../../core/network/api_endpoint.dart';
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/widget/custom_guard_shape.dart';
 import '../../../../core/widget/custom_text.dart';

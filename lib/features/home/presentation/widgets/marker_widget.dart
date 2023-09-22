@@ -1,9 +1,4 @@
-import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
-import 'package:family_guard/core/utils/app_assets.dart';
 import 'package:family_guard/core/widget/custom_guard_shape.dart';
-import 'package:family_guard/core/widget/custom_network_image.dart';
-import 'package:family_guard/core/widget/images/custom_svg_image.dart';
-import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
