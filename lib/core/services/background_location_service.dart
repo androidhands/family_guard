@@ -92,7 +92,7 @@ Future<void> initializeBackroundService() async {
 }
 
 @pragma('vm:entry-point')
-Future<bool> onIosBackground(ServiceInstance service) async {
+FutureOr<bool> onIosBackground(ServiceInstance service) async {
   WidgetsFlutterBinding.ensureInitialized();
   DartPluginRegistrant.ensureInitialized();
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =

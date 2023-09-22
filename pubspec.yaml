@@ -100,6 +100,7 @@ dependencies:
   flutter_onboard: ^2.0.0
   flutter_speed_dial: ^7.0.0
   flutter_background_service_ios: ^5.0.0
+  background_fetch: ^1.2.1
 
 
 
