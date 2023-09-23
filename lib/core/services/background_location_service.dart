@@ -113,49 +113,38 @@ FutureOr<bool> onIosBackground(ServiceInstance service) async {
   });
   await BackgroundDependencyInjection().init();
 
-  Timer.periodic(const Duration(seconds: 20), (timer) async {
-    if (service is AndroidServiceInstance) {
-      if (await service.isForegroundService()) {
-        gl.Position? curentPosition;
-        bool serviceEnabled = await gl.Geolocator.isLocationServiceEnabled();
-        await gl.Geolocator.getCurrentPosition(
-                desiredAccuracy: LocationAccuracy.high,
-                forceAndroidLocationManager: true)
-            .then((Position position) {
-          curentPosition = position;
-          uploadPosition(position, serviceEnabled);
-          print("bg location ${position.latitude}");
-        }).catchError((e) {
-          Fluttertoast.showToast(msg: e.toString());
-        });
+  Timer.periodic(const Duration(minutes: 15), (timer) async {
+    gl.Position? curentPosition;
+    bool serviceEnabled = await gl.Geolocator.isLocationServiceEnabled();
+    await gl.Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high,
+            forceAndroidLocationManager: true)
+        .then((Position position) {
+      curentPosition = position;
+      uploadPosition(position, serviceEnabled);
+      print("bg location ${position.latitude}");
+    }).catchError((e) {
+      Fluttertoast.showToast(msg: e.toString());
+    });
 
-        flutterLocalNotificationsPlugin.show(
-          888,
-          'COOL SERVICE',
-          'Awesome ${DateTime.now()}',
-          const NotificationDetails(
-            iOS: DarwinNotificationDetails(
-                subtitle: 'Family Guard SERVICE',
-                presentBadge: true,
-                threadIdentifier: 'your.uturnsoftware.notification_identifier',
-                categoryIdentifier:
-                    'your.uturnsoftware.notification_identifier'),
-            android: AndroidNotificationDetails(
-              'my_foreground',
-              'Family Guard SERVICE',
-              icon: 'ic_bg_service_small',
-              ongoing: true,
-            ),
-          ),
-        );
-
-        service.setForegroundNotificationInfo(
-          title: "Family Guard",
-          content:
-              "Family Guard is updating your location",
-        );
-      }
-    }
+    flutterLocalNotificationsPlugin.show(
+      888,
+      'COOL SERVICE',
+      'Awesome ${DateTime.now()}',
+      const NotificationDetails(
+        iOS: DarwinNotificationDetails(
+            subtitle: 'Family Guard updating your location',
+            presentBadge: true,
+            threadIdentifier: 'com.uturnsoftware.location_identifier',
+            categoryIdentifier: 'com.uturnsoftware.location_identifier'),
+        android: AndroidNotificationDetails(
+          'my_foreground',
+          'Family Guard SERVICE',
+          icon: 'ic_bg_service_small',
+          ongoing: true,
+        ),
+      ),
+    );
   });
 
   return true;
@@ -184,7 +173,7 @@ Future<void> onStart(ServiceInstance service) async {
   });
   await BackgroundDependencyInjection().init();
 
-  Timer.periodic(const Duration(seconds: 20), (timer) async {
+  Timer.periodic(const Duration(minutes: 15), (timer) async {
     if (service is AndroidServiceInstance) {
       if (await service.isForegroundService()) {
         gl.Position? curentPosition;
@@ -222,8 +211,7 @@ Future<void> onStart(ServiceInstance service) async {
 
         service.setForegroundNotificationInfo(
           title: "Family Guard",
-          content:
-              "Family Guard is updating your location",
+          content: "Family Guard is updating your location",
         );
       }
     }
@@ -245,8 +233,7 @@ Future<void> onStart(ServiceInstance service) async {
   print('location upload $res');
 }
  */
-Future<String> uploadPosition(
-    Position position, bool serviceEnabled) async {
+Future<String> uploadPosition(Position position, bool serviceEnabled) async {
   // BackgroundIsolateBinaryMessenger.ensureInitialized(args[3]);
 
   ConnectivityResult connectivityResult =

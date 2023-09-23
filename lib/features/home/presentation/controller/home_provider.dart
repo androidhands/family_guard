@@ -2,12 +2,13 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/error/failure.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
-
+import 'package:background_location/background_location.dart' as bGl;
 import 'package:family_guard/core/services/background_location_service.dart';
 import 'package:family_guard/core/services/dependency_injection_service.dart';
 import 'package:family_guard/core/services/navigation_service.dart';
@@ -15,19 +16,28 @@ import 'package:family_guard/core/utils/app_constants.dart';
 import 'package:family_guard/core/utils/map_utils.dart';
 import 'package:family_guard/core/utils/utils.dart';
 import 'package:family_guard/core/widget/dialog_service.dart';
+import 'package:family_guard/features/authentication/data/models/user_model.dart';
+import 'package:family_guard/features/home/data/datasource/tracking_data_source.dart';
+import 'package:family_guard/features/home/data/models/tracking_model.dart';
+import 'package:family_guard/features/home/data/repository/tracking_repository.dart';
+import 'package:family_guard/features/home/domain/entity/tracking_entity.dart';
+import 'package:family_guard/features/home/domain/usecases/add_new_user_location_usecase.dart';
 import 'package:family_guard/features/home/domain/usecases/track_my_members_usecase.dart';
 import 'package:family_guard/features/home/utils/utils.dart';
 import 'package:family_guard/features/notifications/domain/usecases/get_notification_count_usecase.dart';
 import 'package:family_guard/features/notifications/presentation/screens/notifications_screen.dart';
 import 'package:family_guard/features/profile/presentation/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:geocoding/geocoding.dart' as gc;
 import 'package:geolocator/geolocator.dart' as gl;
-import 'package:location/location.dart';
+import 'package:location/location.dart' as lc;
 
 import 'package:provider/provider.dart';
 
@@ -58,7 +68,88 @@ class HomeProvider extends ChangeNotifier {
 
     initializeInitialCameraPosition();
     getAuthenticationResultModel();
+    if (Platform.isIOS) {
+      fetchBackgroundLocation();
+    }
+
     Future.delayed(const Duration(seconds: 2), getUnReadNotificationCount);
+  }
+  void fetchBackgroundLocation() async {
+    log('start fetching');
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    flutterLocalNotificationsPlugin.show(888, 'Family Guard',
+        'Family Guard updating your location', NotificationDetails());
+    await location.enableBackgroundMode(enable: true);
+
+    await location.changeNotificationOptions(
+      channelName: 'my_foreground',
+      title: 'Family Guard',
+      subtitle: 'Family Guard updating your location',
+      iconName: 'ic_bg_service_small',
+    );
+    await location.changeSettings(
+        interval: 600000, accuracy: lc.LocationAccuracy.high);
+    location.onLocationChanged.listen((position) async {
+      // log('start fetching location ${jsonEncode(position)}');
+      // Fluttertoast.showToast(msg: position.latitude.toString());
+      gc.Placemark placemark = (await gc.placemarkFromCoordinates(
+              position.latitude!, position.longitude!))
+          .first;
+      TrackingEntity trackingEntity = TrackingModel(
+        id: 0,
+        mobile: '',
+        country: placemark.country == null || placemark.country!.isEmpty
+            ? "No Country"
+            : placemark.country!.tr,
+        adminArea: placemark.administrativeArea == null ||
+                placemark.administrativeArea!.isEmpty
+            ? "No Admin Area"
+            : placemark.administrativeArea!.tr,
+        subAdminArea: placemark.subAdministrativeArea == null ||
+                placemark.subAdministrativeArea!.isEmpty
+            ? "No Sub Admin Area"
+            : placemark.subAdministrativeArea!.tr,
+        locality: placemark.locality == null || placemark.locality!.isEmpty
+            ? "No Locality"
+            : placemark.locality!.tr,
+        subLocality:
+            placemark.subLocality == null || placemark.subLocality!.isEmpty
+                ? "No Sub Locality"
+                : placemark.subLocality!.tr,
+        street: placemark.street == null || placemark.street!.isEmpty
+            ? "No Street Name"
+            : placemark.street!.tr,
+        postalCode:
+            placemark.postalCode == null || placemark.postalCode!.isEmpty
+                ? "No Postal Code"
+                : placemark.postalCode!,
+        lat: position.latitude!,
+        lon: position.longitude!,
+        speed: position.speed == 0.0 || position.speed! < 0.0
+            ? 0.0001
+            : position.speed!,
+      );
+      /*  location.changeNotificationOptions(
+            title: 'Family Guard',
+            subtitle: 'Geolocation detection ${currentLocation.latitude}',
+            iconName: 'ic_bg_service_small'); */
+
+      try {
+        Either<Failure, String> results = await AddNewUserLocationUsecase(
+            baseTrackingRepository: TrackingRepository(
+                baseTrackingDataSource: TrackingDataSource()))(TrackingParams(
+            accessToken: userEntity!.apiToken!,
+            trackingEntity: trackingEntity));
+        results.fold((l) {
+          log('Service locations error ${l.message}');
+        }, (r) {
+          log('Service locations $r');
+        });
+      } catch (e) {
+        log('Location Fetcher error ${e.toString()}');
+      }
+    });
   }
 
   UserEntity? userEntity =
@@ -77,9 +168,9 @@ class HomeProvider extends ChangeNotifier {
   Completer<GoogleMapController> completer = Completer<GoogleMapController>();
   late GoogleMapController mapController;
 
-  Location location = Location();
-  late PermissionStatus permissionGranted;
-  late LocationData locationData;
+  lc.Location location = lc.Location();
+  late lc.PermissionStatus permissionGranted;
+  late lc.LocationData locationData;
 
   initializeInitialCameraPosition() async {
     initialCameraPosition = const CameraPosition(
@@ -96,7 +187,7 @@ class HomeProvider extends ChangeNotifier {
         .then((value) {
       notifyListeners();
     });
-    await initializeBackroundService();
+    // await initializeBackroundService();
   }
 
   onMapCreated(GoogleMapController googleMapController) {
@@ -143,9 +234,9 @@ class HomeProvider extends ChangeNotifier {
 
   Future<bool> requestLocationPermission() async {
     permissionGranted = await location.hasPermission();
-    if (permissionGranted == PermissionStatus.denied) {
+    if (permissionGranted == lc.PermissionStatus.denied) {
       permissionGranted = await location.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
+      if (permissionGranted != lc.PermissionStatus.granted) {
         return false;
       }
     }
