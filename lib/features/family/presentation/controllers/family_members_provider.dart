@@ -49,10 +49,10 @@ class FamilyMembersProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void navigateToMemberDetailsScreen() {
+  void navigateToMemberDetailsScreen(UserEntity userEntity) {
     NavigationService.navigateTo(
         navigationMethod: NavigationMethod.push,
-        page: () => const ShowMemberScreen());
+        page: () =>  ShowMemberScreen(userEntity: userEntity,));
   }
 
   void navigateToAddMemberScreen() {

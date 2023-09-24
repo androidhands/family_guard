@@ -20,6 +20,7 @@ abstract class BaseEmergencyCallsDatasource {
       EmergencyCallParams emergencyCallParams);
   Future<List<PhoneCallEntity>> getCallsLog(String accessToken);
   Future<PhoneCallEntity> getCallLogBySid(CallLogParams callLogParams);
+  Future<String> getCallRecordingUrl(CallLogParams callLogParams);
 }
 
 class EmergencyCallsDatasource implements BaseEmergencyCallsDatasource {
@@ -111,6 +112,27 @@ class EmergencyCallsDatasource implements BaseEmergencyCallsDatasource {
     return await sl<ApiCaller>().requestPost(
       ApiEndPoint.getCallLogBySidPath,
       (data) => PhoneCallModel.fromJson(data),
+      token: callLogParams.accessToken,
+      body: callLogParams.toMap(),
+      onFailure: (ErrorMessage failureData) {
+        failureData.code == "23000"
+            ? throw ServerException(
+                message: 'Douplicated Entry',
+                code: failureData.code,
+              )
+            : throw ServerException(
+                message: failureData.message,
+                code: failureData.code,
+              );
+      },
+    );
+  }
+
+  @override
+  Future<String> getCallRecordingUrl(CallLogParams callLogParams) async {
+    return await sl<ApiCaller>().requestPost(
+      ApiEndPoint.getCallRecordingsBySidPath,
+      (data) => data,
       token: callLogParams.accessToken,
       body: callLogParams.toMap(),
       onFailure: (ErrorMessage failureData) {

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
+import 'package:family_guard/core/network/api_endpoint.dart';
 import 'package:family_guard/core/utils/app_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,7 +25,7 @@ enum BranchStatus {
 }
 
 Future<BitmapDescriptor> getMarkerIcon(
-    String imagePath, Size size, String name) async {
+    String imagePath, Size size, String name,String accessToken) async {
   final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
   final Canvas canvas = Canvas(pictureRecorder);
 
@@ -97,7 +98,7 @@ Future<BitmapDescriptor> getMarkerIcon(
 
   // Add image
   ui.Image image = await getImageFromPath(
-      imagePath, ""); // Alternatively use your own method to get the image
+      imagePath, accessToken); // Alternatively use your own method to get the image
   paintImage(canvas: canvas, image: image, rect: oval, fit: BoxFit.fitWidth);
 
   // Convert canvas to image
@@ -122,12 +123,15 @@ Future<ui.Image> getImageFromPath(String imagePath, String accessToken) async {
         'Basic YWJkZWxoYW1pZC5haG1lZC5hYmRvQGdtYWlsLmNvbTpBYmRvQEJvb2R5QDI1MjkwMA=='
   };
 
-  var response = await http.Client().get(
-      Uri.parse(
-          'https://development.uturnsoftware.com/api/members/GetMemberProfile?api_password=COLgGMo6KEiaY3cFhysY920Kd33SHmGG5cXD&imageUrl=Qv9dYrA8yYdfjMTqLvxEbreH7SM21692035394.jpg'),
-      headers: headers);
+  late Uint8List imageBytes;
 
-  Uint8List imageBytes = response.bodyBytes;
+  if (imagePath.isNotEmpty || imagePath != "No Data") {
+    var response = await http.Client().get(
+        Uri.parse(
+            'https://development.uturnsoftware.com/api/members/GetMemberProfile?api_password=${ApiEndPoint.apiPassword}&imageUrl=$imagePath'),
+        headers: headers);
+    imageBytes = response.bodyBytes;
+  }
 
   final Completer<ui.Image> completer = Completer();
 

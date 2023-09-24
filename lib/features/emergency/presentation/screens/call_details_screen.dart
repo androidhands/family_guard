@@ -11,6 +11,7 @@ import 'package:family_guard/core/widget/images/custom_svg_image.dart';
 import 'package:family_guard/features/emergency/data/models/time_zone_model.dart';
 import 'package:family_guard/features/emergency/domain/entities/phone_call_entity.dart';
 import 'package:family_guard/features/emergency/presentation/controller/call_details_provier.dart';
+import 'package:family_guard/features/emergency/presentation/widgets/custom_call_player_widget.dart';
 import 'package:family_guard/features/profile/presentation/widgets/custom_my_details_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -82,6 +83,10 @@ class CallDetailsScreen extends StatelessWidget {
                                   )),
                                 ],
                               ),
+                            ),
+                            CustomCallPlayerWidget(
+                              url:
+                                  'https://api.twilio.com/2010-04-01/Accounts/AC079c39fd77cf487f99a27a7a52756c24/Recordings/RE9f30dc0ca6e6786b8086dad5d000b255',
                             ),
                             CustomMyDetailsWidget(
                               title: tr(AppConstants.emergencyCase),

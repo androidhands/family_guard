@@ -124,5 +124,6 @@ Map<String, String> coreAr = {
   'STATE': 'State',
   'CALL_STATUS': 'Call Status',
   'DATE': 'Call Date',
-  'Duration': 'Call Duration'
+  'Duration': 'Call Duration',
+  'MEMBER_DETAILS': 'Member Details',
 };

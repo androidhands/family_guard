@@ -66,4 +66,15 @@ class EmergencyCallsRepository implements BaseEmergencyCallsRepository {
       return Left(ServerFailure(code: e.code, message: e.message));
     }
   }
+
+  @override
+  Future<Either<Failure, String>> getCallRecordingUrl(
+      CallLogParams callLogParams) async {
+    try {
+      return Right(await baseEmergencyCallsDatasource
+          .getCallRecordingUrl(callLogParams));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(code: e.code, message: e.message));
+    }
+  }
 }

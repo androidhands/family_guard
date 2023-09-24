@@ -5,6 +5,8 @@ PODS:
   - AppAuth/Core (1.6.2)
   - AppAuth/ExternalUserAgent (1.6.2):
     - AppAuth/Core
+  - background_location (0.0.1):
+    - Flutter
   - background_locator_2 (0.0.1):
     - Flutter
   - connectivity_plus (0.0.1):
@@ -155,6 +157,7 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - background_location (from `.symlinks/plugins/background_location/ios`)
   - background_locator_2 (from `.symlinks/plugins/background_locator_2/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
@@ -205,6 +208,8 @@ SPEC REPOS:
     - Toast
 
 EXTERNAL SOURCES:
+  background_location:
+    :path: ".symlinks/plugins/background_location/ios"
   background_locator_2:
     :path: ".symlinks/plugins/background_locator_2/ios"
   connectivity_plus:
@@ -258,6 +263,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
+  background_location: 1b80c1fe3abd9912bca298618f6e365abf6f588f
   background_locator_2: bc8a422343ab656d5bd98e08694c6f89fef20418
   connectivity_plus: 07c49e96d7fc92bc9920617b83238c4d178b446a
   Firebase: 07150e75d142fb9399f6777fa56a187b17f833a0
@@ -303,6 +309,6 @@ SPEC CHECKSUMS:
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
 
-PODFILE CHECKSUM: 520e98cf87c40cbbcae7063019467efb7556061d
+PODFILE CHECKSUM: 50248c923c4106d2520dfbefff54a76c4250c830
 
 COCOAPODS: 1.12.1

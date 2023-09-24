@@ -78,7 +78,7 @@ class FamilyScreen extends StatelessWidget {
                                             userEnt: provider.user,
                                             onPressed: () {
                                               provider
-                                                  .navigateToMemberDetailsScreen();
+                                                  .navigateToMemberDetailsScreen(e);
                                             },
                                           ),
                                         )

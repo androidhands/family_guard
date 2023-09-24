@@ -50,7 +50,7 @@ packages:
     source: hosted
     version: "2.11.0"
   audio_session:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: audio_session
       sha256: "8a2bc5e30520e18f3fb0e366793d78057fb64cd5287862c76af0c8771f2a52ad"
@@ -65,14 +65,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
-  background_locator_2:
-    dependency: transitive
-    description:
-      name: background_locator_2
-      sha256: "145ef41767306052cbb2159478c0369b83c9800740f7acc656530c263d371695"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.6"
   badges:
     dependency: "direct main"
     description:
@@ -113,14 +105,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
-  carp_background_location:
-    dependency: "direct main"
-    description:
-      name: carp_background_location
-      sha256: e419cf36d4471f832094cbed410acc0f00c3115d6b2a204b02deb289d19b4e84
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.0"
   change_app_package_name:
     dependency: "direct main"
     description:

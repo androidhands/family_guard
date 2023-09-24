@@ -338,6 +338,7 @@ class AppConstants {
   static const String personal = "PERSONAL";
 
   static const String addMember = "ADD_MEMBER";
+  static const String memberDetails = "MEMBER_DETAILS";
   static const String receivedRequests = "RECEIVED_REQUESTS";
   static const String sentRequests = "SEMT_REQUESTS";
 
@@ -356,15 +357,15 @@ class AppConstants {
   static const String noReceivedRequestFound = "NO_RECEIVED_REQUEST";
 
   static const String noMemberAdded = "NO_MEMBERS_ADDED";
-    static const String incomingCallMessage = 'INCOMINGCALLMESSAGE';
+  static const String incomingCallMessage = 'INCOMINGCALLMESSAGE';
 
   static const String emergencyCalls = "EMERGENCY_CALLS";
 
   static const String callsLog = "CALLS_LOG";
 
-  static const String emergencyCase  = "EMERGENCY_CASE";
+  static const String emergencyCase = "EMERGENCY_CASE";
 
-  static const String city  = "CITY";
+  static const String city = "CITY";
 
   static const String state = "STATE";
 

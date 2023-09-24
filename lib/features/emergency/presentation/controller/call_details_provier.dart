@@ -30,6 +30,8 @@ class CallDetailsProvier extends ChangeNotifier {
   late PhoneCallEntity callEntity;
   UserEntity user = Provider.of<MainProvider>(Get.context!).userCredentials!;
   bool isLoading = false;
+  bool isGettingRecordingUrl = false;
+  
   Completer<GoogleMapController> completer = Completer<GoogleMapController>();
   late GoogleMapController mapController;
   lc.Location location = lc.Location();
