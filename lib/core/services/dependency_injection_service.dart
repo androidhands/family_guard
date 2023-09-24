@@ -26,6 +26,7 @@ import 'package:family_guard/features/emergency/domain/repositories/base_emergen
 import 'package:family_guard/features/emergency/domain/usecases/add_new_caller_id_usecase.dart';
 import 'package:family_guard/features/emergency/domain/usecases/check_verified_caller_id_usecase.dart';
 import 'package:family_guard/features/emergency/domain/usecases/get_call_log_by_sid_usecase.dart';
+import 'package:family_guard/features/emergency/domain/usecases/get_call_record_url_usecase.dart';
 import 'package:family_guard/features/emergency/domain/usecases/get_calls_log_usecase.dart';
 import 'package:family_guard/features/emergency/domain/usecases/make_emergency_call_usecase.dart';
 import 'package:family_guard/features/family/data/data_source/family_connections_data_source.dart';
@@ -381,6 +382,8 @@ class DependencyInjectionServices {
 
     sl.registerLazySingleton(
         () => GetCallsLogUsecase(baseEmergencyCallsRepository: sl()));
+sl.registerLazySingleton(
+        () => GetCallRecordUrlUsecase(baseEmergencyCallsRepository: sl()));
 
     //datasource
     sl.registerLazySingleton<BaseEmergencyCallsDatasource>(

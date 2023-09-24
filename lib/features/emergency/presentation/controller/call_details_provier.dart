@@ -9,6 +9,7 @@ import 'package:family_guard/core/utils/app_constants.dart';
 import 'package:family_guard/core/widget/dialog_service.dart';
 import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
 import 'package:family_guard/features/emergency/domain/usecases/get_call_log_by_sid_usecase.dart';
+import 'package:family_guard/features/emergency/domain/usecases/get_call_record_url_usecase.dart';
 import 'package:flutter/material.dart';
 
 import 'package:family_guard/features/emergency/domain/entities/phone_call_entity.dart';
@@ -28,10 +29,11 @@ class CallDetailsProvier extends ChangeNotifier {
     getCallDetails();
   }
   late PhoneCallEntity callEntity;
+  late String recordUrl;
   UserEntity user = Provider.of<MainProvider>(Get.context!).userCredentials!;
   bool isLoading = false;
   bool isGettingRecordingUrl = false;
-  
+
   Completer<GoogleMapController> completer = Completer<GoogleMapController>();
   late GoogleMapController mapController;
   lc.Location location = lc.Location();
@@ -52,6 +54,7 @@ class CallDetailsProvier extends ChangeNotifier {
     }, (r) {
       callEntity = r;
       initializeInitialCameraPosition();
+      getRecordUrl();
     });
     isLoading = false;
     notifyListeners();
@@ -97,5 +100,21 @@ class CallDetailsProvier extends ChangeNotifier {
       }
     }
     return true;
+  }
+
+  void getRecordUrl() async {
+    isGettingRecordingUrl = true;
+    Either<Failure, String> results = await sl<GetCallRecordUrlUsecase>()(
+        CallLogParams(user.apiToken!, phoneCallEntity.sid!));
+    results.fold((l) async {
+      await DialogWidget.showCustomDialog(
+          context: Get.context!,
+          title: l.message,
+          buttonText: tr(AppConstants.ok));
+    }, (r) {
+      recordUrl = r;
+    });
+    isGettingRecordingUrl = false;
+    notifyListeners();
   }
 }

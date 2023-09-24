@@ -60,5 +60,5 @@ class ApiEndPoint {
   static const String getCallsLogPath =
       '/GetCallsLogByUser?api_password=$apiPassword';
   static const String getCallLogBySidPath = '/GetCallLogBySid';
-   static const String getCallRecordingsBySidPath = '/GetCallLogBySid';
+  static const String getCallRecordingsBySidPath = '/GetCallRecording';
 }

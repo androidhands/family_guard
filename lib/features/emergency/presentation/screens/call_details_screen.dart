@@ -84,10 +84,15 @@ class CallDetailsScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            CustomCallPlayerWidget(
-                              url:
-                                  'https://api.twilio.com/2010-04-01/Accounts/AC079c39fd77cf487f99a27a7a52756c24/Recordings/RE9f30dc0ca6e6786b8086dad5d000b255',
-                            ),
+                            if (provider.callEntity.status == "completed")
+                              provider.isGettingRecordingUrl
+                                  ? Center(
+                                      child: CustomLoadingIndicators
+                                          .defaultLoading(),
+                                    )
+                                  : CustomCallPlayerWidget(
+                                      url: provider.recordUrl,
+                                    ),
                             CustomMyDetailsWidget(
                               title: tr(AppConstants.emergencyCase),
                               subTitle: provider.callEntity.emergencyType

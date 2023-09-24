@@ -8,6 +8,7 @@ import 'package:dartz/dartz.dart';
 import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/error/failure.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
+import 'package:family_guard/core/services/date_parser.dart';
 import 'package:family_guard/core/services/dependency_injection_service.dart';
 import 'package:family_guard/core/services/navigation_service.dart';
 import 'package:family_guard/core/utils/app_constants.dart';
@@ -392,11 +393,12 @@ class HomeProvider extends ChangeNotifier {
             draggable: false,
             markerId: MarkerId("${u.id}"),
             position: LatLng(u.trackingEntity!.lat, u.trackingEntity!.lon),
-            icon: await getMarkerIcon(
-                u.imageUrl, Size(200.w, 200.h), u.firstName,userEntity!.apiToken!),
+            icon: await getMarkerIcon(u.imageUrl, Size(200.w, 200.h),
+                u.firstName, userEntity!.apiToken!),
             infoWindow: InfoWindow(
                 title: u.userName,
-                snippet: 'Updated At: ${u.trackingEntity!.updatedAt}')));
+                snippet:
+                    'Updated At: ${DateParser().dateFormatterOnlyDateTime(u.trackingEntity!.updatedAt)}')));
         log('marker added');
       }
 
