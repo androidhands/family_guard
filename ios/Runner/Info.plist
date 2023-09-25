@@ -93,5 +93,7 @@
 	<true/>
 	<key>kTCCServiceMediaLibrary</key>
 	<string>media</string>
+	<key>NSMicrophoneUsageDescription</key>
+<string>Need microphone access for uploading audio</string>
 </dict>
 </plist>
