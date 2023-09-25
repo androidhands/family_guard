@@ -24,7 +24,10 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return android;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for android - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
@@ -49,21 +52,13 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyA_Cl4tTsUE0_H5N5A7OutO4O31B6cc85Q',
-    appId: '1:665644469567:android:ecc940e1a05c62327a578a',
-    messagingSenderId: '665644469567',
-    projectId: 'family-guard-c555c',
-    storageBucket: 'family-guard-c555c.appspot.com',
-  );
-
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyD8CyWX66bVSqSklcAbTVQHdiRkeZzgcl0',
-    appId: '1:665644469567:ios:20901d91cc407f137a578a',
+    appId: '1:665644469567:ios:d18993807905c5cd7a578a',
     messagingSenderId: '665644469567',
     projectId: 'family-guard-c555c',
     storageBucket: 'family-guard-c555c.appspot.com',
-    iosClientId: '665644469567-5273cl968lc5i2rj1rs7hr7eg35j6aio.apps.googleusercontent.com',
-    iosBundleId: 'com.familyguard.familyGuard',
+    androidClientId: '665644469567-82tnsbr9ucn5nb2kn4j976hajtr5jh8v.apps.googleusercontent.com',
+    iosBundleId: 'com.familyguard.familyGuardApp',
   );
 }
