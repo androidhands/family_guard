@@ -3,13 +3,16 @@ import 'package:get/get.dart';
 
 import '../../../../core/services/navigation_service.dart';
 import '../../../../core/utils/utils.dart';
-enum RequestType{Sent,Received}
-enum MemberPermissions{Emergency,Tracking}
+
+enum RequestType { Sent, Received }
+
+enum MemberPermissions { Emergency, Tracking }
+
 enum Relationships {
   Select_Relation,
-  Fahter,
+  Father,
   Mother,
-  Hausband,
+  Husband,
   Wife,
   Son,
   Daughter,
@@ -28,7 +31,7 @@ enum Relationships {
 Map<Relationships, List<Relationships>> getReciverRelations() {
   return {
     Relationships.Select_Relation: [Relationships.Select_Relation],
-    Relationships.Fahter: [
+    Relationships.Father: [
       Relationships.Select_Relation,
       Relationships.Son,
       Relationships.Daughter
@@ -39,16 +42,16 @@ Map<Relationships, List<Relationships>> getReciverRelations() {
       Relationships.Daughter
     ],
     Relationships.Friend: [Relationships.Select_Relation, Relationships.Friend],
-    Relationships.Hausband: [Relationships.Select_Relation, Relationships.Wife],
-    Relationships.Wife: [Relationships.Select_Relation, Relationships.Hausband],
+    Relationships.Husband: [Relationships.Select_Relation, Relationships.Wife],
+    Relationships.Wife: [Relationships.Select_Relation, Relationships.Husband],
     Relationships.Daughter: [
       Relationships.Select_Relation,
-      Relationships.Fahter,
+      Relationships.Father,
       Relationships.Mother
     ],
     Relationships.Son: [
       Relationships.Select_Relation,
-      Relationships.Fahter,
+      Relationships.Father,
       Relationships.Mother
     ],
     Relationships.Sister: [

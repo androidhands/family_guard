@@ -37,7 +37,6 @@ class SignUpScreen extends StatelessWidget {
             isScrolling: true,
             backOnPress: () => NavigationService.goBack(),
             title: tr(AppConstants.signUp),
-          
             body: Form(
               key: provider.formKey,
               child: Column(
@@ -124,25 +123,28 @@ class SignUpScreen extends StatelessWidget {
                   SizedBox(
                     height: AppSizes.pH3,
                   ),
-                  provider.isloadingCountryCode?Center(child: CustomLoadingIndicators.defaultLoading(),):
-                  IntlPhoneField(
-                    decoration: InputDecoration(
-                      labelText: tr(AppConstants.phoneNumber),
-                      border: const OutlineInputBorder(
-                        borderSide: BorderSide(),
-                      ),
-                    ),
-                    dropdownIcon: const Icon(
-                      Icons.arrow_drop_down,
-                      color: ThemeColorLight.pinkColor,
-                    ),
-                    initialCountryCode: provider.countryCode,
-                    controller: provider.phoneController,
-                    onChanged: (phone) {
-                      provider.setPhoneNumber(phone);
-                      provider.checkFormReadiness();
-                    },
-                  ),
+                  provider.isloadingCountryCode
+                      ? Center(
+                          child: CustomLoadingIndicators.defaultLoading(),
+                        )
+                      : IntlPhoneField(
+                          decoration: InputDecoration(
+                            labelText: tr(AppConstants.phoneNumber),
+                            border: const OutlineInputBorder(
+                              borderSide: BorderSide(),
+                            ),
+                          ),
+                          dropdownIcon: const Icon(
+                            Icons.arrow_drop_down,
+                            color: ThemeColorLight.pinkColor,
+                          ),
+                          initialCountryCode: provider.countryCode,
+                          controller: provider.phoneController,
+                          onChanged: (phone) {
+                            provider.setPhoneNumber(phone);
+                            provider.checkFormReadiness();
+                          },
+                        ),
                   SizedBox(
                     height: AppSizes.pH3,
                   ),
@@ -188,16 +190,7 @@ class SignUpScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: AppSizes.pH3,
-                  ),
-                  ChooseGenderComponent(
-                    onChanged: (gender) {
-                      provider.setSelectedGender(gender);
-                    },
-                    selectedGender: provider.selectedGenders,
-                  ),
-                  SizedBox(
-                    height: AppSizes.pH8,
+                    height: AppSizes.pH9,
                   ),
                   Align(
                     alignment: AlignmentDirectional.centerStart,

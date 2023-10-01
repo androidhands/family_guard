@@ -65,13 +65,13 @@ class MyDetailsScreen extends StatelessWidget {
                         subTitle: provider.user.email,
                         hasDevider: false,
                       ),
-                      CustomMyDetailsWidget(
+                      /*   CustomMyDetailsWidget(
                         title: tr(AppConstants.gender),
                         subTitle: provider.user.gender == "0"
                             ? tr(AppConstants.male)
                             : tr(AppConstants.female),
                         hasDevider: false,
-                      ),
+                      ), */
                     ],
                   ),
                 );

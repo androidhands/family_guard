@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "665644469567-82tnsbr9ucn5nb2kn4j976hajtr5jh8v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.familyguard.family_guard",
+            "certificate_hash": "6fb28465514a53b3beabd638b6840165f1cbcbf5"
+          }
+        },
+        {
           "client_id": "665644469567-ou0gvfhlojjeea1f7d0uqi914e3m2fbb.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "665644469567-ou0gvfhlojjeea1f7d0uqi914e3m2fbb.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "665644469567-5273cl968lc5i2rj1rs7hr7eg35j6aio.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.familyguard.familyGuard"
+              }
             }
           ]
         }

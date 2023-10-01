@@ -44,7 +44,7 @@ class SignUpProvider extends ChangeNotifier {
 
   ///Data
 
-  Genders? selectedGenders;
+  Genders? selectedGenders = Genders.male;
   late SignUpParams _signUpParameters;
 
   ///Design related vars

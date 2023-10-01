@@ -101,6 +101,7 @@ dependencies:
   flutter_background_service_ios: ^5.0.0
   just_audio: ^0.9.35
   audio_session: ^0.1.16
+  webview_flutter: ^4.2.4
 
 
 
