@@ -6,12 +6,14 @@ import 'package:dartz/dartz.dart';
 import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/error/failure.dart';
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
+import 'package:family_guard/core/services/navigation_service.dart';
 import 'package:family_guard/core/utils/app_constants.dart';
 import 'package:family_guard/core/widget/custom_loading_indicator.dart';
 import 'package:family_guard/features/authentication/domain/entities/address_entity.dart';
 import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
 import 'package:family_guard/features/authentication/domain/usecases/delete_user_account_usecase.dart';
 import 'package:family_guard/features/authentication/domain/usecases/save_user_credentials_usecase.dart';
+import 'package:family_guard/features/authentication/presentation/screens/login_screen.dart';
 import 'package:family_guard/features/profile/domain/usecases/get_user_address_usecase.dart';
 import 'package:family_guard/features/profile/domain/usecases/save_profile_image_usecase.dart';
 import 'package:flutter/material.dart';
@@ -232,6 +234,8 @@ class ProfileProvider extends ChangeNotifier {
     }, (r) async {
       await DialogWidget.showCustomDialog(
           context: Get.context!, title: r, buttonText: tr(AppConstants.ok));
+      NavigationService.goBack();
+      NavigationService.offAll(page: () => const LoginScreen());
     });
     isLogOut = false;
     notifyListeners();

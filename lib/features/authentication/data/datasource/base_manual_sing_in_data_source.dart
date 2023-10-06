@@ -85,6 +85,24 @@ class ManualSingInDataSource implements BaseManualSingInDataSource {
 
   @override
   Future<String> deleteUserAccount(String token) async {
+    final cacheDir = await getTemporaryDirectory();
+
+    if (cacheDir.existsSync()) {
+      if (Platform.isAndroid) {
+        cacheDir.deleteSync(recursive: true);
+      }
+    }
+
+    final appDir = await getApplicationSupportDirectory();
+
+    if (appDir.existsSync()) {
+      if (Platform.isAndroid) {
+        appDir.deleteSync(recursive: true);
+      }
+    }
+    sl<SharedPreferencesServices>().clearAll();
+    await FirebaseAuth.instance.signOut();
+
     return await sl<ApiCaller>().requestPost(
       ApiEndPoint.deleteUserAccountPath,
       (data) => data,
