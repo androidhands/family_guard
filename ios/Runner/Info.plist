@@ -44,10 +44,9 @@
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>Music!</string>
+	
 	<key>NSCameraUsageDescription</key>
-	<string>camera</string>
+	<string>you need camera to take profile photo</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Always and when in use!</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -95,5 +94,7 @@
 	<string>media</string>
 	<key>NSMicrophoneUsageDescription</key>
 <string>Need microphone access for uploading audio</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>we need access photo to upload profile image</string>
 </dict>
 </plist>
