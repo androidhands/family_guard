@@ -15,6 +15,7 @@ import 'package:family_guard/features/authentication/domain/repositories/base_us
 import 'package:family_guard/features/authentication/domain/repositories/base_user_credentials_repository.dart';
 import 'package:family_guard/features/authentication/domain/usecases/check_user_credentials_usecase.dart';
 import 'package:family_guard/features/authentication/domain/usecases/check_verification_code_usecase.dart';
+import 'package:family_guard/features/authentication/domain/usecases/delete_user_account_usecase.dart';
 import 'package:family_guard/features/authentication/domain/usecases/get_cached_user_credentials_usecase.dart';
 import 'package:family_guard/features/authentication/domain/usecases/manual_sign_up_usecase.dart';
 import 'package:family_guard/features/authentication/domain/usecases/save_user_address_usecase.dart';
@@ -138,7 +139,7 @@ class DependencyInjectionServices {
   }
 
   initializeLocationFetcher() {
-   // sl.registerLazySingleton<LocationFetcher>(() => LocationFetcher.instance);
+    // sl.registerLazySingleton<LocationFetcher>(() => LocationFetcher.instance);
     //sl.registerLazySingleton(() => LocationDetectorProvider());
   }
 
@@ -219,6 +220,8 @@ class DependencyInjectionServices {
     //usecases
     sl.registerLazySingleton(
         () => ManualSignInUsecase(baseManualSignInRepository: sl()));
+    sl.registerLazySingleton(
+        () => DeleteUserAccountUsecase(baseManualSignInRepository: sl()));
 
     sl.registerLazySingleton<BaseManualSingInDataSource>(
         () => ManualSingInDataSource());
@@ -382,7 +385,7 @@ class DependencyInjectionServices {
 
     sl.registerLazySingleton(
         () => GetCallsLogUsecase(baseEmergencyCallsRepository: sl()));
-sl.registerLazySingleton(
+    sl.registerLazySingleton(
         () => GetCallRecordUrlUsecase(baseEmergencyCallsRepository: sl()));
 
     //datasource

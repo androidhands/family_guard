@@ -8,4 +8,5 @@ abstract class BaseManualSignInRepository {
   Future<Either<Failure, UserEntity>> signUpUserManually(
       SignInParams signInParams);
   Future<Either<Failure, bool>> signOutUser();
+   Future<Either<Failure,String>> deleteUserAccount(String token);
 }

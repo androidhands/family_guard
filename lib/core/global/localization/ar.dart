@@ -126,4 +126,5 @@ Map<String, String> coreAr = {
   'DATE': 'Call Date',
   'Duration': 'Call Duration',
   'MEMBER_DETAILS': 'Member Details',
+  'DELETE_ACCOUNT': 'Delete My Account',
 };

@@ -10,6 +10,7 @@ import 'package:family_guard/core/utils/app_constants.dart';
 import 'package:family_guard/core/widget/custom_loading_indicator.dart';
 import 'package:family_guard/features/authentication/domain/entities/address_entity.dart';
 import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
+import 'package:family_guard/features/authentication/domain/usecases/delete_user_account_usecase.dart';
 import 'package:family_guard/features/authentication/domain/usecases/save_user_credentials_usecase.dart';
 import 'package:family_guard/features/profile/domain/usecases/get_user_address_usecase.dart';
 import 'package:family_guard/features/profile/domain/usecases/save_profile_image_usecase.dart';
@@ -171,7 +172,6 @@ class ProfileProvider extends ChangeNotifier {
                           )),
                       IconButton(
                           onPressed: () async {
-                            
                             isUploadingImage = true;
 
                             await ImagePicker()
@@ -218,5 +218,22 @@ class ProfileProvider extends ChangeNotifier {
       isLogOut = false;
       notifyListeners();
     });
+  }
+
+  void deleteMyAccount(BuildContext context) async {
+    isLogOut = true;
+    Either<Failure, String> result =
+        await sl<DeleteUserAccountUsecase>()(user.apiToken!);
+    result.fold((l) async {
+      await DialogWidget.showCustomDialog(
+          context: Get.context!,
+          title: l.message,
+          buttonText: tr(AppConstants.ok));
+    }, (r) async {
+      await DialogWidget.showCustomDialog(
+          context: Get.context!, title: r, buttonText: tr(AppConstants.ok));
+    });
+    isLogOut = false;
+    notifyListeners();
   }
 }

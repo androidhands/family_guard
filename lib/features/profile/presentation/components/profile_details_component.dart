@@ -144,6 +144,54 @@ class ProfileDetailsComponent extends StatelessWidget {
                     text: tr(
                       AppConstants.logOut,
                     )),
+                const CustomProfileDivider(),
+                ProfileItemComponent(
+                    onTap: () {
+                      Get.defaultDialog(
+                          title: tr(AppConstants.deleteMyAccount),
+                          content: Container(
+                            height: AppSizes.pH100,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.circular(AppSizes.br40),
+                            ),
+                            child: Center(
+                              child: CustomText(
+                                  'Are you shur to delete your account permenently? You can not access your data again!',
+                                  textStyle: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .copyWith(
+                                          color: ThemeColorLight.pinkColor,
+                                          fontSize: AppSizes.h6)),
+                            ),
+                          ),
+                          confirm: CustomElevatedButton(
+                            onPressed: () {
+                              provider.deleteMyAccount(context);
+                            },
+                            text: tr(AppConstants.deleteMyAccount),
+                            isLoading: provider.isLogOut,
+                          ),
+                          cancel: CustomOutlinedButton(
+                            onPressed: () {
+                              NavigationService.goBack();
+                            },
+                            text: tr(AppConstants.cancel),
+                          ),
+                          titleStyle: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(
+                                  color: ThemeColorLight.pinkColor,
+                                  fontSize: AppSizes.h4));
+
+                      // provider.logOut(context);
+                    },
+                    path: AppAssets.deleteSvg,
+                    text: tr(
+                      AppConstants.deleteMyAccount,
+                    )),
               ],
             ),
           ])),

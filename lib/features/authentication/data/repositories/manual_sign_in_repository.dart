@@ -22,13 +22,20 @@ class ManualSignInRepository implements BaseManualSignInRepository {
       return Left(ServerFailure(message: ex.message, code: ex.code));
     }
   }
-  
 
   @override
-  Future<Either<Failure, bool>> signOutUser()async {
-     try {
-      return Right(
-          await baseManualSingInDataSource.signOutUser());
+  Future<Either<Failure, bool>> signOutUser() async {
+    try {
+      return Right(await baseManualSingInDataSource.signOutUser());
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message, code: '0'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> deleteUserAccount(String token) async {
+    try {
+      return Right(await baseManualSingInDataSource.deleteUserAccount(token));
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message, code: '0'));
     }

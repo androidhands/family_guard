@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,12 +19,12 @@ import '../models/user_model.dart';
 abstract class BaseManualSingInDataSource {
   Future<UserEntity> signInUserManually(SignInParams signInParams);
   Future<bool> signOutUser();
+  Future<String> deleteUserAccount(String token);
 }
 
 class ManualSingInDataSource implements BaseManualSingInDataSource {
   @override
   Future<UserEntity> signInUserManually(SignInParams signInParams) async {
-   
     return await sl<ApiCaller>().requestPost(
       ApiEndPoint.manualSignInPath,
       (data) => UserModel.fromJson(data),
@@ -51,19 +50,17 @@ class ManualSingInDataSource implements BaseManualSingInDataSource {
       final cacheDir = await getTemporaryDirectory();
 
       if (cacheDir.existsSync()) {
-        if(Platform.isAndroid){
-cacheDir.deleteSync(recursive: true);
+        if (Platform.isAndroid) {
+          cacheDir.deleteSync(recursive: true);
         }
-        
       }
 
       final appDir = await getApplicationSupportDirectory();
 
       if (appDir.existsSync()) {
-        if(Platform.isAndroid){
-appDir.deleteSync(recursive: true);
+        if (Platform.isAndroid) {
+          appDir.deleteSync(recursive: true);
         }
-        
       }
       sl<SharedPreferencesServices>().clearAll();
       await FirebaseAuth.instance.signOut();
@@ -84,5 +81,20 @@ appDir.deleteSync(recursive: true);
     } on FirebaseAuthException catch (e) {
       throw ServerException(message: e.message!, code: '');
     }
+  }
+
+  @override
+  Future<String> deleteUserAccount(String token) async {
+    return await sl<ApiCaller>().requestPost(
+      ApiEndPoint.deleteUserAccountPath,
+      (data) => data,
+      token: token,
+      onFailure: (ErrorMessage failureData) {
+        throw ServerException(
+          message: failureData.message,
+          code: failureData.code,
+        );
+      },
+    );
   }
 }

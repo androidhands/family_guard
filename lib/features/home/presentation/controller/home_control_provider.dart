@@ -189,10 +189,13 @@ class HomeControlProvider with ChangeNotifier {
 
   checkUserCountry() async {
     log(userEntity!.country);
-
+    startAnimation();
     if (userEntity!.country == "US") {
-      await checkUserIsInUS();
+      startAnimation();
+      await checkVeriviedCallerId();
+      // await checkUserIsInUS();
     } else {
+      startAnimation();
       await DialogWidget.showCustomDialog(
           context: Get.context!,
           title:
@@ -202,6 +205,7 @@ class HomeControlProvider with ChangeNotifier {
   }
 
   Future checkUserIsInUS() async {
+    startAnimation();
     await gl.Geolocator.getCurrentPosition(
             desiredAccuracy: gl.LocationAccuracy.high,
             forceAndroidLocationManager: true)
@@ -212,8 +216,10 @@ class HomeControlProvider with ChangeNotifier {
       log('Map location ${placemark.isoCountryCode}');
 
       if (placemark.isoCountryCode == "US") {
+        startAnimation();
         await checkVeriviedCallerId();
       } else {
+        startAnimation();
         await DialogWidget.showCustomDialog(
             context: Get.context!,
             title:

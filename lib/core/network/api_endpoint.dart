@@ -11,6 +11,8 @@ class ApiEndPoint {
   static const String resetPasswordPath = '/users/ResetPassword';
   static const String manualSignInPath =
       '/users/login?api_password=$apiPassword';
+  static const String deleteUserAccountPath =
+      '/users/DeleteUserAccount?api_password=$apiPassword';
   static const String logoutPath = '/users/logout?api_password=$apiPassword';
 
   static const String getAllNotifications = "/users/GetUserNotifications";

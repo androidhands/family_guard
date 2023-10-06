@@ -372,4 +372,6 @@ class AppConstants {
   static const String callStatus = "CALL_STATUS";
 
   static const String date = "DATE";
+
+  static const String deleteMyAccount = "DELETE_ACCOUNT";
 }

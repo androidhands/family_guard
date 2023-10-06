@@ -378,4 +378,6 @@ class AppAssets {
   static const String requestCanceled = "${svgImagePath}request_canceled.svg";
   static const String incominCall = "${svgImagePath}incoming_call.svg";
    static const String emergencyCallSvg = "${svgImagePath}call_emergency.svg";
+
+  static const String deleteSvg = "${svgImagePath}delete.svg";
 }
