@@ -25,7 +25,7 @@ enum BranchStatus {
 }
 
 Future<BitmapDescriptor> getMarkerIcon(
-    String imagePath, Size size, String name,String accessToken) async {
+    String imagePath, Size size, String name, String accessToken) async {
   final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
   final Canvas canvas = Canvas(pictureRecorder);
 
@@ -97,8 +97,8 @@ Future<BitmapDescriptor> getMarkerIcon(
   canvas.clipPath(Path()..addOval(oval));
 
   // Add image
-  ui.Image image = await getImageFromPath(
-      imagePath, accessToken); // Alternatively use your own method to get the image
+  ui.Image image = await getImageFromPath(imagePath,
+      accessToken); // Alternatively use your own method to get the image
   paintImage(canvas: canvas, image: image, rect: oval, fit: BoxFit.fitWidth);
 
   // Convert canvas to image
@@ -125,12 +125,13 @@ Future<ui.Image> getImageFromPath(String imagePath, String accessToken) async {
 
   late Uint8List imageBytes;
 
-  if (imagePath.isNotEmpty || imagePath != "No Data") {
+  if (imagePath != "No Data") {
     var response = await http.Client().get(
         Uri.parse(
             'https://development.uturnsoftware.com/api/members/GetMemberProfile?api_password=${ApiEndPoint.apiPassword}&imageUrl=$imagePath'),
         headers: headers);
     imageBytes = response.bodyBytes;
+    print('image bytes $imagePath $imageBytes');
   }
 
   final Completer<ui.Image> completer = Completer();
