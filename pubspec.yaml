@@ -4,7 +4,7 @@ description: Instant Emergency App Protecting Family And Kids
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 
-version: 1.0.0+1
+version: 1.0.0+6
 
 environment:
   sdk: '>=3.0.5 <4.0.0'

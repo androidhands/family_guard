@@ -126,13 +126,17 @@ class ProfileProvider extends ChangeNotifier {
     Map<Permission, PermissionStatus> statuses = await [
       Permission.camera,
       Permission.storage,
-      Permission.mediaLibrary,
+      if (Platform.isAndroid) Permission.mediaLibrary,
       //add more permission to request here.
     ].request();
     if (Platform.isAndroid) {
       if (statuses[Permission.camera]!.isGranted) {
         if (statuses[Permission.storage]!.isGranted) {
-          if (statuses[Permission.mediaLibrary]!.isGranted) {
+          if (Platform.isAndroid) {
+            if (statuses[Permission.mediaLibrary]!.isGranted) {
+              showImageDialog();
+            }
+          } else if (Platform.isIOS) {
             showImageDialog();
           }
         }
