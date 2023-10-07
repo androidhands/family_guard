@@ -48,15 +48,15 @@
 	<key>NSCameraUsageDescription</key>
 	<string>you need camera to take profile photo</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Always and when in use!</string>
+	<string>We need location usage to update your location to enable your family members to track you</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Can I haz location always?</string>
+	<string>We need location usage to update your location to enable your family members to track you</string>
 	<key>NSLocationUsageDescription</key>
-	<string>Older devices need location.</string>
+	<string>We need location usage to update your location to enable your family members to track you</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Need location when in use</string>
+	<string>We need location usage to update your location to enable your family members to track you</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>photos</string>
+	<string>we need access photo to upload profile image</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
