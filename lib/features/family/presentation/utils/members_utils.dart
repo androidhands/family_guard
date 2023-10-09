@@ -1,3 +1,4 @@
+import 'package:family_guard/features/authentication/domain/entities/user_entity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -144,6 +145,32 @@ void showCustromReceiverDropDwonDialog(
                         title: getReciverRelations()[sender]![index]
                             .name
                             .replaceAll("_", " ")))).toList()),
+      )
+      /*   onCancel: () {
+          NavigationService.goBack();
+        } */
+      );
+}
+
+void showMembersDropDwonDialog(Function(UserEntity) onSelected,
+    List<UserEntity> userEntity, String title) {
+  Get.defaultDialog(
+      title: title, //tr(AppConstants.selectAccountType),
+      content: SizedBox(
+        height: 300,
+        width: 200,
+        child: ListView(
+            children: List.generate(
+                    userEntity.length,
+                    (index) => GestureDetector(
+                        onTap: () {
+                          onSelected(userEntity[index]);
+                          NavigationService.goBack();
+                        },
+                        child: CustomTitleCard(
+                            title:
+                                '${userEntity[index].firstName}  ${userEntity[index].mobile}')))
+                .toList()),
       )
       /*   onCancel: () {
           NavigationService.goBack();

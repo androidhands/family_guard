@@ -374,4 +374,8 @@ class AppConstants {
   static const String date = "DATE";
 
   static const String deleteMyAccount = "DELETE_ACCOUNT";
+
+  static const String requestHelp = "REQUEST_HELP";
+
+  static const String sendHelpRequest = "SEND_HELP_REQUEST";
 }

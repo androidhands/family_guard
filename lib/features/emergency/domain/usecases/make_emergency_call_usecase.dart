@@ -27,6 +27,7 @@ class EmergencyCallParams extends Equatable {
   final String country;
   final double currentLat;
   final double currentLon;
+  final String to;
   const EmergencyCallParams(
       {required this.accessToken,
       required this.emergencyCase,
@@ -35,7 +36,8 @@ class EmergencyCallParams extends Equatable {
       required this.city,
       required this.country,
       required this.currentLat,
-      required this.currentLon});
+      required this.currentLon,
+      required this.to});
 
   @override
   List<Object?> get props => [
@@ -46,7 +48,8 @@ class EmergencyCallParams extends Equatable {
         city,
         country,
         currentLat,
-        currentLon
+        currentLon,
+        to
       ];
 
   Map<String, dynamic> toMap() {
@@ -58,7 +61,8 @@ class EmergencyCallParams extends Equatable {
       'city': city,
       'country': country,
       'current_lat': currentLat,
-      'current_lon': currentLon
+      'current_lon': currentLon,
+      'to':to
     };
   }
 }

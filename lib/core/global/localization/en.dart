@@ -128,5 +128,7 @@ Map<String, String> coreEn = {
   'DATE': 'Call Date',
   'Duration': 'Call Duration',
   'MEMBER_DETAILS': 'Member Details',
-  'DELETE_ACCOUNT':'Delete My Account',
+  'DELETE_ACCOUNT': 'Delete My Account',
+  'REQUEST_HELP': 'Request Help',
+  'SEND_HELP_REQUEST': 'Send Help Request',
 };

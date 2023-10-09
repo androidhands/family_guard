@@ -1,13 +1,12 @@
 import 'package:family_guard/core/global/localization/app_localization.dart';
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
 import 'package:family_guard/core/services/navigation_service.dart';
-import 'package:family_guard/core/utils/app_assets.dart';
 import 'package:family_guard/core/utils/app_constants.dart';
 import 'package:family_guard/core/utils/app_sizes.dart';
+import 'package:family_guard/core/widget/buttons/custom_elevated_button.dart';
 import 'package:family_guard/core/widget/custom_appbar.dart';
 import 'package:family_guard/core/widget/custom_loading_indicator.dart';
 import 'package:family_guard/core/widget/custom_text.dart';
-import 'package:family_guard/core/widget/images/custom_svg_image.dart';
 import 'package:family_guard/features/emergency/presentation/controller/emergency_calls_provider.dart';
 import 'package:family_guard/features/emergency/presentation/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -39,19 +38,35 @@ class EmergencyCallScreen extends StatelessWidget {
                   padding: EdgeInsets.all(AppSizes.pW5),
                   child: SingleChildScrollView(
                     child: SingleChildScrollView(
-                      child: Column(
-                          children: List.generate(
-                              EmergencyTypes.values.length,
-                              (index) => CustomEmergencyTypeWidget(
-                                    type: EmergencyTypes.values[index],
-                                    onPresses: () {
-                                      provider.setSelectedEmergencyType(
-                                          EmergencyTypes.values[index]);
-                                    },
-                                    isLoading: provider.isLoading &&
-                                        EmergencyTypes.values[index] ==
-                                            provider.selectedEmergencyTypes,
-                                  ))),
+                      child: provider.isLoadingMembers
+                          ? Center(
+                              child: CustomLoadingIndicators.defaultLoading(),
+                            )
+                          : provider.myMembers.isEmpty
+                              ? Center(
+                                  child: CustomText(
+                                      'You have not any members to request help from them',
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .displayMedium!
+                                          .copyWith(
+                                              color:
+                                                  ThemeColorLight.pinkColor)))
+                              : Column(
+                                  children: List.generate(
+                                      EmergencyTypes.values.length,
+                                      (index) => CustomEmergencyTypeWidget(
+                                            type: EmergencyTypes.values[index],
+                                            onPresses: () {
+                                              provider.setSelectedEmergencyType(
+                                                  EmergencyTypes.values[index],
+                                                  context);
+                                            },
+                                            isLoading: provider.isLoading &&
+                                                EmergencyTypes.values[index] ==
+                                                    provider
+                                                        .selectedEmergencyTypes,
+                                          ))),
                     ),
                   ),
                 ));
@@ -86,15 +101,29 @@ class CustomEmergencyTypeWidget extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CustomText(tr(type.name),
-                  textAlign: TextAlign.start,
-                  textStyle: Theme.of(context).textTheme.labelMedium!.copyWith(
-                      color: ThemeColorLight.pinkColor,
-                      fontSize: AppSizes.h4,
-                      fontWeight: FontWeight.bold)),
-              isLoading
-                  ? CustomLoadingIndicators.defaultLoading()
-                  : CustomSvgImage.square(path: AppAssets.emergencyCallSvg),
+              Expanded(
+                flex: 1,
+                child: CustomText(tr(type.name),
+                    textAlign: TextAlign.start,
+                    textStyle: Theme.of(context)
+                        .textTheme
+                        .labelMedium!
+                        .copyWith(
+                            color: ThemeColorLight.pinkColor,
+                            fontSize: AppSizes.h4,
+                            fontWeight: FontWeight.bold)),
+              ),
+              Expanded(
+                  flex: 1,
+                  child: isLoading
+                      ? CustomLoadingIndicators.defaultLoading()
+                      : CustomElevatedButton(
+                          text: tr(AppConstants.requestHelp),
+                          onPressed: () {
+                            onPresses.call();
+                          },
+                        ))
+              // CustomSvgImage.square(path: AppAssets.emergencyCallSvg),
             ],
           )),
     );
