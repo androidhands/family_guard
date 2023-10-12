@@ -6,16 +6,16 @@ final List<OnBoardModel> onBoardData = [
     description: "Keep your family safe",
     imgUrl: "assets/images/png/onboard_family.png",
   ),
-  const OnBoardModel(
+  /*  const OnBoardModel(
     title: "Track your members",
     description:
         "With family guard, you can track your family members locations anywhere in the world",
     imgUrl: "assets/images/png/onboard_track.png",
-  ),
-  const OnBoardModel(
+  ), */
+  /*  const OnBoardModel(
     title: "24/7 Emergancy",
     description:
         "A 24/7 emergency dispatcher will be ready to send police to your locaton.",
     imgUrl: "assets/images/png/onboard_emergency.png",
-  ),
+  ), */
 ];

@@ -62,7 +62,6 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
-		<string>location</string>
 		<string>nearby-interaction</string>
 		<string>processing</string>
 		<string>remote-notification</string>
@@ -96,5 +95,7 @@
 <string>Need microphone access for uploading audio</string>
 <key>NSPhotoLibraryUsageDescription</key>
 <string>we need access photo to upload profile image</string>
+<key>NSAppleMusicUsageDescription</key>
+<string>Play audio files, to listen to the recorded emergency call</string>
 </dict>
 </plist>
