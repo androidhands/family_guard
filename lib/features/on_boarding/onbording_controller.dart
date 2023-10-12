@@ -3,27 +3,26 @@ import 'package:family_guard/features/authentication/presentation/screens/login_
 import 'package:flutter/material.dart';
 import 'package:flutter_onboard/flutter_onboard.dart';
 
+class OnbordingController extends ChangeNotifier {
+  final PageController pageController = PageController();
+  bool islast = false;
+  int currentIndex = 0;
 
-class OnbordingController extends ChangeNotifier
-{
-final PageController pageController = PageController();
-bool islast = false;
-int currentIndex = 0;
+  isLastOnbording(bool last) {
+    islast = last;
+    notifyListeners();
+  }
 
-isLastOnbording(bool last)
-{
- islast=last;
- notifyListeners();
-}
+  changeIndex(int index) {
+    currentIndex = index;
+    notifyListeners();
+  }
 
-changeIndex(int index)
-{
- currentIndex=index;
- notifyListeners();
-}
-
- void onNextTap(OnBoardState onBoardState) {
-    if (!onBoardState.isLastPage) {
+  void onNextTap(OnBoardState onBoardState) {
+    NavigationService.navigateTo(
+        navigationMethod: NavigationMethod.pushReplacement,
+        page: () => const LoginScreen());
+    /*  if (!onBoardState.isLastPage) {
       pageController.animateToPage(
         onBoardState.page + 1,
         duration: const Duration(milliseconds: 250),
@@ -33,7 +32,6 @@ changeIndex(int index)
        NavigationService.navigateTo(
               navigationMethod: NavigationMethod.pushReplacement,
               page: () => const LoginScreen());
-    }
+    } */
   }
-
 }
