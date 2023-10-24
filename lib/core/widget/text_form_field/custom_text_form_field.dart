@@ -99,7 +99,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             return widget.validator!(value);
           },
           style: Theme.of(context).textTheme.labelMedium!.copyWith(
-              fontSize: AppSizes.h5,
+              fontSize: AppSizes.h6,
               fontWeight: AppFonts.medium,
               color: ThemeColorLight.pinkColor),
           textDirection: widget.textDirection,

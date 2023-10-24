@@ -211,7 +211,7 @@ class AppSizes {
   static final double contentItemCardHeight = 105.h;
   static final double targetAudienceContainerSize = 50.h;
   static final double dotSize = 5.w;
-  static final double requestCardHeight = 180.h;
+  static final double requestCardHeight = 200.h;
 
   ///width
   static final double widthPinCode = 50.w;
@@ -275,9 +275,11 @@ class AppSizes {
 
   static final double chipChoiceHigh = 60.h;
 
-  static final double mapAddressHigh = 300.h;
+  static final double mapAddressHigh = 180.h;
   static final double mapAddressHight2 = 200.h;
 
   static final double bottomBarIconHigh = 50.h;
   static final double bottomBarIconWidth = 50.w;
+
+  static final double mapWidtth = 350.0.w;
 }

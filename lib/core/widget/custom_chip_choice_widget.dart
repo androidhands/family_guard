@@ -29,7 +29,7 @@ class CustomChipChoiceWidget extends StatefulWidget {
       this.isCloseIcon = false,
       required this.token,
       required this.onSelected,
-     required this.isEnabled })
+      required this.isEnabled})
       : super(key: key);
 
   @override
@@ -43,6 +43,8 @@ class _CustomChipChoiceWidgetState extends State<CustomChipChoiceWidget> {
       margin: const EdgeInsets.all(AppSizes.e2),
       child: ChoiceChip(
         selectedColor: Theme.of(context).primaryColor,
+        side:
+            BorderSide(color: ThemeColorLight.pinkColor, width: AppSizes.bs1_0),
         label: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

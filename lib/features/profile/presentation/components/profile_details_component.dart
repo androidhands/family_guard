@@ -17,6 +17,7 @@ import 'package:family_guard/core/widget/custom_text.dart';
 import 'package:get/get.dart';
 
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../controllers/profile_provider.dart';
 import '../widgets/custom_container_widget.dart';
@@ -95,6 +96,9 @@ class ProfileDetailsComponent extends StatelessWidget {
                     text: tr(AppConstants.changePassword)),
                 const CustomProfileDivider(),
                 ProfileItemComponent(
+                    onTap: () {
+                      Share.share('com.familyguard.familyGuardApp');
+                    },
                     path: AppAssets.shareAppSvg,
                     text: tr(AppConstants.shareApp)),
                 const CustomProfileDivider(),

@@ -131,4 +131,5 @@ Map<String, String> coreEn = {
   'DELETE_ACCOUNT': 'Delete My Account',
   'REQUEST_HELP': 'Request Help',
   'SEND_HELP_REQUEST': 'Send Help Request',
+  'FIND_MY_FAMILY': 'Find My Family',
 };
