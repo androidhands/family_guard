@@ -373,7 +373,7 @@ class SignUpProvider extends ChangeNotifier {
         familyNameController.text.isEmpty ||
         phoneController.text.isEmpty ||
         !isValidNumber(phoneNumber!) ||
-        selectedGenders == null ||
+       
         !isTermsAndConditionsAccepted ||
         passwordController.text.isEmpty ||
         confirmPasswordController.text.isEmpty;

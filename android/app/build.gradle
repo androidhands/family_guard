@@ -26,6 +26,12 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 apply plugin: 'com.google.gms.google-services'
 
+def keystoreProperties = new Properties()
+   def keystorePropertiesFile = rootProject.file('key.properties')
+   if (keystorePropertiesFile.exists()) {
+       keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+   }
+
 android {
     namespace "com.familyguard.family_guard"
     compileSdkVersion 34           // or latest
@@ -53,15 +59,30 @@ android {
          targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+         manifestPlaceholders['foregroundServiceType'] = 'location'
     }
 
+     signingConfigs {
+       release {
+           keyAlias keystoreProperties['keyAlias']
+           keyPassword keystoreProperties['keyPassword']
+           storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+           storePassword keystoreProperties['storePassword']
+       }
+   }
+
     buildTypes {
+        debug{
+            manifestPlaceholders = [consumerAppId:"com.familyguard.family_guard"]
+
+        }
+    
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             ///TODO: change debug to release
-            
-            signingConfig signingConfigs.debug
+             manifestPlaceholders = [consumerAppId:"com.familyguard.family_guard"]
+            signingConfig signingConfigs.release
         }
     }
 }
