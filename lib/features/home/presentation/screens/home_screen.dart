@@ -1,4 +1,7 @@
+import 'package:family_guard/core/global/localization/app_localization.dart';
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
+import 'package:family_guard/core/utils/app_constants.dart';
+import 'package:family_guard/core/widget/custom_chip_choice_widget.dart';
 import 'package:family_guard/core/widget/custom_loading_indicator.dart';
 import 'package:family_guard/core/widget/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -67,12 +70,17 @@ class HomeScreen extends StatelessWidget {
                           padding: EdgeInsets.all(AppSizes.pW6),
                           child: provider.isTrackingMembers
                               ? CustomLoadingIndicators.defaultLoading()
-                              : CustomFloatingActionButton(
-                                  iconSVGPath:provider.firstClick? AppAssets.requestCanceled:AppAssets.familySvg,
-                                  onTap: () {
+                              : CustomChipChoiceWidget(
+                                  prefixPath: provider.firstClick
+                                      ? AppAssets.requestCanceled
+                                      : AppAssets.familySvg,
+                                  title:provider. firstClick?tr(AppConstants.cancel):tr(AppConstants.findMyFamily),
+                                  onSelected: (bool) {
                                     provider.setFirstClick();
                                     provider.trackMyMembers();
                                   },
+                                  token: '',
+                                  isEnabled: true,
                                 ),
                         ),
                       ],

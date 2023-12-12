@@ -83,21 +83,21 @@ class CustomSentRequestWidget extends StatelessWidget {
                         .labelMedium!
                         .copyWith(
                             color: ThemeColorLight.pinkColor,
-                            fontSize: AppSizes.h6)),
+                            fontSize: AppSizes.h7)),
                 CustomText(userEntity.memberEntity!.isLocationTracked,
                     textStyle: Theme.of(context)
                         .textTheme
                         .labelMedium!
                         .copyWith(
                             color: ThemeColorLight.pinkColor,
-                            fontSize: AppSizes.h6)),
+                            fontSize: AppSizes.h7)),
                 CustomText(userEntity.memberEntity!.isEmergency,
                     textStyle: Theme.of(context)
                         .textTheme
                         .labelMedium!
                         .copyWith(
                             color: ThemeColorLight.pinkColor,
-                            fontSize: AppSizes.h6)),
+                            fontSize: AppSizes.h7)),
                 if (userEntity.memberEntity!.createdAt != null)
                   CustomText(
                       'Requested at : ${DateParser().dateFormatterOnlyDateTime(userEntity.memberEntity!.createdAt!).toString()}',
@@ -106,7 +106,7 @@ class CustomSentRequestWidget extends StatelessWidget {
                           .labelMedium!
                           .copyWith(
                               color: ThemeColorLight.pinkColor,
-                              fontSize: AppSizes.h6))
+                              fontSize: AppSizes.h7))
               ],
             ),
           )

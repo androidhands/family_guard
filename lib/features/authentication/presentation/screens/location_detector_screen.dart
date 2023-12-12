@@ -1,5 +1,7 @@
 import 'package:family_guard/core/services/navigation_service.dart';
 import 'package:family_guard/features/authentication/domain/entities/sign_up_params.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
 import 'package:family_guard/core/utils/app_assets.dart';
@@ -19,8 +21,9 @@ import '../components/authentication_common_body.dart';
 import '../controller/location_detector_provider.dart';
 
 class LocationDetectorScreen extends StatelessWidget {
-   SignUpParams signUpParams;
-   LocationDetectorScreen({Key? key,required this.signUpParams}) : super(key: key);
+  SignUpParams signUpParams;
+  LocationDetectorScreen({Key? key, required this.signUpParams})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +62,15 @@ class LocationDetectorScreen extends StatelessWidget {
                     GoogleMap(
                       mapType: MapType.normal,
                       initialCameraPosition: provider.initialCameraPosition,
-                      zoomControlsEnabled: false,
+                      myLocationButtonEnabled: false,
+                      zoomControlsEnabled: true,
+                      scrollGesturesEnabled: true,
+                      gestureRecognizers:
+                          <Factory<OneSequenceGestureRecognizer>>{}
+                            ..add(Factory<PanGestureRecognizer>(
+                                () => PanGestureRecognizer()))
+                            ..add(Factory<VerticalDragGestureRecognizer>(
+                                () => VerticalDragGestureRecognizer())),
                       onCameraIdle: () => provider.changeLocation(context),
                       onMapCreated: (googleMapController) =>
                           provider.onMapCreated(googleMapController),
@@ -81,9 +92,8 @@ class LocationDetectorScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Positioned(
-                        top: AppSizes.mapAddressHigh / 2,
-                        right: MediaQuery.of(context).size.width / 2,
+                    Align(
+                        alignment: Alignment.center,
                         child: CustomSvgImage(
                           path: AppAssets.pinLocation,
                           width: AppSizes.locationIndicatorWidth,
@@ -98,43 +108,89 @@ class LocationDetectorScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Theme.of(context).appBarTheme.backgroundColor,
                 ),
-                child: Column(
-                  children: [
-                    CustomTextFormField(
-                      controller: provider.locationTextController,
-                      readonly: true,
-                      maxLines: 2,
-                    ),
-                    SizedBox(
-                      height: AppSizes.pH3,
-                    ),
-                    provider.isLoadingLocation
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CustomLoadingIndicators.defaultLoading(
-                                  size: AppSizes
-                                      .loadingIndicatorFOrSocialMediaSize),
-                              SizedBox(
-                                width: AppSizes.pW6,
-                              ),
-                              CustomText.primaryBodyLarge(
-                                tr(AppConstants.detectingLocation),
-                                textStyle: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .copyWith(fontSize: AppSizes.h5),
-                              )
-                            ],
-                          )
-                        : CustomElevatedButton(
-                            text: tr(AppConstants.submit),
-                            isEnabled: provider.isCountryInRegion,
-                            isLoading: provider.isLoadingLocation ||
-                                provider.isSavingNewCountry,
-                            onPressed: () => provider.saveNewLocation(context),
-                          ),
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      CustomTextFormField(
+                        controller: provider.countryTextController,
+                        readonly: true,
+                        labelText: tr(AppConstants.country),
+                      ),
+                      const SizedBox(
+                        height: AppSizes.e3,
+                      ),
+                      CustomTextFormField(
+                        controller: provider.adminAreaTextController,
+                        readonly: true,
+                        labelText: tr(AppConstants.adminArea),
+                      ),
+                      const SizedBox(
+                        height: AppSizes.e3,
+                      ),
+                      CustomTextFormField(
+                        controller: provider.subAdminAreaTextController,
+                        labelText: tr(AppConstants.state),
+                      ),
+                      const SizedBox(
+                        height: AppSizes.e3,
+                      ),
+                      CustomTextFormField(
+                        controller: provider.localityTextController,
+                        labelText: tr(AppConstants.district),
+                      ),
+                      const SizedBox(
+                        height: AppSizes.e3,
+                      ),
+                      CustomTextFormField(
+                        controller: provider.subLocalityextController,
+                        labelText: tr(AppConstants.city),
+                      ),
+                      const SizedBox(
+                        height: AppSizes.e3,
+                      ),
+                      CustomTextFormField(
+                        controller: provider.streetTextController,
+                        labelText: tr(AppConstants.street),
+                      ),
+                      const SizedBox(
+                        height: AppSizes.e3,
+                      ),
+                      CustomTextFormField(
+                        controller: provider.postalCodeTextController,
+                        labelText: tr(AppConstants.postalCode),
+                      ),
+                      const SizedBox(
+                        height: AppSizes.e3,
+                      ),
+                      provider.isLoadingLocation
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CustomLoadingIndicators.defaultLoading(
+                                    size: AppSizes
+                                        .loadingIndicatorFOrSocialMediaSize),
+                                SizedBox(
+                                  width: AppSizes.pW6,
+                                ),
+                                CustomText.primaryBodyLarge(
+                                  tr(AppConstants.detectingLocation),
+                                  textStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(fontSize: AppSizes.h5),
+                                )
+                              ],
+                            )
+                          : CustomElevatedButton(
+                              text: tr(AppConstants.submit),
+                              isEnabled: provider.isCountryInRegion,
+                              isLoading: provider.isLoadingLocation ||
+                                  provider.isSavingNewCountry,
+                              onPressed: () =>
+                                  provider.saveNewLocation(context),
+                            ),
+                    ],
+                  ),
                 ),
               ),
             ],

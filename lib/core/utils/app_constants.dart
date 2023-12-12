@@ -378,4 +378,7 @@ class AppConstants {
   static const String requestHelp = "REQUEST_HELP";
 
   static const String sendHelpRequest = "SEND_HELP_REQUEST";
+  static const String findMyFamily = "FIND_MY_FAMILY";
+
+  static String district = "DISTRICT";
 }

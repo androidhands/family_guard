@@ -4,6 +4,9 @@ import 'dart:io';
 import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/screen/main_screen.dart';
 import 'package:family_guard/core/services/background_location_service.dart';
+import 'package:family_guard/features/authentication/domain/entities/sign_in_params.dart';
+import 'package:family_guard/features/authentication/domain/entities/sign_up_params.dart';
+import 'package:family_guard/features/authentication/presentation/screens/location_detector_screen.dart';
 
 import 'package:family_guard/features/family/presentation/controllers/family_members_provider.dart';
 import 'package:family_guard/features/family/presentation/controllers/received_requests_provider.dart';
@@ -30,7 +33,6 @@ void main() async {
   await ServiceInitializer().initializeSettings();
 
   runApp(const MyApp());
- 
 }
 
 class MyApp extends StatelessWidget {
@@ -89,7 +91,7 @@ class MyApp extends StatelessWidget {
                   ],
                   supportedLocales: const [Locale('en'), Locale('ar')],
                   fallbackLocale: ServiceInitializer.locale,
-                  title: 'Go-Care',
+                  title: 'Family Guard',
                   debugShowCheckedModeBanner: false,
                   locale: ServiceInitializer.locale,
                   translations: LanguageTranslation(),

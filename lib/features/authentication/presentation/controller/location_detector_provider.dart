@@ -40,7 +40,16 @@ class LocationDetectorProvider with ChangeNotifier {
 
   late AddressEntity addressEntity;
 
-  final TextEditingController locationTextController = TextEditingController();
+  final TextEditingController countryTextController = TextEditingController();
+  final TextEditingController adminAreaTextController = TextEditingController();
+  final TextEditingController subAdminAreaTextController =
+      TextEditingController();
+  final TextEditingController localityTextController = TextEditingController();
+  final TextEditingController subLocalityextController =
+      TextEditingController();
+  final TextEditingController streetTextController = TextEditingController();
+  final TextEditingController postalCodeTextController =
+      TextEditingController();
 
   String? selectedCountry;
 
@@ -72,7 +81,7 @@ class LocationDetectorProvider with ChangeNotifier {
     double screenWidth = MediaQuery.of(context).size.width *
         MediaQuery.of(context).devicePixelRatio;
 
-    double middleX = screenWidth / 2; // AppSizes.mapAddressHigh / 2;
+    double middleX = AppSizes.mapWidtth / 2; // AppSizes.mapAddressHigh / 2;
     double middleY = AppSizes.mapAddressHigh / 2; //screenHeight / 2;
 
     ScreenCoordinate screenCoordinate =
@@ -87,32 +96,29 @@ class LocationDetectorProvider with ChangeNotifier {
     /* placemark.country == AppConstants.geoCoderCountryEgypt ||
             placemark.country == AppConstants.geoCoderCountrySA; */
     selectedCountry = placemark.country;
-    String address = '';
+
     if (placemark.country?.isNotEmpty ?? false) {
-      address += '${placemark.country!}, ';
+      countryTextController.text = placemark.country!;
     }
     if (placemark.administrativeArea?.isNotEmpty ?? false) {
-      address += '${placemark.administrativeArea!}, ';
+      adminAreaTextController.text = placemark.administrativeArea!;
     }
     if (placemark.subAdministrativeArea?.isNotEmpty ?? false) {
-      address += '${placemark.subAdministrativeArea!}, ';
+      subAdminAreaTextController.text = placemark.subAdministrativeArea!;
     }
     if (placemark.locality?.isNotEmpty ?? false) {
-      address += '${placemark.locality!}, ';
+      localityTextController.text = placemark.locality!;
     }
     if (placemark.subLocality?.isNotEmpty ?? false) {
-      address += '${placemark.subLocality!}, ';
+      subLocalityextController.text = placemark.subLocality!;
     }
     if (placemark.postalCode?.isNotEmpty ?? false) {
-      address += '${placemark.postalCode!}, ';
+      streetTextController.text = placemark.street!;
     }
     if (placemark.street?.isNotEmpty ?? false) {
-      address += '${placemark.street!}.';
+      postalCodeTextController.text = placemark.postalCode!;
     }
 
-    /*    UserEntity? user =
-        Provider.of<MainProvider>(Get.context!, listen: false).userCredentials; */
-    locationTextController.text = address;
     signUpParams.setCountry =
         placemark.country == null || placemark.country!.isEmpty
             ? "No Country"
@@ -151,7 +157,7 @@ class LocationDetectorProvider with ChangeNotifier {
   goToMyLocation() async {
     isLoadingLocation = true;
     notifyListeners();
-   
+
     if (!(await requestLocationPermission())) {
       isLoadingLocation = false;
       notifyListeners();
