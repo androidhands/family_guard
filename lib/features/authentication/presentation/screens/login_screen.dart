@@ -85,12 +85,13 @@ class LoginScreen extends StatelessWidget {
                             border: const OutlineInputBorder(
                               borderSide: BorderSide(),
                             ),
-                          ),
+                          ), 
                           initialCountryCode: provider.countryCode,
                           dropdownIcon: const Icon(
                             Icons.arrow_drop_down,
                             color: ThemeColorLight.pinkColor,
                           ),
+                          dropdownIconPosition: IconPosition.trailing,
                           controller: provider.phoneController,
                           onChanged: (phone) {
                             provider.setPhoneNumber(phone);
