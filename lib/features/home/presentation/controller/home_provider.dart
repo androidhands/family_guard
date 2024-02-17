@@ -8,13 +8,18 @@ import 'package:dartz/dartz.dart';
 import 'package:family_guard/core/controllers/main_provider.dart';
 import 'package:family_guard/core/error/failure.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
+import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
 import 'package:family_guard/core/services/date_parser.dart';
 import 'package:family_guard/core/services/dependency_injection_service.dart';
 import 'package:family_guard/core/services/navigation_service.dart';
+import 'package:family_guard/core/utils/app_assets.dart';
 import 'package:family_guard/core/utils/app_constants.dart';
+import 'package:family_guard/core/utils/app_sizes.dart';
 import 'package:family_guard/core/utils/map_utils.dart';
 import 'package:family_guard/core/utils/utils.dart';
+import 'package:family_guard/core/widget/custom_text.dart';
 import 'package:family_guard/core/widget/dialog_service.dart';
+import 'package:family_guard/core/widget/images/custom_svg_image.dart';
 import 'package:family_guard/features/home/data/datasource/tracking_data_source.dart';
 import 'package:family_guard/features/home/data/models/tracking_model.dart';
 import 'package:family_guard/features/home/data/repository/tracking_repository.dart';
@@ -231,10 +236,47 @@ class HomeProvider extends ChangeNotifier {
   Future<bool> requestLocationPermission() async {
     permissionGranted = await location.hasPermission();
     if (permissionGranted == lc.PermissionStatus.denied) {
-      permissionGranted = await location.requestPermission();
-      if (permissionGranted != lc.PermissionStatus.granted) {
-        return false;
-      }
+      Get.defaultDialog(
+          title: 'Use Location',
+          titleStyle: Get.theme.textTheme.labelSmall!.copyWith(
+            color: ThemeColorLight.pinkColor,
+          ),
+          content: Center(
+              child: Column(
+            children: [
+              CustomSvgImage(path: AppAssets.mapSvg),
+              SizedBox(
+                height: AppSizes.pH3,
+              ),
+              CustomText(
+                'This app collects location data to enable background location, even when the app is closed or not in use to allowing the users to connect with their family member and enables them to locate their family members current location.',
+                textStyle: Get.theme.textTheme.labelSmall!.copyWith(
+                  color: ThemeColorLight.pinkColor,
+                ),
+              ),
+              CustomText(
+                'Please enable location permissions',
+                textStyle: Get.theme.textTheme.labelSmall!.copyWith(
+                  color: ThemeColorLight.pinkColor,
+                ),
+              ),
+            ],
+          )),
+          textConfirm: 'Accept',
+          textCancel: 'Deny',
+          onConfirm: () async {
+            permissionGranted = await location.requestPermission();
+            NavigationService.goBack();
+          },
+          onCancel: () {
+            NavigationService.goBack();
+          }).then(
+        (value) {
+          if (permissionGranted != lc.PermissionStatus.granted) {
+            return false;
+          }
+        },
+      );
     }
     return true;
   }
