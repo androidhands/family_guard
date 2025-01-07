@@ -45,7 +45,7 @@ class _BottomNavBarWithAnimationComponentState
 
   void show() {
     setState(() {
-      if (!isVisible) {
+      if (!isVisible) { 
         setState(() {
           isVisible = !isVisible;
         });
