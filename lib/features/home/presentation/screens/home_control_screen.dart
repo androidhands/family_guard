@@ -40,17 +40,19 @@ class _HomeControlScreenState extends State<HomeControlScreen>
               ),
 
               ///Floating Action Button
-              floatingActionButton: RotationTransition(
-                turns: Tween(begin: 0.0, end: 1.0).animate(
-                  provider.animationController,
-                ),
-                child: FloatingActionButtonHomeWidget(
-                  onPressed: () {
-                    //provider.startAnimation();
-                    provider.checkUserCountry();
-                  },
-                ),
-              ),
+              floatingActionButton: provider.animationController == null
+                  ? null
+                  : RotationTransition(
+                      turns: Tween(begin: 0.0, end: 1.0).animate(
+                        provider.animationController!,
+                      ),
+                      child: FloatingActionButtonHomeWidget(
+                        onPressed: () {
+                          //provider.startAnimation();
+                          provider.checkUserCountry();
+                        },
+                      ),
+                    ),
             ),
           );
         },

@@ -8,8 +8,6 @@ import 'package:family_guard/core/utils/app_constants.dart';
 import 'package:family_guard/core/widget/custom_appbar.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-
-
 class TermsAndPrivacyPolicyScreen extends StatelessWidget {
   const TermsAndPrivacyPolicyScreen({Key? key}) : super(key: key);
 
@@ -33,7 +31,7 @@ class TermsAndPrivacyPolicyScreen extends StatelessWidget {
           },
         ),
       )
-      ..loadRequest(Uri.parse('https://uturnsoftware.com/terms-of-service'),
+      ..loadRequest(Uri.parse('https://family1guard.com/terms-of-service'),
           headers: {'Authorization': 'Basic $basicAuth'},
           method: LoadRequestMethod.get);
     return Scaffold(

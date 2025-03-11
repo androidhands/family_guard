@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:family_guard/core/error/failure.dart';
 import 'package:family_guard/features/authentication/domain/usecases/check_mobile_registered_usecase.dart';
+import 'package:family_guard/features/authentication/presentation/screens/location_detector_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:family_guard/core/global/localization/app_localization.dart';
 
@@ -12,7 +13,7 @@ import 'package:family_guard/features/authentication/presentation/utils/constant
 import 'package:family_guard/features/authentication/presentation/utils/enums.dart';
 import 'package:family_guard/features/general/presentation/screens/terms_and_privacy_policy.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
+
 import 'package:get/get.dart';
 import 'package:intl_phone_field/phone_number.dart';
 
@@ -88,10 +89,10 @@ class SignUpProvider extends ChangeNotifier {
   ///Sign up parameters
 
   SignUpProvider() {
-    getCountryCode();
+    //getCountryCode();
   }
 
-  Future getCountryCode() async {
+  /*  Future getCountryCode() async {
     try {
       countryCode = await FlutterSimCountryCode.simCountryCode;
       log(countryCode!);
@@ -100,7 +101,7 @@ class SignUpProvider extends ChangeNotifier {
     }
     isloadingCountryCode = false;
     notifyListeners();
-  }
+  } */
 
   ///Validations
 
@@ -434,11 +435,11 @@ class SignUpProvider extends ChangeNotifier {
           );
 
           log(_signUpParameters.toJson().toString());
-          NavigationService.navigateTo(
-              navigationMethod: NavigationMethod.push,
-              page: () => VerificationScreen(
-                    signUpParams: _signUpParameters,
-                  ));
+       NavigationService.navigateTo(
+          navigationMethod: NavigationMethod.pushReplacement,
+          page: () => LocationDetectorScreen(
+                signUpParams: _signUpParameters,
+              ));
         }
       });
     } else {

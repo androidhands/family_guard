@@ -10,8 +10,8 @@ import '../services/dependency_injection_service.dart';
 const String attachmentBaseUrl = '';
 
 //const String baseUrl = "http://test.uturnsoftware.com/";
-//const String baseUrl = "http://uturnsoftware.com/";
-const String baseUrl = "https://development.uturnsoftware.com/";
+const String baseUrl = "https://family1guard.com/";
+//const String baseUrl = "https://development.uturnsoftware.com/";
 const int defaultAppTenant = 1;
 
 const String basicAuth =
@@ -128,7 +128,7 @@ class ApiCaller {
       'Abp.TenantId': tenantId,
 
       ///TODO Check if tenant id is null use the global tenant... global tenant should be set in signIn
-      'Authorization': 'Basic $basicAuth',
+      'Authorization': 'Bearer $token',
       'auth-token': token
     }
       ..addAll(
@@ -209,7 +209,7 @@ class ApiCaller {
       // showServerErrorDialog(data.message!.message);
       if (onFailure != null) onFailure(data.message);
     }
-    
+
     return Future.value();
   }
 }

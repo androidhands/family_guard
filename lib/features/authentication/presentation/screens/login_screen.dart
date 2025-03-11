@@ -1,5 +1,6 @@
 import 'package:family_guard/core/global/theme/theme_color/theme_color_light.dart';
 import 'package:family_guard/core/utils/app_assets.dart';
+import 'package:family_guard/core/utils/app_fonts.dart';
 import 'package:family_guard/core/widget/custom_loading_indicator.dart';
 import 'package:family_guard/core/widget/images/custom_png_image.dart';
 import 'package:flutter/material.dart';
@@ -80,12 +81,26 @@ class LoginScreen extends StatelessWidget {
                           child: CustomLoadingIndicators.defaultLoading(),
                         )
                       : IntlPhoneField(
+                          dropdownTextStyle: Theme.of(context)
+                              .textTheme
+                              .labelMedium!
+                              .copyWith(
+                                  fontSize: AppSizes.h6,
+                                  fontWeight: AppFonts.medium,
+                                  color: ThemeColorLight.pinkColor),
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelMedium!
+                              .copyWith(
+                                  fontSize: AppSizes.h6,
+                                  fontWeight: AppFonts.medium,
+                                  color: ThemeColorLight.pinkColor),
                           decoration: InputDecoration(
                             labelText: tr(AppConstants.phoneNumber),
                             border: const OutlineInputBorder(
                               borderSide: BorderSide(),
                             ),
-                          ), 
+                          ),
                           initialCountryCode: provider.countryCode,
                           dropdownIcon: const Icon(
                             Icons.arrow_drop_down,

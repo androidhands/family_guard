@@ -63,31 +63,23 @@ class AddFamilyMemberScreen extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  provider.isloadingCountryCode
-                                      ? Center(
-                                          child: CustomLoadingIndicators
-                                              .defaultLoading(),
-                                        )
-                                      : IntlPhoneField(
-                                          decoration: InputDecoration(
-                                            labelText:
-                                                tr(AppConstants.phoneNumber),
-                                            border: const OutlineInputBorder(
-                                              borderSide: BorderSide(),
-                                            ),
-                                          ),
-                                          initialCountryCode:
-                                              provider.countryCode,
-                                          dropdownIcon: const Icon(
-                                            Icons.arrow_drop_down,
-                                            color: ThemeColorLight.pinkColor,
-                                          ),
-                                          controller: provider.phoneController,
-                                          onChanged: (phone) {
-                                            provider.setPhoneNumber(phone);
-                                         
-                                          },
-                                        ),
+                                  IntlPhoneField(
+                                    decoration: InputDecoration(
+                                      labelText: tr(AppConstants.phoneNumber),
+                                      border: const OutlineInputBorder(
+                                        borderSide: BorderSide(),
+                                      ),
+                                    ),
+                                    initialCountryCode: provider.countryCode,
+                                    dropdownIcon: const Icon(
+                                      Icons.arrow_drop_down,
+                                      color: ThemeColorLight.pinkColor,
+                                    ),
+                                    controller: provider.phoneController,
+                                    onChanged: (phone) {
+                                      provider.setPhoneNumber(phone);
+                                    },
+                                  ),
                                   SizedBox(
                                     height: AppSizes.sizedBoxH4,
                                   ),

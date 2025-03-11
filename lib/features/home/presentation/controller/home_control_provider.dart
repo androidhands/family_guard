@@ -34,17 +34,17 @@ import 'package:geocoding/geocoding.dart' as gc;
 
 class HomeControlProvider with ChangeNotifier {
   bool isMounted = true;
-
+  ///var
+  UserEntity? userEntity;
   final SingleTickerProviderStateMixin singleTickerProviderStateMixin;
 
   ///Constructor
   HomeControlProvider({required this.singleTickerProviderStateMixin}) {
     initializeDataSharedInSubScreen();
+    
   }
 
-  ///var
-  UserEntity? userEntity =
-      Provider.of<MainProvider>(Get.context!, listen: false).userCredentials;
+
 
   List<NotificationEntity>? notificationsList;
   int unReadNotificationsCount = 0;
@@ -54,7 +54,7 @@ class HomeControlProvider with ChangeNotifier {
   bool isLoadingDataSharedInSubScreen = true;
   bool isLoadingHomeScreen = true;
 
-  late AnimationController animationController;
+   AnimationController? animationController;
 
   ///controller
   final ScrollController scrollController = ScrollController();
@@ -70,6 +70,9 @@ class HomeControlProvider with ChangeNotifier {
 
   ///initialize Data Shared In SubScreen in bottom nav bar
   initializeDataSharedInSubScreen() async {
+    await Provider.of<MainProvider>(Get.context!, listen: false).getCachedUserCredentials();
+    userEntity =
+      Provider.of<MainProvider>(Get.context!, listen: false).userCredentials;
     animationController = AnimationController(
       vsync: singleTickerProviderStateMixin,
       duration: const Duration(seconds: 5),
@@ -152,7 +155,7 @@ class HomeControlProvider with ChangeNotifier {
   @override
   void dispose() {
     isMounted = false;
-    animationController.dispose();
+    animationController?.dispose();
     super.dispose();
   }
 
@@ -170,15 +173,15 @@ class HomeControlProvider with ChangeNotifier {
   bool isLoadingAnimation = false;
   void startAnimation() {
     log('start animation');
-    if (animationController.isAnimating) {
+    if (animationController!.isAnimating) {
       isLoadingAnimation = false;
-      animationController.stop();
+      animationController!.stop();
       notifyListeners();
     } else {
       isLoadingAnimation = true;
-      animationController.fling();
+      animationController!.fling();
 //animationController.forward();
-      animationController.repeat();
+      animationController!.repeat();
 
       /*  animationController.fling();
       animationController.repeat(); */

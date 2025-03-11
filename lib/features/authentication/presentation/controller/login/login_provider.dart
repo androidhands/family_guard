@@ -11,7 +11,7 @@ import 'package:family_guard/features/authentication/presentation/screens/forget
 
 import 'package:family_guard/features/authentication/presentation/screens/signup_screen.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
+
 import 'package:get/get.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:provider/provider.dart';
@@ -38,7 +38,7 @@ class LoginProvider extends ChangeNotifier {
   bool showPassword = false;
   bool isUsingPhone = false;
   bool isLoadingSignIn = false;
-  bool isLoadingActiveCountries = true;
+  bool isLoadingActiveCountries = false;
 
   bool isLoadingAvailableTenants = false;
   bool isLoadingPhoneCodes = false;
@@ -48,7 +48,7 @@ class LoginProvider extends ChangeNotifier {
   //isMounted .. Don't delete
   bool isMounted = true;
   String? countryCode;
-  bool isloadingCountryCode = true;
+  bool isloadingCountryCode = false;
 
   // SignIn Patamater
   late SignInParams _signInParameters;
@@ -79,19 +79,10 @@ class LoginProvider extends ChangeNotifier {
     } else {
       sl<BaseAppLocalizations>().changeLocale(languageCode: locale);
     }
-    getCountryCode();
+   // getCountryCode();
   }
 
-  Future getCountryCode() async {
-    try {
-      countryCode = await FlutterSimCountryCode.simCountryCode;
-      log(countryCode!);
-    } on PlatformException {
-      log('Failed to get sim country code.');
-    }
-    isloadingCountryCode = false;
-    notifyListeners();
-  }
+
 
   String? validateEmailOrMobilePhone(String value) {
     if (!emailOrPhoneShowValidation) return null;

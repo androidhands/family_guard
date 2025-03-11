@@ -68,6 +68,7 @@ class HomeProvider extends ChangeNotifier {
     // LocationFetcher.instance.getLocation();
 
     initializeInitialCameraPosition();
+
     getAuthenticationResultModel();
     if (Platform.isIOS) {
       fetchBackgroundLocation();
@@ -153,8 +154,7 @@ class HomeProvider extends ChangeNotifier {
     });
   }
 
-  UserEntity? userEntity =
-      Provider.of<MainProvider>(Get.context!, listen: false).userCredentials;
+  UserEntity? userEntity;
 
   bool isLoadingLocation = true;
   bool isCountryInRegion = false;
@@ -186,6 +186,8 @@ class HomeProvider extends ChangeNotifier {
     await Provider.of<MainProvider>(Get.context!, listen: false)
         .getCachedUserCredentials()
         .then((value) {
+      userEntity = Provider.of<MainProvider>(Get.context!, listen: false)
+          .userCredentials;
       notifyListeners();
     });
     // await initializeBackroundService();
@@ -412,7 +414,15 @@ class HomeProvider extends ChangeNotifier {
         ..removeWhere((element) => element.trackingEntity == null);
       startTimeout();
       if (trackedmembers.isNotEmpty) {
+        log('I will show member on map');
         await showMembersOmMap(r);
+      } else {
+        isTrackingMembers = false;
+        notifyListeners();
+        await DialogWidget.showCustomDialog(
+            context: Get.context!,
+            title: 'Member not found',
+            buttonText: tr(AppConstants.ok));
       }
     });
 

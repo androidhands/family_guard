@@ -6,7 +6,7 @@ import 'package:family_guard/features/authentication/domain/usecases/verify_user
 import 'package:family_guard/features/authentication/presentation/screens/forget_password_verification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
+
 import 'package:get/get.dart';
 import 'package:intl_phone_field/phone_number.dart';
 
@@ -23,7 +23,7 @@ class ForgetPasswordProvider extends ChangeNotifier {
   ///Usecase
 
   ForgetPasswordProvider() {
-    getCountryCode();
+    //getCountryCode();
   }
 
   final formKey = GlobalKey<FormState>();
@@ -45,7 +45,7 @@ class ForgetPasswordProvider extends ChangeNotifier {
 
   ///Design related vars
 
-  Future getCountryCode() async {
+/*   Future getCountryCode() async {
     try {
       countryCode = await FlutterSimCountryCode.simCountryCode;
       log(countryCode!);
@@ -54,7 +54,7 @@ class ForgetPasswordProvider extends ChangeNotifier {
     }
     isloadingCountryCode = false;
     notifyListeners();
-  }
+  } */
 
   PhoneNumber? phoneNumber;
   void setPhoneNumber(PhoneNumber phone) {

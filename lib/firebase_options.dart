@@ -26,10 +26,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -54,9 +51,20 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyA_Cl4tTsUE0_H5N5A7OutO4O31B6cc85Q',
-    appId: '1:665644469567:android:f24ca4537d46a5047a578a',
+    appId: '1:665644469567:android:e7708b2c2f662f487a578a',
     messagingSenderId: '665644469567',
     projectId: 'family-guard-c555c',
-    storageBucket: 'family-guard-c555c.appspot.com',
+    storageBucket: 'family-guard-c555c.firebasestorage.app',
   );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyD8CyWX66bVSqSklcAbTVQHdiRkeZzgcl0',
+    appId: '1:665644469567:ios:d18993807905c5cd7a578a',
+    messagingSenderId: '665644469567',
+    projectId: 'family-guard-c555c',
+    storageBucket: 'family-guard-c555c.firebasestorage.app',
+    androidClientId: '665644469567-82tnsbr9ucn5nb2kn4j976hajtr5jh8v.apps.googleusercontent.com',
+    iosBundleId: 'com.familyguard.familyGuardApp',
+  );
+
 }

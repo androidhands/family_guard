@@ -13,7 +13,7 @@ import 'package:family_guard/features/family/presentation/screens/sent_requests_
 import 'package:family_guard/features/family/presentation/utils/members_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
+
 import 'package:get/get.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:provider/provider.dart';
@@ -25,11 +25,11 @@ class AddNewMemberController extends ChangeNotifier {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
 
   AddNewMemberController() {
-    getCountryCode();
+   // getCountryCode();
     selectedReceiverRelation = getReciverRelations()[selectedSnderRelation]![0];
   }
   String? countryCode;
-  bool isloadingCountryCode = true;
+
   final TextEditingController phoneController = TextEditingController();
   bool enableVerifyButton = false;
   PhoneNumber? phoneNumber;
@@ -71,16 +71,6 @@ class AddNewMemberController extends ChangeNotifier {
     checkFormReadiness();
   }
 
-  Future getCountryCode() async {
-    try {
-      countryCode = await FlutterSimCountryCode.simCountryCode;
-      log(countryCode!);
-    } on PlatformException {
-      log('Failed to get sim country code.');
-    }
-    isloadingCountryCode = false;
-    notifyListeners();
-  }
 
   void showReceiverRelationShipsDropDwonDialog() {
     showCustromReceiverDropDwonDialog(

@@ -123,28 +123,24 @@ class SignUpScreen extends StatelessWidget {
                   SizedBox(
                     height: AppSizes.pH3,
                   ),
-                  provider.isloadingCountryCode
-                      ? Center(
-                          child: CustomLoadingIndicators.defaultLoading(),
-                        )
-                      : IntlPhoneField(
-                          decoration: InputDecoration(
-                            labelText: tr(AppConstants.phoneNumber),
-                            border: const OutlineInputBorder(
-                              borderSide: BorderSide(),
-                            ),
-                          ),
-                          dropdownIcon: const Icon(
-                            Icons.arrow_drop_down,
-                            color: ThemeColorLight.pinkColor,
-                          ),
-                          initialCountryCode: provider.countryCode,
-                          controller: provider.phoneController,
-                          onChanged: (phone) {
-                            provider.setPhoneNumber(phone);
-                            provider.checkFormReadiness();
-                          },
-                        ),
+                  IntlPhoneField(
+                    decoration: InputDecoration(
+                      labelText: tr(AppConstants.phoneNumber),
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide(),
+                      ),
+                    ),
+                    dropdownIcon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: ThemeColorLight.pinkColor,
+                    ),
+                    initialCountryCode: provider.countryCode,
+                    controller: provider.phoneController,
+                    onChanged: (phone) {
+                      provider.setPhoneNumber(phone);
+                      provider.checkFormReadiness();
+                    },
+                  ),
                   SizedBox(
                     height: AppSizes.pH3,
                   ),

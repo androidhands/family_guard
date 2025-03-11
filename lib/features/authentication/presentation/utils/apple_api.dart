@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+//import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AppleAPI {
   AppleAPI._();
@@ -25,7 +25,7 @@ class AppleAPI {
     final digest = sha256.convert(bytes);
     return digest.toString();
   }
-
+/* 
   Future<List?>? loginWithApple() async {
     final rawNonce = generateNonce();
     final nonce = sha256ofString(rawNonce);
@@ -47,7 +47,7 @@ class AppleAPI {
     UserCredential? credential = await getUserData(oauthCredential);
     return [credential, appleCredential];
   }
-
+ */
   Future getUserData(appleAuthCredential) async {
     return await FirebaseAuth.instance
         .signInWithCredential(appleAuthCredential);

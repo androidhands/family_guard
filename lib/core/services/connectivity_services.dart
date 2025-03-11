@@ -18,9 +18,7 @@ class ConnectivityService {
 
   initializeConnectivityListeners() {
     if (_isInitialized) return;
-    Connectivity()
-        .onConnectivityChanged
-        .listen((ConnectivityResult status) async {
+    Connectivity().onConnectivityChanged.listen((status) async {
       print("Connection status changed : $status");
       bool isConnected = ((status == ConnectivityResult.mobile) ||
           (status == ConnectivityResult.wifi));
@@ -30,7 +28,6 @@ class ConnectivityService {
           if (canGoBack) {
             NavigationService.goBack();
           } else {
-          
             isCached
                 ? NavigationService.navigateTo(
                     navigationMethod: NavigationMethod.pushReplacement,
@@ -57,6 +54,7 @@ class ConnectivityService {
   }
 
   Future<ConnectivityResult> isConnected() async {
-    return await Connectivity().checkConnectivity();
+    var results = await Connectivity().checkConnectivity();
+    return results.first;
   }
 }

@@ -1,4 +1,4 @@
-import 'dart:developer';
+/* import 'dart:developer';
 
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get/get.dart';
@@ -107,3 +107,4 @@ class DynamicLinkService {
     }
   }
 }
+ */
